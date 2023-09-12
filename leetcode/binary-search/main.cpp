@@ -115,3 +115,110 @@ int findPeakElement(std::vector<int> &nums) {
 
     return l;
 }
+
+// 33. Search in Rotated Sorted Array
+int searchRotation(std::vector<int>& nums) {
+    int n = nums.size();
+
+    int l = 0;
+    int r = n - 1;
+
+    while (l < r) {
+        int m = (l + r) / 2;
+
+        if (m + 1 >= n || nums[m] > nums[m + 1]) return m;
+        else if (nums[m] > nums[r]) {
+            l = m + 1;
+        } else {
+            r = m;
+        }
+    }
+
+    return l;
+}
+
+int bisect(std::vector<int>& nums, int l, int r, int target) {
+    if (l > r) return -1;
+
+    int n = nums.size();
+
+    while (l < r) {
+        int m = (l + r) / 2;
+
+        if (nums[m] == target) return m;
+        else if (nums[m] < target) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+
+    return nums[l] == target ? l : -1;
+}
+
+int search(std::vector<int>& nums, int target) {
+    int n = nums.size();
+
+    int pivot = searchRotation(nums);
+
+    int i = bisect(nums, 0, pivot, target);
+    if (i != -1) return i;
+
+    return bisect(nums, pivot + 1, n - 1, target);
+}
+
+// 34. Find First and Last Position of Element in Sorted Array
+int findFirst(std::vector<int>& nums, int target) {
+    int n = nums.size();
+
+    int l = 0;
+    int r = n - 1;
+
+    while (l < r) {
+        int m = (l + r) / 2;
+
+        if (nums[m] == target && (m - 1 < 0 || nums[m - 1] != target)) return m;
+        if (nums[m] < target) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+
+    return nums[l] == target ? l : -1;
+}
+
+int findLast(std::vector<int>& nums, int target) {
+    int n = nums.size();
+
+    int l = 0;
+    int r = n - 1;
+
+    while (l < r) {
+        int m = (l + r) / 2;
+
+        if (nums[m] == target && (m + 1 >= n || nums[m + 1] != target)) return m;
+        if (nums[m] > target) {
+            r = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+
+    return nums[l] == target ? l : -1;
+}
+
+std::vector<int> searchRange(std::vector<int>& nums, int target) {
+    if (nums.size() == 0) return std::vector<int>{-1, -1};
+
+    return std::vector<int>{findFirst(nums, target), findLast(nums, target)};
+}
+
+// 153. Find Minimum in Rotated Sorted Array
+
+int findMin(std::vector<int>& nums) {
+    if (nums.size() < 2) return nums[0];
+    int pivot = searchRotation(nums);
+    if (nums[pivot] < nums[pivot + 1]) return nums[pivot];
+    return nums[pivot + 1];
+}
