@@ -14,6 +14,8 @@
 #include <chrono>
 #include <queue>
 
+const int INF = 1e9;
+
 // 35. Search Insert Position
 int searchInsert(std::vector<int> &nums, int target) {
     int l = 0;
@@ -117,7 +119,7 @@ int findPeakElement(std::vector<int> &nums) {
 }
 
 // 33. Search in Rotated Sorted Array
-int searchRotation(std::vector<int>& nums) {
+int searchRotation(std::vector<int> &nums) {
     int n = nums.size();
 
     int l = 0;
@@ -137,7 +139,7 @@ int searchRotation(std::vector<int>& nums) {
     return l;
 }
 
-int bisect(std::vector<int>& nums, int l, int r, int target) {
+int bisect(std::vector<int> &nums, int l, int r, int target) {
     if (l > r) return -1;
 
     int n = nums.size();
@@ -156,7 +158,7 @@ int bisect(std::vector<int>& nums, int l, int r, int target) {
     return nums[l] == target ? l : -1;
 }
 
-int search(std::vector<int>& nums, int target) {
+int search(std::vector<int> &nums, int target) {
     int n = nums.size();
 
     int pivot = searchRotation(nums);
@@ -168,7 +170,7 @@ int search(std::vector<int>& nums, int target) {
 }
 
 // 34. Find First and Last Position of Element in Sorted Array
-int findFirst(std::vector<int>& nums, int target) {
+int findFirst(std::vector<int> &nums, int target) {
     int n = nums.size();
 
     int l = 0;
@@ -188,7 +190,7 @@ int findFirst(std::vector<int>& nums, int target) {
     return nums[l] == target ? l : -1;
 }
 
-int findLast(std::vector<int>& nums, int target) {
+int findLast(std::vector<int> &nums, int target) {
     int n = nums.size();
 
     int l = 0;
@@ -208,7 +210,7 @@ int findLast(std::vector<int>& nums, int target) {
     return nums[l] == target ? l : -1;
 }
 
-std::vector<int> searchRange(std::vector<int>& nums, int target) {
+std::vector<int> searchRange(std::vector<int> &nums, int target) {
     if (nums.size() == 0) return std::vector<int>{-1, -1};
 
     return std::vector<int>{findFirst(nums, target), findLast(nums, target)};
@@ -216,9 +218,57 @@ std::vector<int> searchRange(std::vector<int>& nums, int target) {
 
 // 153. Find Minimum in Rotated Sorted Array
 
-int findMin(std::vector<int>& nums) {
+int findMin(std::vector<int> &nums) {
     if (nums.size() < 2) return nums[0];
     int pivot = searchRotation(nums);
     if (nums[pivot] < nums[pivot + 1]) return nums[pivot];
     return nums[pivot + 1];
+}
+
+// 4. Median of Two Sorted Arrays
+
+double findMedianSortedArrays(std::vector<int> &a, std::vector<int> &b) {
+    int n = a.size();
+    int m = b.size();
+
+    int total = n + m;
+
+    int half = total / 2;
+
+    if (n < m) {
+        std::swap(a, b);
+        std::swap(n, m);
+    }
+
+    int l = 0;
+    int r = m - 1;
+
+    while (true) {
+        int i = (l + r) / 2;
+
+        if (l + r < 0) {
+            i = -1;
+        }
+
+        // index of end element in A
+        int j = half - (i + 1) - 1;
+
+        int a_left = j >= 0 ? a[j] : -INF;
+        int a_right = j + 1 < n ? a[j + 1] : INF;
+
+        int b_left = i >= 0 ? b[i] : -INF;
+        int b_right = i + 1 < m ? b[i + 1] : INF;
+
+        if (a_left <= b_right && b_left <= a_right) {
+            if (total % 2 != 0) {
+                return std::min(a_right, b_right);
+            } else {
+                return (double) (std::max(a_left, b_left) + std::min(a_right, b_right)) / 2.0;
+            }
+        } else if (a_left > b_right) {
+            l = i + 1;
+        } else {
+            r = i - 1;
+        }
+    }
 }
