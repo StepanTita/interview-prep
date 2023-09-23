@@ -229,8 +229,82 @@ int coinChange(std::vector<int> &coins, int amount) {
     return dp[amount] != INF ? dp[amount] : -1;
 }
 
+// 1043. Partition Array for Maximum Sum
+
+int maxSumAfterPartitioning(std::vector<int> &arr, int k) {
+    int n = arr.size();
+
+    std::vector<int> dp(n + 1, 0);
+
+    for (int i = 1; i <= n; ++i) {
+        int curr_max = arr[i - 1];
+
+        for (int j = 1; j <= k && i - j >= 0; ++j) {
+            curr_max = std::max(curr_max, arr[i - j]);
+            dp[i] = std::max(dp[i], dp[i - j] + curr_max * j);
+        }
+    }
+
+    return dp[n];
+}
+
+// 1884. Egg Drop With 2 Eggs and N Floors
+
+int dfs(int f, int e, std::vector<std::vector<int>> &dp) {
+    if (e == 1) return f;
+
+    if (f == 0 || f == 1) return f;
+
+    if (dp[f][e] != -1) return dp[f][e];
+
+    dp[f][e] = INF;
+
+    for (int i = 1; i <= f; ++i) {
+        dp[f][e] = std::min(dp[f][e],
+                            std::max(
+                                    dfs(i - 1, e - 1, dp),
+                                    dfs(f - i, e, dp)
+                            ) + 1
+        );
+    }
+
+    return dp[f][e];
+}
+
+int twoEggDrop(int n) {
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(2 + 1, -1));
+
+    return dfs(n, 2, dp);
+}
+
+// 1638. Count Substrings That Differ by One Character
+
+int countSubstrings(std::string s, std::string t) {
+    int n = s.length();
+    int m = t.length();
+
+    std::vector<std::vector<int>> match(n + 1, std::vector<int>(m + 1, 0));
+    std::vector<std::vector<int>> missmatch(n + 1, std::vector<int>(m + 1, 0));
+
+    int ans = 0;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            if (s[i - 1] == t[j - 1]) {
+                match[i][j] = match[i - 1][j - 1] + 1;
+                missmatch[i][j] = missmatch[i - 1][j - 1];
+            } else {
+                missmatch[i][j] = 1 + match[i - 1][j - 1];
+            }
+
+            ans += missmatch[i][j];
+        }
+    }
+
+    return ans;
+}
+
 int main() {
-    auto v = std::vector<std::string>{"a", "b", "bbb", "bbbb"};
-    wordBreak("bb", v);
+    auto v = std::vector<int>{1, 15, 7, 9, 2, 5, 10};
+    maxSumAfterPartitioning(v, 3);
     return 0;
 }
