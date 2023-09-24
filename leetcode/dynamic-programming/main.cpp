@@ -303,8 +303,35 @@ int countSubstrings(std::string s, std::string t) {
     return ans;
 }
 
+int backtrack(int i, std::vector<int>& cookies, std::vector<int>& children, int k, int zero_count) {
+    if (cookies.size() - i < zero_count) return INF;
+
+    if (i == cookies.size()) {
+        return *std::max_element(children.begin(), children.end());
+    }
+
+    int ans = INF;
+
+    for (int j = 0; j < k; ++j) {
+        zero_count -= children[j] == 0 ? 1 : 0;
+        children[j] += cookies[i];
+
+        ans = std::min(ans, backtrack(i + 1, cookies, children, k, zero_count));
+
+        children[j] -= cookies[i];
+        zero_count += children[j] == 0 ? 1 : 0;
+    }
+
+    return ans;
+}
+
+int distributeCookies(std::vector<int>& cookies, int k) {
+    std::vector<int> children(k, 0);
+    return backtrack(0, cookies, children, k, k);
+}
+
 int main() {
-    auto v = std::vector<int>{1, 15, 7, 9, 2, 5, 10};
-    maxSumAfterPartitioning(v, 3);
+    auto v = std::vector<int>{1, 2};
+    distributeCookies(v, 2);
     return 0;
 }
