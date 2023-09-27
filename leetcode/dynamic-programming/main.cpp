@@ -53,6 +53,7 @@ int rob(std::vector<int> &nums) {
 }
 
 // 139. Word Break
+
 struct TrieNode {
     std::unordered_map<char, TrieNode *> next;
     bool is_terminal;
@@ -152,6 +153,7 @@ std::vector<TreeNode *> allPossibleFBT(int n) {
 }
 
 // 1646. Get Maximum in Generated Array
+
 int getMaximumGenerated(int n) {
     if (n < 1) return 0;
 
@@ -172,6 +174,7 @@ int getMaximumGenerated(int n) {
 }
 
 // 1137. N-th Tribonacci Number
+
 int tribo(int n, std::vector<int> &dp) {
     if (dp[n] != -1) return dp[n];
 
@@ -192,6 +195,7 @@ int tribonacci(int n) {
 }
 
 // 300. Longest Increasing Subsequence
+
 int lengthOfLIS(std::vector<int> &nums) {
     int n = nums.size();
 

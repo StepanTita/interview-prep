@@ -17,6 +17,7 @@
 const int INF = 1e9;
 
 // 215. Kth Largest Element in an Array
+
 int findKthLargest(std::vector<int> &nums, int k) {
     std::priority_queue<int> heap;
     for (auto num: nums) {
@@ -34,6 +35,7 @@ int findKthLargest(std::vector<int> &nums, int k) {
 }
 
 // 502. IPO
+
 int findMaximizedCapital(int k, int w, std::vector<int> &profits, std::vector<int> &capital) {
     int n = profits.size();
 
@@ -63,6 +65,7 @@ int findMaximizedCapital(int k, int w, std::vector<int> &profits, std::vector<in
 }
 
 // 373. Find K Pairs with Smallest Sums
+
 std::vector<std::vector<int>> kSmallestPairs(std::vector<int> &nums1, std::vector<int> &nums2, int k) {
     int n = nums1.size();
     int m = nums2.size();
@@ -99,6 +102,7 @@ std::vector<std::vector<int>> kSmallestPairs(std::vector<int> &nums1, std::vecto
 
 
 // 295. Find Median from Data Stream
+
 class MedianFinder {
     std::priority_queue<int> lower; // 1, 2
     std::priority_queue<int> upper; // 3
