@@ -424,7 +424,7 @@ int stoneGameII(std::vector<int> &piles) {
 int countSubstrings(std::string s) {
     int n = s.length();
 
-    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(n + 1, 0));
+    std::vector<std::vector<bool>> dp(n + 1, std::vector<bool>(n + 1, false));
 
     int res = 0;
     for (int k = 0; k < n; ++k) {
@@ -432,16 +432,16 @@ int countSubstrings(std::string s) {
             int j = i + k;
 
             if (k == 0) {
-                dp[i][j] = 1;
-            } else if (s[i - 1] == s[j - 1] && dp[i + 1][j - 1] > 0) {
-                dp[i][j] = dp[i + 1][j - 1] + 1;
+                dp[i][j] = true;
+                ++res;
+            } else if (s[i - 1] == s[j - 1] && (k == 1 || dp[i + 1][j - 1])) {
+                dp[i][j] = true;
+                ++res;
             }
-
-            res += dp[i][j];
         }
     }
 
-    return dp[1][n];
+    return res;
 }
 
 // 1372. Longest ZigZag Path in a Binary Tree
