@@ -303,7 +303,9 @@ int countSubstrings(std::string s, std::string t) {
     return ans;
 }
 
-int backtrack(int i, std::vector<int>& cookies, std::vector<int>& children, int k, int zero_count) {
+// 2305. Fair Distribution of Cookies
+
+int backtrack(int i, std::vector<int> &cookies, std::vector<int> &children, int k, int zero_count) {
     if (cookies.size() - i < zero_count) return INF;
 
     if (i == cookies.size()) {
@@ -325,13 +327,227 @@ int backtrack(int i, std::vector<int>& cookies, std::vector<int>& children, int 
     return ans;
 }
 
-int distributeCookies(std::vector<int>& cookies, int k) {
+int distributeCookies(std::vector<int> &cookies, int k) {
     std::vector<int> children(k, 0);
     return backtrack(0, cookies, children, k, k);
 }
 
+// 1140. Stone Game II
+
+int alice(std::vector<int> &piles, std::vector<int> prefix, int l, int M, int total_sum);
+
+std::vector<std::vector<int>> dp_alice;
+std::vector<std::vector<int>> dp_bob;
+
+int bob(std::vector<int> &piles, std::vector<int> prefix, int l, int M, int total_sum) {
+    if (l >= piles.size()) return 0;
+
+    if (dp_bob[l][M] != -1) {
+        return dp_bob[l][M];
+    }
+
+    int n = piles.size();
+
+    int max_bob = 0;
+    for (int x = 1; x <= 2 * M; ++x) {
+        if (l + x >= prefix.size()) break;
+
+        // max for bob is total - max for alice
+        int max_alice = alice(
+                piles,
+                prefix,
+                l + x,
+                std::max(M, x),
+                total_sum - (prefix[l + x] - prefix[l])
+        );
+
+        max_bob = std::max(
+                max_bob,
+                total_sum - max_alice
+        );
+    }
+
+    return dp_bob[l][M] = max_bob;
+}
+
+int alice(std::vector<int> &piles, std::vector<int> prefix, int l, int M, int total_sum) {
+    if (l >= piles.size()) return 0;
+
+    if (dp_alice[l][M] != -1) {
+        return dp_alice[l][M];
+    }
+
+    int n = piles.size();
+
+    int max_alice = 0;
+    for (int x = 1; x <= 2 * M; ++x) {
+        if (l + x >= prefix.size()) break;
+
+        // max for alice is total - max for bob
+        int max_bob = bob(
+                piles,
+                prefix,
+                l + x,
+                std::max(M, x),
+                total_sum - (prefix[l + x] - prefix[l])
+        );
+
+        max_alice = std::max(
+                max_alice,
+                total_sum - max_bob
+        );
+    }
+
+    return dp_alice[l][M] = max_alice;
+}
+
+int stoneGameII(std::vector<int> &piles) {
+    int n = piles.size();
+
+    dp_alice = std::vector<std::vector<int>>(n + 1, std::vector<int>(n + 1, -1));
+    dp_bob = std::vector<std::vector<int>>(n + 1, std::vector<int>(n + 1, -1));
+
+    std::vector<int> prefix(n + 1, 0);
+    for (int i = 1; i <= n; ++i) {
+        prefix[i] = prefix[i - 1] + piles[i - 1];
+    }
+
+    return alice(piles, prefix, 0, 1, prefix[n]);
+}
+
+// 647. Palindromic Substrings
+
+int countSubstrings(std::string s) {
+    int n = s.length();
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(n + 1, 0));
+
+    int res = 0;
+    for (int k = 0; k < n; ++k) {
+        for (int i = 1; i + k <= n; ++i) {
+            int j = i + k;
+
+            if (k == 0) {
+                dp[i][j] = 1;
+            } else if (s[i - 1] == s[j - 1] && dp[i + 1][j - 1] > 0) {
+                dp[i][j] = dp[i + 1][j - 1] + 1;
+            }
+
+            res += dp[i][j];
+        }
+    }
+
+    return dp[1][n];
+}
+
+// 1372. Longest ZigZag Path in a Binary Tree
+
+int maxZigZag(TreeNode *curr, bool left, int depth = 0) {
+    // left is true if came to curr from left,
+    // otherwise false
+
+    if (curr == NULL) return depth;
+
+    if (left) {
+        return std::max(
+                maxZigZag(curr->right, !left, depth + 1),
+                maxZigZag(curr->left, true, 0)
+        );
+    };
+    return std::max(
+            maxZigZag(curr->left, !left, depth + 1),
+            maxZigZag(curr->right, false, 0)
+    );
+}
+
+int longestZigZag(TreeNode *curr) {
+    if (curr == NULL) {
+        return 0;
+    }
+
+    return std::max(
+            maxZigZag(curr->left, true),
+            maxZigZag(curr->right, false)
+    );
+}
+
+// 1493. Longest Subarray of 1's After Deleting One Element
+
+int longestSubarray(std::vector<int> &nums) {
+    int n = nums.size();
+
+    int l = 0;
+    int zeros = 0;
+    int len = 0;
+    for (int r = 0; r < n; ++r) {
+        if (nums[r] == 0) ++zeros;
+
+        while (zeros > 1 && l < r) {
+            if (nums[l] == 0) --zeros;
+            ++l;
+        }
+
+        len = std::max(len, r - l);
+    }
+
+    return len;
+}
+
+// 131. Palindrome Partitioning
+
+void dfs(
+        int start,
+        std::string &s,
+        std::vector<std::vector<bool>> &dp,
+        std::vector<std::string> &part,
+        std::vector<std::vector<std::string>> &res
+) {
+    int n = s.length();
+
+    if (start > n) {
+        res.emplace_back(part.begin(), part.end());
+        return;
+    }
+
+    std::string curr = "";
+    for (int j = start; j <= n; ++j) {
+        curr += s[j - 1];
+
+        if (dp[start][j]) {
+            part.emplace_back(curr);
+            dfs(j + 1, s, dp, part, res);
+            part.pop_back();
+        }
+    }
+}
+
+std::vector<std::vector<std::string>> partition(std::string s) {
+    int n = s.length();
+
+    std::vector<std::vector<bool>> dp(n + 1, std::vector<bool>(n + 1, 0));
+
+    for (int k = 0; k < n; ++k) {
+        for (int i = 1; i + k <= n; ++i) {
+            int j = i + k;
+
+            if (k == 0) {
+                dp[i][j] = true;
+            } else if (s[i - 1] == s[j - 1] && (k == 1 || dp[i + 1][j - 1])) {
+                dp[i][j] = true;
+            }
+        }
+    }
+
+    std::vector<std::string> curr;
+    std::vector<std::vector<std::string>> res;
+
+    dfs(1, s, dp, curr, res);
+
+    return res;
+}
+
 int main() {
-    auto v = std::vector<int>{1, 2};
-    distributeCookies(v, 2);
+    auto v = std::vector<int>{1, 2, 3, 4, 5, 100};
+    countSubstrings("dcaacd");
     return 0;
 }
