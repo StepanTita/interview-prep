@@ -32,6 +32,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 1372. **Longest ZigZag Path in a Binary Tree**
 1493. **Longest Subarray of 1's After Deleting One Element**
 131. **Palindrome Partitioning**
+2304. **Minimum Path Cost in a Grid**
+931. **Minimum Falling Path Sum**
 
 ### Heap 📊:
 215. **Kth Largest Element in an Array**
