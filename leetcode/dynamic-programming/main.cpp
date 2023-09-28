@@ -550,8 +550,81 @@ std::vector<std::vector<std::string>> partition(std::string s) {
     return res;
 }
 
+// 2304. Minimum Path Cost in a Grid
+
+int minPathCost(std::vector<std::vector<int>> &grid, std::vector<std::vector<int>> &moveCost) {
+    int n = grid.size();
+    int m = grid[0].size();
+    std::vector<std::vector<int>> dp(2, std::vector<int>(m, INF));
+
+    for (int j = 0; j < m; ++j) {
+        dp[0][j] = grid[0][j];
+    }
+
+    // take dp to k-th column for the previous step, and add moveCost from prev step to current step
+    // dp[i][j] = min(dp[i - 1][j], dp[i - 1][k] + moveCost[grid[i - 1][k]][j]);
+
+    int ans = INF;
+    for (int i = 1; i < n; ++i) {
+        dp[i % 2].assign(m, INF);
+        for (int j = 0; j < m; ++j) {
+            for (int k = 0; k < m; ++k) {
+                dp[i % 2][j] = std::min(
+                        dp[i % 2][j],
+                        dp[(i + 1) % 2][k] + moveCost[grid[i - 1][k]][j] + grid[i][j]
+                );
+            }
+            if (i + 1 == n) {
+                ans = std::min(ans, dp[i % 2][j]);
+            }
+        }
+    }
+
+    return ans;
+}
+
+// 931. Minimum Falling Path Sum
+
+int minFallingPathSum(std::vector<std::vector<int>>& matrix) {
+    int n = matrix.size();
+    std::vector<std::vector<int>> dp(2, std::vector<int>(n, INF));
+
+    if (n == 1) return matrix[0][0];
+
+    int ans = INF;
+
+    for (int j = 0; j < n; ++j) {
+        dp[0][j] = matrix[0][j];
+    }
+
+    for (int i = 1; i < n; ++i) {
+        dp[i % 2].assign(n, INF);
+
+        for (int j = 0; j < n; ++j) {
+            int topLeft = INF;
+            if (j - 1 >= 0) {
+                topLeft = dp[(i + 1) % 2][j - 1];
+            }
+
+            int topRight = INF;
+            if (j + 1 < n) {
+                topRight = dp[(i + 1) % 2][j + 1];
+            }
+
+            dp[i % 2][j] = std::min(
+                    dp[i % 2][j],
+                    std::min(std::min(dp[(i + 1) % 2][j], topLeft), topRight) + matrix[i][j]
+            );
+
+            if (i + 1 == n) {
+                ans = std::min(ans, dp[i % 2][j]);
+            }
+        }
+    }
+
+    return ans;
+}
+
 int main() {
-    auto v = std::vector<int>{1, 2, 3, 4, 5, 100};
-    countSubstrings("dcaacd");
     return 0;
 }
