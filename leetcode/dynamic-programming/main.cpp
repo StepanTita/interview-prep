@@ -585,7 +585,7 @@ int minPathCost(std::vector<std::vector<int>> &grid, std::vector<std::vector<int
 
 // 931. Minimum Falling Path Sum
 
-int minFallingPathSum(std::vector<std::vector<int>>& matrix) {
+int minFallingPathSum(std::vector<std::vector<int>> &matrix) {
     int n = matrix.size();
     std::vector<std::vector<int>> dp(2, std::vector<int>(n, INF));
 
@@ -625,6 +625,92 @@ int minFallingPathSum(std::vector<std::vector<int>>& matrix) {
     return ans;
 }
 
+// 983. Minimum Cost For Tickets
+
+int mincostTickets(std::vector<int> &days, std::vector<int> &costs) {
+    int n = days.size();
+
+    std::vector<int> dp(days[n - 1] + 1, 0);
+
+    int i = 0;
+
+    for (int d = days[0]; d <= days[n - 1]; ++d) {
+        if (d < days[i]) {
+            dp[d] = dp[d - 1];
+        } else {
+            dp[d] = std::min(
+                    dp[std::max(d - 30, 0)] + costs[2],
+                    std::min(dp[d - 1] + costs[0], dp[std::max(d - 7, 0)] + costs[1])
+            );
+            ++i;
+        }
+    }
+
+    return dp[days[n - 1]];
+}
+
+// 413. Arithmetic Slices
+
+int numberOfArithmeticSlices(std::vector<int> &nums) {
+    int n = nums.size();
+
+    if (n < 3) return 0;
+
+    std::vector<std::vector<int>> dp(n, std::vector<int>(n, INF));
+
+    int res = 0;
+    for (int i = 1; i < n - 1; ++i) {
+        if (nums[i] - nums[i - 1] == nums[i + 1] - nums[i]) {
+            dp[i - 1][i + 1] = nums[i] - nums[i - 1];
+            ++res;
+        }
+    }
+
+    for (int k = 4; k <= n; ++k) {
+        for (int i = 0; i + k - 1 < n; ++i) {
+            int j = i + k - 1;
+
+            if (dp[i][j - 1] == nums[j] - nums[j - 1]) {
+                dp[i][j] = dp[i][j - 1];
+                ++res;
+            }
+        }
+    }
+
+    return res;
+}
+
+// 712. Minimum ASCII Delete Sum for Two Strings
+
+int minimumDeleteSum(std::string s1, std::string s2) {
+    int n = s1.size();
+    int m = s2.size();
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
+
+    for (int i = n - 1; i >= 0; --i) {
+        for (int j = m - 1; j >= 0; --j) {
+            if (s1[i] == s2[j]) {
+                dp[i][j] = dp[i + 1][j + 1] + s1[i];
+            } else {
+                dp[i][j] = std::max(dp[i + 1][j], dp[i][j + 1]);
+            }
+        }
+    }
+    int lcsS1 = 0;
+    for (int i = 0; i < n; ++i) {
+        lcsS1 += (int)s1[i];
+    }
+
+    int lcsS2 = 0;
+    for (int j = 0; j < m; ++j) {
+        lcsS2 += (int)s2[j];
+    }
+
+    return lcsS1 + lcsS2 - 2 * dp[0][0];
+}
+
 int main() {
+    minimumDeleteSum("delete", "leet");
     return 0;
 }

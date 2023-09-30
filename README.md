@@ -34,6 +34,7 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 131. **Palindrome Partitioning**
 2304. **Minimum Path Cost in a Grid**
 931. **Minimum Falling Path Sum**
+983. **Minimum Cost For Tickets**
 
 ### Heap 📊:
 215. **Kth Largest Element in an Array**
