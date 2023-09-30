@@ -35,6 +35,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 2304. **Minimum Path Cost in a Grid**
 931. **Minimum Falling Path Sum**
 983. **Minimum Cost For Tickets**
+413. **Arithmetic Slices**
+712. **Minimum ASCII Delete Sum for Two Strings**
 
 ### Heap 📊:
 215. **Kth Largest Element in an Array**
