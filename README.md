@@ -37,6 +37,9 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 983. **Minimum Cost For Tickets**
 413. **Arithmetic Slices**
 712. **Minimum ASCII Delete Sum for Two Strings**
+712. **Minimum ASCII Delete Sum for Two Strings**
+526. **Beautiful Arrangement**
+1664. **Ways to Make a Fair Array**
 
 ### Heap 📊:
 215. **Kth Largest Element in an Array**

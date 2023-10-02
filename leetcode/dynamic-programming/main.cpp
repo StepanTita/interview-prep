@@ -699,18 +699,179 @@ int minimumDeleteSum(std::string s1, std::string s2) {
     }
     int lcsS1 = 0;
     for (int i = 0; i < n; ++i) {
-        lcsS1 += (int)s1[i];
+        lcsS1 += (int) s1[i];
     }
 
     int lcsS2 = 0;
     for (int j = 0; j < m; ++j) {
-        lcsS2 += (int)s2[j];
+        lcsS2 += (int) s2[j];
     }
 
     return lcsS1 + lcsS2 - 2 * dp[0][0];
 }
 
+// 241. Different Ways to Add Parentheses
+
+bool isDigit(char c) {
+    return c >= '0' && c <= '9';
+}
+
+int apply(int a, int b, char op) {
+    if (op == '+') {
+        return a + b;
+    } else if (op == '-') {
+        return a - b;
+    } else if (op == '*') {
+        return a * b;
+    }
+
+    return -INF;
+}
+
+int evaluate(std::string expr, int l, int r) {
+    std::stack<int> st;
+    st.push(0);
+
+    char op = '#';
+    for (int i = l; i <= r; ++i) {
+        if (!isDigit(expr[i])) {
+            op = expr[i];
+            st.push(0);
+        } else {
+            int v = st.top();
+            st.pop();
+            v = v * 10 + (expr[i] - '0');
+            st.push(v);
+        }
+    }
+
+    int a = st.top();
+    st.pop();
+    int b = st.top();
+
+    return apply(b, a, op);
+}
+
+std::vector<int> dfs(std::string expression, int l, int r, int ops, std::vector<std::vector<std::vector<int>>> &dp) {
+    if (ops == 0) {
+        std::cout << std::string(expression.begin() + l, expression.begin() + r + 1) << std::endl;
+
+        return std::vector<int>{std::stoi(std::string(expression.begin() + l, expression.begin() + r + 1))};
+    }
+    if (ops == 1) {
+        return std::vector<int>{evaluate(expression, l, r)};
+    }
+
+    int leftOps = 0;
+
+    std::vector<int> res;
+    for (int i = l; i <= r; ++i) {
+        if (!isDigit(expression[i])) {
+            auto left = dfs(expression, l, i - 1, leftOps, dp);
+            auto right = dfs(expression, i + 1, r, ops - leftOps - 1, dp);
+
+            for (int li: left) {
+                for (int ri: right) {
+                    res.emplace_back(apply(li, ri, expression[i]));
+                }
+            }
+
+            ++leftOps;
+        }
+    }
+
+    return dp[l][r] = res;
+}
+
+std::vector<int> diffWaysToCompute(std::string expression) {
+    int n = expression.length();
+
+    auto dp = std::vector<std::vector<std::vector<int>>>(n, std::vector<std::vector<int>>(n, std::vector<int>()));
+
+    int ops = 0;
+    for (char c: expression) {
+        if (!isDigit(c)) {
+            ++ops;
+        }
+    }
+
+    if (ops == 0) return std::vector<int>{std::stoi(expression)};
+
+    return dfs(expression, 0, n - 1, ops, dp);
+}
+
+// 526. Beautiful Arrangement
+
+bool bitSet(int n, int i) {
+    return n & (1 << i);
+}
+
+int setBit(int n, int i) {
+    return n | (1 << i);
+}
+
+int dfs(int n, int i, int used, std::vector<std::vector<int>> &dp) {
+    if (i > n) return 1;
+
+    if (dp[i][used] != -1) return dp[i][used];
+
+    int ans = 0;
+
+    for (int j = 1; j <= n; ++j) {
+        if (bitSet(used, j)) continue;
+
+        if (i % j == 0 || j % i == 0) {
+            ans += dfs(n, i + 1, setBit(used, j), dp);
+        }
+    }
+    return dp[i][used] = ans;
+}
+
+int countArrangement(int n) {
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>((1 << 16) + 1, -1));
+    return dfs(n, 1, 0, dp);
+}
+
+// 1664. Ways to Make a Fair Array
+
+int waysToMakeFair(std::vector<int> &nums) {
+    int n = nums.size();
+
+    int prefix_odd = 0;
+    int prefix_even = 0;
+
+    int count = 0;
+
+    std::vector<int> suffix_odd(n + 1, 0);
+    std::vector<int> suffix_even(n + 1, 0);
+    for (int i = n - 1; i >= 0; --i) {
+        if (i % 2 != 0) {
+            suffix_odd[i] = suffix_odd[i + 1] + nums[i];
+            suffix_even[i] = suffix_even[i + 1];
+        } else {
+            suffix_even[i] = suffix_even[i + 1] + nums[i];
+            suffix_odd[i] = suffix_odd[i + 1];
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        int suff_odd = suffix_even[i + 1];
+        int suff_even = suffix_odd[i + 1];
+        if (prefix_odd + suff_odd == prefix_even + suff_even) {
+            ++count;
+        }
+
+        if (i % 2 != 0) {
+            prefix_odd += nums[i];
+        } else {
+            prefix_even += nums[i];
+        }
+    }
+
+    return count;
+}
+
 int main() {
-    minimumDeleteSum("delete", "leet");
+    auto v = countArrangement(2);
     return 0;
 }
