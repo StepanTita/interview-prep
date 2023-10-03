@@ -40,6 +40,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 712. **Minimum ASCII Delete Sum for Two Strings**
 526. **Beautiful Arrangement**
 1664. **Ways to Make a Fair Array**
+1035. **Uncrossed Lines**
+
 
 ### Heap 📊:
 215. **Kth Largest Element in an Array**

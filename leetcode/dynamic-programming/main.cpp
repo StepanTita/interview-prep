@@ -754,8 +754,6 @@ int evaluate(std::string expr, int l, int r) {
 
 std::vector<int> dfs(std::string expression, int l, int r, int ops, std::vector<std::vector<std::vector<int>>> &dp) {
     if (ops == 0) {
-        std::cout << std::string(expression.begin() + l, expression.begin() + r + 1) << std::endl;
-
         return std::vector<int>{std::stoi(std::string(expression.begin() + l, expression.begin() + r + 1))};
     }
     if (ops == 1) {
@@ -871,7 +869,46 @@ int waysToMakeFair(std::vector<int> &nums) {
     return count;
 }
 
+// 518. Coin Change II
+
+int change(int amount, std::vector<int> &coins) {
+    int n = coins.size();
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(amount + 1, 0));
+
+    for (int i = 1; i <= n; ++i) {
+        dp[i][0] = 1;
+        for (int j = 1; j <= amount; ++j) {
+            dp[i][j] = dp[i - 1][j] + ((j - coins[i - 1] >= 0) ? dp[i][j - coins[i - 1]] : 0);
+        }
+    }
+
+    return dp[n][amount];
+}
+
+// 1035. Uncrossed Lines
+
+int maxUncrossedLines(std::vector<int> &nums1, std::vector<int> &nums2) {
+    int n = nums1.size();
+    int m = nums2.size();
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
+
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            if (nums1[i - 1] == nums2[j - 1]) {
+                dp[i][j] = std::max(dp[i][j], dp[i - 1][j - 1] + 1);
+            } else {
+                dp[i][j] = std::max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    return dp[n][m];
+}
+
 int main() {
-    auto v = countArrangement(2);
+    auto a = std::vector<int>{2, 5, 1, 2, 5};
+    auto b = std::vector<int>{10, 5, 2, 1, 5, 2};
+    auto v = maxUncrossedLines(a, b);
+    std::cout << v << std::endl;
     return 0;
 }
