@@ -905,10 +905,35 @@ int maxUncrossedLines(std::vector<int> &nums1, std::vector<int> &nums2) {
     return dp[n][m];
 }
 
+// 516. Longest Palindromic Subsequence
+
+int longestPalindromeSubseq(std::string s) {
+    int n = s.length();
+
+    std::vector<int> dp(n, 0);
+    std::vector<int> dp_prev(n, 0);
+
+    for (int i = n - 1; i >= 0; --i) {
+        dp[i] = 1;
+
+        for (int j = i + 1; j < n; ++j) {
+            if (s[i] == s[j]) {
+                dp[j] = dp_prev[j - 1] + 2;
+            } else {
+                dp[j] = std::max(dp_prev[j], dp[j - 1]);
+            }
+        }
+
+        std::swap(dp, dp_prev);
+    }
+
+    return dp_prev[n - 1];
+}
+
 int main() {
     auto a = std::vector<int>{2, 5, 1, 2, 5};
     auto b = std::vector<int>{10, 5, 2, 1, 5, 2};
-    auto v = maxUncrossedLines(a, b);
+    auto v = longestPalindromeSubseq("bbbab");
     std::cout << v << std::endl;
     return 0;
 }

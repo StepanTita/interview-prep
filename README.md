@@ -41,6 +41,7 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 526. **Beautiful Arrangement**
 1664. **Ways to Make a Fair Array**
 1035. **Uncrossed Lines**
+516. **Longest Palindromic Subsequence**
 
 
 ### Heap 📊:
