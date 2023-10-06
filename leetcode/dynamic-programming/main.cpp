@@ -930,10 +930,169 @@ int longestPalindromeSubseq(std::string s) {
     return dp_prev[n - 1];
 }
 
+// 1947. Maximum Compatibility Score Sum
+
+int backtrack(int s, int taken,
+              std::vector<std::vector<int>> &students,
+              std::vector<std::vector<int>> &mentors,
+              std::vector<int> &memo,
+              std::vector<std::vector<int>> &compat
+) {
+    int m = students.size();
+    int n = students[0].size();
+
+    if (s >= m) return 0;
+
+    if (memo[taken] != -1) return memo[taken];
+
+    for (int i = 0; i < m; ++i) {
+        if (bitSet(taken, i)) continue;
+
+        memo[taken] = std::max(
+                memo[taken],
+                backtrack(s + 1, setBit(taken, i), students, mentors, memo, compat) + compat[s][i]
+        );
+    }
+
+    return memo[taken];
+}
+
+int maxCompatibilitySum(std::vector<std::vector<int>> &students, std::vector<std::vector<int>> &mentors) {
+    int m = students.size();
+    int n = students[0].size();
+
+    std::vector<int> memo((1 << m) + 1, -1);
+    std::vector<std::vector<int>> compat(m, std::vector<int>(m, 0));
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < m; ++j) {
+            for (int k = 0; k < n; ++k) {
+                compat[i][j] += students[i][k] == mentors[j][k];
+            }
+        }
+    }
+
+    return backtrack(0, 0, students, mentors, memo, compat);
+}
+
+// 926. Flip String to Monotone Increasing
+
+int minFlipsMonoIncr(std::string s) {
+    // dp[i][0] - min cost of i-th prefix given that everything before i is 0
+    // dp[i][1] - min cost of i-th prefix given that not everything before i is 0
+
+    int n = s.length();
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(2, 0));
+
+    for (int i = 1; i <= n; ++i) {
+        dp[i][0] = dp[i - 1][0] + (s[i - 1] != '0');
+        dp[i][1] = std::min(dp[i - 1][0], dp[i - 1][1]) + (s[i - 1] == '0');
+    }
+
+    return std::min(dp[n][0], dp[n][1]);
+}
+
+// 583. Delete Operation for Two Strings
+
+int lcs(std::string &word1, std::string &word2) {
+    int n = word1.size();
+    int m = word2.size();
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
+
+    for (int i = n - 1; i >= 0; --i) {
+        for (int j = m - 1; j >= 0; --j) {
+            if (word1[i] == word2[j]) {
+                dp[i][j] = dp[i + 1][j + 1] + 1;
+            } else {
+                dp[i][j] = std::max(dp[i + 1][j], dp[i][j + 1]);
+            }
+        }
+    }
+
+    return dp[0][0];
+}
+
+int minDistance(std::string word1, std::string word2) {
+    int n = word1.size();
+    int m = word2.size();
+
+    int len = lcs(word1, word2);
+    return n + m - 2 * len;
+}
+
+// 1048. Longest String Chain
+
+bool isPred(std::string &s, std::string &t) {
+    if (t.length() - s.length() != 1) return false;
+
+    int i = 0;
+    int j = 0;
+    int counter = 1;
+    while (i < s.length() && j < t.length()) {
+        if (s[i] == t[j]) {
+            ++i;
+            ++j;
+        } else if (counter == 1) {
+            counter = 0;
+            ++j;
+        } else {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int dfs(std::string &curr,
+        std::unordered_map<std::string, std::unordered_set<std::string> > &pred,
+        std::unordered_set<std::string> &visited,
+        std::unordered_map<std::string, int> &memo
+) {
+    if (memo.contains(curr)) return memo[curr];
+
+    visited.insert(curr);
+
+    int ans = 0;
+
+    for (auto next: pred[curr]) {
+        if (!visited.contains(next)) {
+            ans = std::max(ans, dfs(next, pred, visited, memo) + 1);
+        }
+    }
+
+    visited.erase(curr);
+
+    return memo[curr] = ans;
+}
+
+int longestStrChain(std::vector<std::string> &words) {
+    int n = words.size();
+    std::unordered_map<std::string, std::unordered_set<std::string> > pred;
+
+    for (auto &word: words) {
+        for (auto &next: words) {
+            if (word == next) continue;
+
+            if (word.length() == 1 && next.length() == 1) continue;
+
+            if (isPred(word, next)) {
+                pred[word].insert(next);
+            }
+        }
+    }
+
+    std::unordered_map<std::string, int> memo;
+    std::unordered_set < std::string > visited;
+
+    int ans = 1;
+    for (auto &word: words) {
+        ans = std::max(ans, dfs(word, pred, visited, memo) + 1);
+    }
+
+    return ans;
+}
+
 int main() {
-    auto a = std::vector<int>{2, 5, 1, 2, 5};
-    auto b = std::vector<int>{10, 5, 2, 1, 5, 2};
-    auto v = longestPalindromeSubseq("bbbab");
-    std::cout << v << std::endl;
     return 0;
 }

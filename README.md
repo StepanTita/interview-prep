@@ -38,11 +38,15 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 413. **Arithmetic Slices**
 712. **Minimum ASCII Delete Sum for Two Strings**
 712. **Minimum ASCII Delete Sum for Two Strings**
-526. **Beautiful Arrangement**
+526. **Beautiful Arrangement** [Solution](https://leetcode.com/problems/beautiful-arrangement/solutions/4121549/faster-100-dp-backtracking-bit-mask-with-explanation/)
 1664. **Ways to Make a Fair Array**
 1035. **Uncrossed Lines**
 516. **Longest Palindromic Subsequence**
-
+1947. **Maximum Compatibility Score Sum**
+926. **Flip String to Monotone Increasing** [Solution](https://leetcode.com/problems/flip-string-to-monotone-increasing/solutions/4134539/c-bottom-up-dp-concise-clear-on-time-on-memory/)
+241. **Different Ways to Add Parentheses** [Solution](https://leetcode.com/problems/different-ways-to-add-parentheses/solutions/4121360/c-recursion-dp-faster-100-clear-and-concise-with-explanation/)
+583. **Delete Operation for Two Strings**
+1048. **Longest String Chain**
 
 ### Heap 📊:
 215. **Kth Largest Element in an Array**
