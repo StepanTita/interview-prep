@@ -47,6 +47,11 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 241. **Different Ways to Add Parentheses** [Solution](https://leetcode.com/problems/different-ways-to-add-parentheses/solutions/4121360/c-recursion-dp-faster-100-clear-and-concise-with-explanation/)
 583. **Delete Operation for Two Strings**
 1048. **Longest String Chain**
+96. **Unique Binary Search Trees**
+343. **Integer Break**
+1031. **Maximum Sum of Two Non-Overlapping Subarrays**
+1105. **Filling Bookcase Shelves**
+
 
 ### Heap 📊:
 215. **Kth Largest Element in an Array**

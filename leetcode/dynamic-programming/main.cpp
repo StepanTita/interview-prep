@@ -1093,6 +1093,96 @@ int longestStrChain(std::vector<std::string> &words) {
     return ans;
 }
 
+// 96. Unique Binary Search Trees
+
+int numTrees(int n) {
+    if (n < 2) return 1;
+
+    int s = 0;
+
+    for (int i = 0; i < n; ++i) {
+        s += numTrees(i) * numTrees(n - i - 1);
+    }
+
+    return s;
+}
+
+// 343. Integer Break
+
+int backtrack(int n, std::vector<int> &dp) {
+    if (dp[n] != -1) return dp[n];
+
+    for (int i = 1; i < n; ++i) {
+        dp[n] = std::max(dp[n], (n - i) * i);
+        dp[n] = std::max(dp[n], backtrack(n - i, dp) * i);
+    }
+
+    return dp[n];
+}
+
+int integerBreak(int n) {
+    std::vector<int> dp(n + 1, -1);
+
+    return backtrack(n, dp);
+}
+
+// 1031. Maximum Sum of Two Non-Overlapping Subarrays
+
+int maxSum(std::vector<int> &p, int L, int M) {
+    int n = p.size();
+
+    int ans = 0;
+    int max_left = 0;
+    for (int i = L + M; i < n; ++i) {
+        max_left = std::max(max_left, p[i - M] - p[i - M - L]);
+        ans = std::max(ans, max_left + p[i] - p[i - M]);
+    }
+
+    return ans;
+}
+
+int maxSumTwoNoOverlap(std::vector<int> &nums, int firstLen, int secondLen) {
+    int n = nums.size();
+    std::vector<int> prefix(n + 1, 0);
+    for (int i = 1; i <= n; ++i) {
+        prefix[i] = prefix[i - 1] + nums[i - 1];
+    }
+
+    return std::max(
+            maxSum(prefix, firstLen, secondLen),
+            maxSum(prefix, secondLen, firstLen)
+    );
+}
+
+// 1105. Filling Bookcase Shelves
+
+int minHeightShelves(std::vector<std::vector<int>>& books, int shelfWidth) {
+    int n = books.size();
+
+    std::vector<int> dp(n + 1, 0);
+
+    dp[0] = 0;
+
+    for (int i = 0; i < n; ++i) {
+        dp[i + 1] = dp[i] + books[i][1];
+
+        int sum_w = 0;
+        int max_h = 0;
+        for (int j = i; j >= 0; --j) {
+            sum_w += books[j][0];
+
+            if (sum_w > shelfWidth) break;
+
+            max_h = std::max(max_h, books[j][1]);
+            dp[i + 1] = std::min(dp[i + 1], dp[j] + max_h);
+        }
+    }
+
+    return dp[n];
+}
+
 int main() {
+    auto v = std::vector<std::vector<int>>{{1, 1}, {2, 3}, {2, 3}, {1, 1}, {1, 1}, {1, 1}, {1, 2}};
+    std::cout << minHeightShelves(v, 4) << std::endl;
     return 0;
 }
