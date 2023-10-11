@@ -1156,7 +1156,7 @@ int maxSumTwoNoOverlap(std::vector<int> &nums, int firstLen, int secondLen) {
 
 // 1105. Filling Bookcase Shelves
 
-int minHeightShelves(std::vector<std::vector<int>>& books, int shelfWidth) {
+int minHeightShelves(std::vector<std::vector<int>> &books, int shelfWidth) {
     int n = books.size();
 
     std::vector<int> dp(n + 1, 0);
@@ -1181,8 +1181,88 @@ int minHeightShelves(std::vector<std::vector<int>>& books, int shelfWidth) {
     return dp[n];
 }
 
+// 1014. Best Sightseeing Pair
+
+int maxScoreSightseeingPair(std::vector<int> &values) {
+    int prev_i = 0;
+
+    int ans = 0;
+    for (int j = 1; j < values.size(); ++j) {
+        ans = std::max(ans, values[prev_i] + prev_i + values[j] - j);
+
+        if (j + values[j] > prev_i + values[prev_i]) {
+            prev_i = j;
+        }
+    }
+
+    return ans;
+}
+
+// 1911. Maximum Alternating Subsequence Sum
+
+long long maxAlternatingSum(std::vector<int> &nums) {
+    int n = nums.size();
+
+    long long even = 0;
+    long long odd = 0;
+
+    for (int i = 0; i < n; ++i) {
+        even = std::max(even, odd + nums[i]);
+        odd = std::max(odd, even - nums[i]);
+    }
+
+    return even;
+}
+
+// 1749. Maximum Absolute Sum of Any Subarray
+
+int maxAbsoluteSum(std::vector<int> &nums) {
+    int n = nums.size();
+
+    int max_sum = 0;
+    int min_sum = 0;
+
+    int ans = 0;
+
+    for (int i = 0; i < n; ++i) {
+        max_sum = std::max(max_sum + nums[i], nums[i]);
+        min_sum = std::min(min_sum + nums[i], nums[i]);
+
+        if (max_sum < 0) {
+            max_sum = 0;
+        }
+        if (min_sum > 0) {
+            min_sum = 0;
+        }
+
+        ans = std::max(ans, std::max(std::abs(max_sum), std::abs(min_sum)));
+    }
+
+    return ans;
+}
+
+// 1653. Minimum Deletions to Make String Balanced
+
+int minimumDeletions(std::string s) {
+    int n = s.length();
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(2, 0));
+
+    // dp[i][0] - currently in the first part
+    // dp[i][1] - currently in the second part
+
+    int a = 0;
+    int b = 0;
+    for (int i = 1; i <= n; ++i) {
+        b = std::min(a, b) + (s[i - 1] == 'a');
+        a = a + (s[i - 1] == 'b');
+    }
+
+    return std::min(a, b);
+}
+
 int main() {
-    auto v = std::vector<std::vector<int>>{{1, 1}, {2, 3}, {2, 3}, {1, 1}, {1, 1}, {1, 1}, {1, 2}};
-    std::cout << minHeightShelves(v, 4) << std::endl;
+    auto v = std::vector<int>{2, -5, 1, -4, 3, -2};
+    std::cout << maxAbsoluteSum(v) << std::endl;
     return 0;
 }

@@ -51,6 +51,10 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 343. **Integer Break**
 1031. **Maximum Sum of Two Non-Overlapping Subarrays**
 1105. **Filling Bookcase Shelves**
+1014. **Best Sightseeing Pair**
+1911. **Maximum Alternating Subsequence Sum**
+1749. **Maximum Absolute Sum of Any Subarray**
+1653. **Minimum Deletions to Make String Balanced**
 
 
 ### Heap 📊:
