@@ -55,6 +55,7 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 1911. **Maximum Alternating Subsequence Sum**
 1749. **Maximum Absolute Sum of Any Subarray**
 1653. **Minimum Deletions to Make String Balanced**
+2110. **Number of Smooth Descent Periods of a Stock**
 
 
 ### Heap 📊:

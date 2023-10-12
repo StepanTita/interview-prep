@@ -1261,8 +1261,30 @@ int minimumDeletions(std::string s) {
     return std::min(a, b);
 }
 
+// 2110. Number of Smooth Descent Periods of a Stock
+
+long long getDescentPeriods(std::vector<int> &prices) {
+    // dp[i] - number of smooth descent periods ending in i-th price
+    // dp[i] = dp[i - 1] + 1 if prices[i] - prices[i - 1] == 1
+    // else dp[i] = 1
+
+    int n = prices.size();
+
+    long long ans = 1;
+    long long sum = 1;
+
+    for (int i = 2; i <= n; ++i) {
+        if ((prices[i - 2] - prices[i - 1]) == 1) {
+            ++sum;
+        } else {
+            sum = 1;
+        }
+        ans += sum;
+    }
+
+    return ans;
+}
+
 int main() {
-    auto v = std::vector<int>{2, -5, 1, -4, 3, -2};
-    std::cout << maxAbsoluteSum(v) << std::endl;
     return 0;
 }
