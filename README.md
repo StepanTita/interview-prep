@@ -56,6 +56,7 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 1749. **Maximum Absolute Sum of Any Subarray**
 1653. **Minimum Deletions to Make String Balanced**
 2110. **Number of Smooth Descent Periods of a Stock**
+2673. **Make Costs of Paths Equal in a Binary Tree**
 
 
 ### Heap 📊:

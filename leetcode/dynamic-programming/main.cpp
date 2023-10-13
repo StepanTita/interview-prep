@@ -1285,6 +1285,31 @@ long long getDescentPeriods(std::vector<int> &prices) {
     return ans;
 }
 
+// 2673. Make Costs of Paths Equal in a Binary Tree
+
+int left(std::vector<int>& tree, int i) {
+    if (2 * i + 1 >= tree.size()) return 0;
+    return tree[2 * i + 1];
+}
+
+int right(std::vector<int>& tree, int i) {
+    if (2 * i + 2 >= tree.size()) return 0;
+    return tree[2 * i + 2];
+}
+
+int minIncrements(int n, std::vector<int>& cost) {
+    int ans = 0;
+    for (int i = n - 1; i >= 0; --i) {
+        int diff = std::max(left(cost, i), right(cost, i)) -
+                   std::min(left(cost, i), right(cost, i));
+        ans += diff;
+
+        cost[i] += std::max(left(cost, i), right(cost, i));
+    }
+
+    return ans;
+}
+
 int main() {
     return 0;
 }
