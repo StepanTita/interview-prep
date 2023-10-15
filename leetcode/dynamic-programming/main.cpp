@@ -1287,17 +1287,17 @@ long long getDescentPeriods(std::vector<int> &prices) {
 
 // 2673. Make Costs of Paths Equal in a Binary Tree
 
-int left(std::vector<int>& tree, int i) {
+int left(std::vector<int> &tree, int i) {
     if (2 * i + 1 >= tree.size()) return 0;
     return tree[2 * i + 1];
 }
 
-int right(std::vector<int>& tree, int i) {
+int right(std::vector<int> &tree, int i) {
     if (2 * i + 2 >= tree.size()) return 0;
     return tree[2 * i + 2];
 }
 
-int minIncrements(int n, std::vector<int>& cost) {
+int minIncrements(int n, std::vector<int> &cost) {
     int ans = 0;
     for (int i = n - 1; i >= 0; --i) {
         int diff = std::max(left(cost, i), right(cost, i)) -
@@ -1310,6 +1310,98 @@ int minIncrements(int n, std::vector<int>& cost) {
     return ans;
 }
 
+// 1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance
+
+std::vector<std::vector<int>> findClosure(int n, std::vector<std::vector<int>> adjMatrix, int distanceThreshold) {
+    std::vector<std::vector<int>> closure(n, std::vector<int>(n, 0));
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            closure[i][j] = adjMatrix[i][j] <= distanceThreshold ? adjMatrix[i][j] : INF;
+        }
+    }
+
+    for (int k = 0; k < n; ++k) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (closure[i][k] != INF && closure[k][j] != INF &&
+                    closure[i][k] + closure[k][j] <= distanceThreshold) {
+                    closure[i][j] = std::min(closure[i][j], closure[i][k] + closure[k][j]);
+                }
+            }
+        }
+    }
+
+    return closure;
+}
+
+int findTheCity(int n, std::vector<std::vector<int>> &edges, int distanceThreshold) {
+    std::vector<std::vector<int>> adjMatrix(n, std::vector<int>(n, INF));
+
+    for (auto &e: edges) {
+        adjMatrix[e[0]][e[1]] = e[2];
+        adjMatrix[e[1]][e[0]] = e[2];
+    }
+
+    auto closure = findClosure(n, adjMatrix, distanceThreshold);
+
+    int minNeighbors = n + 1;
+    int ans = -1;
+    for (int i = n - 1; i >= 0; --i) {
+        int count = 0;
+        for (int j = 0; j < n; ++j) {
+            if (i == j) continue;
+            count += (closure[i][j] != INF);
+        }
+
+        if (minNeighbors > count) {
+            minNeighbors = count;
+            ans = i;
+        }
+    }
+
+    return ans;
+}
+
+// 1690. Stone Game VII
+
+int alice(std::vector<int> &stones, int l, int r, int totalSum);
+
+int bob(std::vector<int> &stones, int l, int r, int totalSum) {
+    if (l >= r) {
+        return 0;
+    }
+
+    int aliceLeft = alice(stones, l + 1, r, totalSum - stones[l]) - (totalSum - stones[l]);
+    int aliceRight = alice(stones, l, r - 1, totalSum - stones[r]) - (totalSum - stones[r]);
+
+    return std::min(aliceLeft, aliceRight);
+}
+
+int alice(std::vector<int> &stones, int l, int r, int totalSum) {
+    if (l >= r) {
+        return 0;
+    }
+
+    int bobLeft = bob(stones, l + 1, r, totalSum - stones[l]) + (totalSum - stones[l]);
+    int bobRight = bob(stones, l, r - 1, totalSum - stones[r]) + (totalSum - stones[r]);
+
+    return std::max(bobLeft, bobRight);
+}
+
+int stoneGameVII(std::vector<int> &stones) {
+    int n = stones.size();
+
+    int totalSum = 0;
+    for (int i = 0; i < n; ++i) {
+        totalSum += stones[i];
+    }
+
+    return alice(stones, 0, n - 1, totalSum);
+}
+
 int main() {
+    auto v = std::vector<int>{5, 3, 1, 4, 2};
+    std::cout << stoneGameVII(v) << std::endl;
     return 0;
 }

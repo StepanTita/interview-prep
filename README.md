@@ -57,6 +57,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 1653. **Minimum Deletions to Make String Balanced**
 2110. **Number of Smooth Descent Periods of a Stock**
 2673. **Make Costs of Paths Equal in a Binary Tree**
+1334. **Find the City With the Smallest Number of Neighbors at a Threshold Distance**
+1690. **Stone Game VII**
 
 
 ### Heap 📊:
