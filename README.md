@@ -59,6 +59,7 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 2673. **Make Costs of Paths Equal in a Binary Tree**
 1334. **Find the City With the Smallest Number of Neighbors at a Threshold Distance**
 1690. **Stone Game VII**
+143. **Longest Common Subsequence**
 
 
 ### Heap 📊:

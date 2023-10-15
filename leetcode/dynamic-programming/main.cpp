@@ -1365,39 +1365,59 @@ int findTheCity(int n, std::vector<std::vector<int>> &edges, int distanceThresho
 
 // 1690. Stone Game VII
 
-int alice(std::vector<int> &stones, int l, int r, int totalSum);
-
-int bob(std::vector<int> &stones, int l, int r, int totalSum) {
-    if (l >= r) {
-        return 0;
-    }
-
-    int aliceLeft = alice(stones, l + 1, r, totalSum - stones[l]) - (totalSum - stones[l]);
-    int aliceRight = alice(stones, l, r - 1, totalSum - stones[r]) - (totalSum - stones[r]);
-
-    return std::min(aliceLeft, aliceRight);
-}
-
-int alice(std::vector<int> &stones, int l, int r, int totalSum) {
-    if (l >= r) {
-        return 0;
-    }
-
-    int bobLeft = bob(stones, l + 1, r, totalSum - stones[l]) + (totalSum - stones[l]);
-    int bobRight = bob(stones, l, r - 1, totalSum - stones[r]) + (totalSum - stones[r]);
-
-    return std::max(bobLeft, bobRight);
-}
-
 int stoneGameVII(std::vector<int> &stones) {
     int n = stones.size();
 
-    int totalSum = 0;
+    std::vector<int> prefix(n + 1, 0);
     for (int i = 0; i < n; ++i) {
-        totalSum += stones[i];
+        prefix[i + 1] = prefix[i] + stones[i];
     }
 
-    return alice(stones, 0, n - 1, totalSum);
+    std::vector<std::vector<int>> dp(n, std::vector<int>(n, 0));
+
+    for (int l = n - 1; l >= 0; --l) {
+        for (int r = l + 1; r < n; ++r) {
+            dp[l][r] = std::max(
+                    (prefix[r + 1] - prefix[l + 1]) - dp[l + 1][r],
+                    (prefix[r] - prefix[l]) - dp[l][r - 1]
+            );
+        }
+    }
+
+    return dp[0][n - 1];
+}
+
+// 143. Longest Common Subsequence
+
+int longestCommonSubsequence(std::string a, std::string b) {
+    int n = a.size();
+    int m = b.size();
+
+    std::vector<int> dp(m + 1, 0);
+
+    int ans = 0;
+
+    for (int i = 1; i <= n; ++i) {
+        int prev_val = 0;
+        for (int j = 1; j <= m; ++j) {
+            // dp[j] - is dp[i - 1][j]
+            // dp[j - 1] - is dp[i][j - 1]
+            // prev_val - is dp[i - 1][j - 1]
+
+            int curr_val = dp[j]; // dp[i - 1][j]
+
+            if (a[i - 1] == b[j - 1]) {
+                dp[j] = prev_val + 1;
+            } else {
+                dp[j] = std::max(dp[j], dp[j - 1]);
+            }
+
+            prev_val = curr_val; // j + 1 -> dp[i - 1][j - 1]
+            ans = std::max(ans, dp[j]);
+        }
+    }
+
+    return ans;
 }
 
 int main() {
