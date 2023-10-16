@@ -1420,8 +1420,244 @@ int longestCommonSubsequence(std::string a, std::string b) {
     return ans;
 }
 
+// 1092. Shortest Common Supersequence
+
+std::vector<std::vector<int>> lcs(const std::string &a, const std::string &b) {
+    int n = a.length();
+    int m = b.length();
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
+
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            if (a[i - 1] == b[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = std::max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+
+    return dp;
+}
+
+std::string shortestCommonSupersequence(const std::string a, const std::string b) {
+    int n = a.length();
+    int m = b.length();
+
+    auto lcaDP = lcs(a, b);
+
+    std::string res = "";
+
+    int i = n;
+    int j = m;
+    while (i > 0 && j > 0) {
+        if (a[i - 1] == b[j - 1]) {
+            res += a[i];
+            --i;
+            --j;
+        } else {
+            if (lcaDP[i - 1][j] > lcaDP[i][j - 1]) {
+                res += a[i - 1];
+                --i;
+            } else {
+                res += b[j - 1];
+                --j;
+            }
+        }
+    }
+
+    while (i > 0) {
+        res += a[i--];
+    }
+
+    while (j > 0) {
+        res += b[j--];
+    }
+
+    return res;
+}
+
+// 121. Best Time to Buy and Sell Stock
+
+int maxProfit(std::vector<int> &prices) {
+    int max_profit = 0;
+    int hold = prices[0];
+
+    /*
+    We have some stock 'hold', and we are at index i of prices.
+    If we could have sold 'hold' better than in the future, we would have tried that,
+    Otherwise right now prices[i] < hold, so we will defenitely not get any profit
+    from selling bigger hold in the future.
+    */
+    for (int i = 0; i < prices.size(); ++i) {
+        if (hold > prices[i]) {
+            hold = prices[i];
+        }
+        max_profit = std::max(max_profit, prices[i] - hold);
+    }
+
+    return max_profit;
+}
+
+// 122. Best Time to Buy and Sell Stock II
+
+int maxProfit2(std::vector<int> &prices) {
+    int n = prices.size();
+
+    // dp[i][0] - max profit not holding stock
+    // dp[i][1] - stock that we are holding
+
+    /*
+     * any given moment we have only 3 options,
+     * either sell our current stock that we hold,
+     * buy a new stock, or just keep what we have
+     * for every prices i, we can consider all of the following:
+     * if prices[i] - hold > 0 - means current sell is profitable - do it
+     * after that immediately buy a current stock
+     * if there is a more profitable deal prices[j] for the prev stock somewhere in the future,
+     * then it cannot be more profitable than:
+     *  - selling prev stock (prices[i] - hold)
+     *  - buying prices[i] stock (we are already in profit here
+     *  - selling prices[i] for prices[j]
+     *  so if prices[j] - hold > prices[i] - hold (j > i)
+     *  then still: prices[j] - hold <= (prices[i] - hold) + (prices[j] - prices[i])
+     *  moreover prices[j] - hold == (prices[i] - hold) + (prices[j] - prices[i]) (simplify the right part)
+     */
+    int max_profit = 0;
+    int hold = prices[0];
+    for (int i = 0; i < n; ++i) {
+        if (prices[i] - hold > 0) {
+            max_profit += (prices[i] - hold);
+            hold = prices[i];
+        }
+        hold = std::min(hold, prices[i]);
+    }
+
+    return max_profit;
+}
+
+int maxProfitWithCooldown(std::vector<int> &prices) {
+    // on each day i, we can either buy stock
+    // or sell stock, or we have a cooldown
+    // dp[i][0] - no stock
+    // dp[i][1] - holding
+    // dp[i][2] - cooldown
+
+    // for the no stock case we might have sold and experienced a cooldown, or have not done anything
+    // dp[i][0] = max(dp[i - 1][0], dp[i - 1][2]);
+    // for the holding case we might have been holding it for a while, or had nothing and bought
+    // dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+    // for cooldown only one option possible: we had something and we have sold it
+    // dp[i][2] = dp[i - 1][1] + prices[i];
+
+    int n = prices.size();
+
+    int no_stock = 0;
+    int hold = -prices[0];
+    int cooldown = 0;
+    for (int i = 1; i < n; ++i) {
+        int prev_no_stock = no_stock;
+        no_stock = std::max(no_stock, cooldown);
+
+        int prev_hold = hold;
+        hold = std::max(hold, prev_no_stock - prices[i]);
+
+        cooldown = prev_hold + prices[i];
+    }
+
+    return std::max(no_stock, cooldown);
+}
+
+// 123. Best Time to Buy and Sell Stock III
+
+int maxProfit2Transactions(std::vector<int> &prices) {
+    // every time at price i, I have either completed 0 transactions
+    // or I have completed 1 transaction
+    // or I have completed 2 transactions
+    // also for each of those cases except for the last one I may or may not have
+    // a stock that I hold
+    // dp[i][0] - completed 0 transactions
+    // dp[i][1] - completed 1 transaction
+    // dp[i][2] - completed 2 transactions
+
+    // dp[i][t][0] - not holding any stock after t transactions
+    // dp[i][t][1] - holding a stock after t transactions
+
+    // either we complete transaction if we hold something, or stay with what we have
+    // dp[i][t][0] = max(dp[i - 1][t][0], dp[i - 1][t - 1][1] + prices[i]);
+    // we either stay in a current transaction, or engage in a new transaction
+    // here we use t - 1 because we do not need to calculate dp[i][2][1], but need dp[i][0][1]
+    // dp[i][t - 1][1] = max(dp[i - 1][t - 1][1], dp[i - 1][t - 1][0] - prices[i]);
+
+    int n = prices.size();
+
+    int k = 2;
+
+    std::vector<std::vector<std::vector<int>>> dp(n, std::vector<std::vector<int>>(k + 1, std::vector<int>(2, -INF)));
+
+    dp[0][0][0] = 0;
+    dp[0][0][1] = -prices[0];
+
+    for (int i = 1; i < n; ++i) {
+        dp[i][0][0] = 0;
+        for (int t = 1; t <= k; ++t) {
+            dp[i][t][0] = std::max(dp[i - 1][t][0], dp[i - 1][t - 1][1] + prices[i]);
+
+            dp[i][t - 1][1] = std::max(dp[i - 1][t - 1][1], dp[i - 1][t - 1][0] - prices[i]);
+        }
+    }
+
+    return std::max({dp[n - 1][0][0], dp[n - 1][1][0], dp[n - 1][2][0]});
+}
+
+// Best Time to Buy and Sell Stock IV
+
+int maxProfit(int k, std::vector<int> &prices) {
+    // every time at price i, I have either completed 0 transactions
+    // or I have completed 1 transaction
+    // or I have completed 2 transactions
+    // also for each of those cases except for the last one I may or may not have
+    // a stock that I hold
+    // dp[i][0] - completed 0 transactions
+    // dp[i][1] - completed 1 transaction
+    // dp[i][2] - completed 2 transactions
+
+    // dp[i][t][0] - not holding any stock after t transactions
+    // dp[i][t][1] - holding a stock after t transactions
+
+    // either we complete transaction if we hold something, or stay with what we have
+    // dp[i][t][0] = max(dp[i - 1][t][0], dp[i - 1][t - 1][1] + prices[i]);
+    // we either stay in a current transaction, or engage in a new transaction
+    // here we use t - 1 because we do not need to calculate dp[i][2][1], but need dp[i][0][1]
+    // dp[i][t - 1][1] = max(dp[i - 1][t - 1][1], dp[i - 1][t - 1][0] - prices[i]);
+
+    int n = prices.size();
+
+    std::vector<std::vector<std::vector<int>>> dp(n, std::vector<std::vector<int>>(k + 1, std::vector<int>(2, -INF)));
+
+    dp[0][0][0] = 0;
+    dp[0][0][1] = -prices[0];
+
+    for (int i = 1; i < n; ++i) {
+        dp[i][0][0] = 0;
+        for (int t = 1; t <= k; ++t) {
+            dp[i][t][0] = std::max(dp[i - 1][t][0], dp[i - 1][t - 1][1] + prices[i]);
+
+            dp[i][t - 1][1] = std::max(dp[i - 1][t - 1][1], dp[i - 1][t - 1][0] - prices[i]);
+        }
+    }
+
+    int ans = 0;
+    for (int t = 0; t <= k; ++t) {
+        ans = std::max(ans, dp[n - 1][t][0]);
+    }
+
+    return ans;
+}
+
 int main() {
     auto v = std::vector<int>{5, 3, 1, 4, 2};
-    std::cout << stoneGameVII(v) << std::endl;
+    std::cout << shortestCommonSupersequence("cab", "abac") << std::endl;
     return 0;
 }
