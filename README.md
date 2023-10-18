@@ -75,6 +75,11 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 373. **Find K Pairs with Smallest Sums**
 295. **Find Median from Data Stream**
 
+
+
+### Stack 📥:
+84. **Largest Rectangle in Histogram**
+
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
 🚀 Happy Learning! 🚀
