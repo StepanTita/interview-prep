@@ -53,6 +53,47 @@ int largestRectangleArea(std::vector<int> &heights) {
     return ans;
 }
 
+// 1504. Count Submatrices With All Ones
+
+int numSubmat(std::vector<std::vector<int>> &mat) {
+    int n = mat.size();
+    int m = mat[0].size();
+
+    int res = 0;
+
+    auto h = std::vector<int>(m, 0);
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            h[j] = (mat[i][j] == 0 ? 0 : h[j] + 1);
+        }
+
+        auto sum = std::vector<int>(m, 0);
+        std::stack<int> bars;
+
+        for (int j = 0; j < m; ++j) {
+            while (!bars.empty() && h[bars.top()] >= h[j]) {
+                bars.pop();
+            }
+
+            if (!bars.empty()) {
+                int prevIndex = bars.top();
+                sum[j] = sum[prevIndex];
+                sum[j] += (j - prevIndex) * h[j];
+            } else {
+                sum[j] = h[j] * (j + 1);
+            }
+
+            bars.push(j);
+        }
+
+        for (int j = 0; j < m; ++j) {
+            res += sum[j];
+        }
+    }
+
+    return res;
+}
+
 
 int main() {
     auto v = std::vector<int>{2, 1, 5, 6, 2, 3};

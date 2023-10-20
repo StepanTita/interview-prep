@@ -79,6 +79,12 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 
 ### Stack 📥:
 84. **Largest Rectangle in Histogram**
+1504. **Count Submatrices With All Ones**
+
+
+
+### Greedy 💰:
+2900. **Longest Unequal Adjacent Groups Subsequence I**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
