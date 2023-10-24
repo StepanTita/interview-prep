@@ -1683,8 +1683,98 @@ int minEditDistance(std::string a, std::string b) {
     return dp[n][m];
 }
 
+// 2002. Maximum Product of the Length of Two Palindromic Subsequences
+
+bool isPalindrome(std::string &s, int idxs) {
+    int n = s.length();
+
+    std::string cand = "";
+    for (int i = 0; i < n; ++i) {
+        if (bitSet(idxs, i)) {
+            cand += s[i];
+        }
+    }
+
+    int k = cand.length();
+    int m = k / 2;
+
+    if (k % 2 == 0) {
+        for (int t = 0; m - t - 1 >= 0 && m + t < k; ++t) {
+            if (cand[m - t - 1] != cand[m + t]) return false;
+        }
+    } else {
+        for (int t = 0; m - t >= 0 && m + t < k; ++t) {
+            if (cand[m - t] != cand[m + t]) return false;
+        }
+    }
+
+    return true;
+}
+
+int countBits(int n) {
+    int count = 0;
+    while (n) {
+        count += n & 1;
+        n >>= 1;
+    }
+    return count;
+}
+
+int dfs(std::string &s, int curr, int idxs, int used) {
+    int ans = 0;
+
+    if (isPalindrome(s, idxs) && isPalindrome(s, used ^ idxs)) {
+        ans = countBits(idxs) * countBits(used ^ idxs);
+    }
+
+    for (int i = curr; i < s.length(); ++i) {
+        if (bitSet(used, i)) continue;
+        // use in the first string
+        ans = std::max(ans, dfs(s, i + 1, setBit(idxs, i), setBit(used, i)));
+        // use in the second string
+        ans = std::max(ans, dfs(s, i + 1, idxs, setBit(used, i)));
+    }
+
+    return ans;
+}
+
+int maxProduct(std::string s) {
+    return dfs(s, 0, 0, 0);
+}
+
+// 2606. Find the Substring With Maximum Cost
+
+int toDig(char c) {
+    return c - 'a';
+}
+
+int getCost(char c, std::vector<int> &chars) {
+    if (chars[toDig(c)] != -INF) return chars[toDig(c)];
+    return toDig(c) + 1;
+}
+
+int maximumCostSubstring(std::string s, std::string chars, std::vector<int>& vals) {
+    int n = s.length();
+
+    std::vector<int> charsMap('z' - 'a' + 1, -INF);
+
+    for (int i = 0; i < chars.length(); ++i) {
+        charsMap[toDig(chars[i])] = vals[i];
+    }
+
+    int ans = 0;
+    int maxVal = 0;
+    for (int i = 0; i < n; ++i) {
+        maxVal = std::max(maxVal + getCost(s[i], charsMap), getCost(s[i], charsMap));
+        maxVal = std::max(maxVal, 0);
+        ans = std::max(ans, maxVal);
+    }
+
+    return ans;
+}
+
 int main() {
-    auto v = std::vector<int>{5, 3, 1, 4, 2};
-    std::cout << shortestCommonSupersequence("cab", "abac") << std::endl;
+    auto v = std::vector<int>{-6, 6};
+    maximumCostSubstring("kqqqqqkkkq", "kq", v);
     return 0;
 }

@@ -14,6 +14,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 153. **Find Minimum in Rotated Sorted Array**
 4. **Median of Two Sorted Arrays**
 
+
+
 ### Dynamic Programming 🧮:
 70. **Climbing Stairs**
 198. **House Robber**
@@ -67,6 +69,7 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 123. **Best Time to Buy and Sell Stock III**
 188. **Best Time to Buy and Sell Stock IV**
 72. **Edit Distance**
+2606. **Find the Substring With Maximum Cost**
 
 
 
@@ -86,6 +89,17 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 
 ### Greedy 💰:
 2900. **Longest Unequal Adjacent Groups Subsequence I**
+
+
+
+### BFS & DFS 🔍:
+838. **Push Dominoes**
+
+
+### Math ♾️:
+1131. Maximum of Absolute Value Expression
+
+
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
