@@ -1753,7 +1753,7 @@ int getCost(char c, std::vector<int> &chars) {
     return toDig(c) + 1;
 }
 
-int maximumCostSubstring(std::string s, std::string chars, std::vector<int>& vals) {
+int maximumCostSubstring(std::string s, std::string chars, std::vector<int> &vals) {
     int n = s.length();
 
     std::vector<int> charsMap('z' - 'a' + 1, -INF);
@@ -1773,8 +1773,81 @@ int maximumCostSubstring(std::string s, std::string chars, std::vector<int>& val
     return ans;
 }
 
+// 95. Unique Binary Search Trees II
+
+// n - number of nodes in the tree
+// l - leftmost element of the current BST
+// r - rightmost element of the current BST
+std::vector<TreeNode *> backtrack(int n, int l, int r) {
+    if (n <= 0) return std::vector<TreeNode *>{};
+
+    auto res = std::vector<TreeNode *>{};
+    for (int i = 0; i < n; ++i) {
+        // when i == 0 -> n - 1 elements to the right, and 1 for root
+        // when i == n - 1 -> n - 1 elements to the left, and 1 for root
+        auto left = backtrack(i, l, l + i);
+        auto right = backtrack(n - i - 1, l + i + 1, r);
+
+        if (left.empty() && right.empty()) {
+            auto root = new TreeNode(l + i);
+            res.emplace_back(root);
+        } else if (left.empty()) {
+            for (auto rc: right) {
+                auto root = new TreeNode(l + i);
+                root->right = rc;
+                res.emplace_back(root);
+            }
+        } else if (right.empty()) {
+            for (auto lc: left) {
+                auto root = new TreeNode(l + i);
+                root->left = lc;
+                res.emplace_back(root);
+            }
+        }
+
+        for (auto lc: left) {
+            for (auto rc: right) {
+                auto root = new TreeNode(l + i);
+                root->left = lc;
+                root->right = rc;
+                res.emplace_back(root);
+            }
+        }
+    }
+
+    return res;
+}
+
+std::vector<TreeNode *> generateTrees(int n) {
+    return backtrack(n, 0, n - 1);
+}
+
+int backtrack(int start, std::vector<int>& nums, std::vector<int>& used) {
+    if (start >= nums.size()) return 0;
+
+    int ans = 0;
+    for (int i = start; i < nums.size(); ++i) {
+        if (used[nums[i]] == 0) {
+            ++used[nums[i] - 1];
+            ++used[nums[i] + 1];
+
+            ans = std::max(ans, backtrack(i + 1, nums, used) + nums[i]);
+
+            --used[nums[i] - 1];
+            --used[nums[i] + 1];
+        }
+    }
+
+    return ans;
+}
+
+int deleteAndEarn(std::vector<int>& nums) {
+    std::vector<int> used(1e4 + 2, 0);
+    return backtrack(0, nums, used);
+}
+
 int main() {
-    auto v = std::vector<int>{-6, 6};
-    maximumCostSubstring("kqqqqqkkkq", "kq", v);
+    auto v = std::vector<int>{2,2,3,3,3,4};
+    std::cout << deleteAndEarn(v) << std::endl;
     return 0;
 }
