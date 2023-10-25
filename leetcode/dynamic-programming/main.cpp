@@ -1822,28 +1822,26 @@ std::vector<TreeNode *> generateTrees(int n) {
     return backtrack(n, 0, n - 1);
 }
 
-int backtrack(int start, std::vector<int>& nums, std::vector<int>& used) {
-    if (start >= nums.size()) return 0;
-
-    int ans = 0;
-    for (int i = start; i < nums.size(); ++i) {
-        if (used[nums[i]] == 0) {
-            ++used[nums[i] - 1];
-            ++used[nums[i] + 1];
-
-            ans = std::max(ans, backtrack(i + 1, nums, used) + nums[i]);
-
-            --used[nums[i] - 1];
-            --used[nums[i] + 1];
-        }
-    }
-
-    return ans;
-}
+// 740. Delete and Earn
 
 int deleteAndEarn(std::vector<int>& nums) {
-    std::vector<int> used(1e4 + 2, 0);
-    return backtrack(0, nums, used);
+    int n = nums.size();
+
+    std::vector<int> values(1e4 + 1, 0);
+    for (int num : nums) {
+        values[num] += num;
+    }
+
+    int take = 0;
+    int skip = 0;
+
+    for (int i = 0; i < values.size(); ++i) {
+        int t = std::max(take, skip + values[i]);
+        skip = take;
+        take = t;
+    }
+
+    return take;
 }
 
 int main() {
