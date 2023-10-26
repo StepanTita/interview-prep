@@ -72,7 +72,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 2606. **Find the Substring With Maximum Cost**
 95. **Unique Binary Search Trees II**
 740. **Delete and Earn**
-
+486. **Predict the Winner**
+2466. **Count Ways To Build Good Strings**
 
 
 

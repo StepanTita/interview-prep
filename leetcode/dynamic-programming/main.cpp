@@ -1844,8 +1844,75 @@ int deleteAndEarn(std::vector<int>& nums) {
     return take;
 }
 
+// 486. Predict the Winner
+/*
+1 5 5 5 5
+0 1 4 4 4
+0 0 1 3 3
+0 0 0 1 2
+0 0 0 0 1
+*/
+
+bool predictTheWinner(std::vector<int>& nums) {
+    int n = nums.size();
+
+    std::vector<int> dp(n, 0);
+
+    for (int i = n - 1; i >= 0; --i) {
+        dp[i] = nums[i];
+        for (int j = i + 1; j < n; ++j) {
+            dp[j] = std::max(nums[i] - dp[j], nums[j] - dp[j - 1]);
+        }
+    }
+
+    return dp[n - 1] >= 0;
+}
+
+// 2466. Count Ways To Build Good Strings
+
+const int MOD = 1e9 + 7;
+
+int countGoodStrings(int low, int high, int zero, int one) {
+    std::vector<int> dp(high + 1, 0);
+
+    dp[0] = 1;
+    int res = 0;
+    for (int i = 0; i <= high; ++i) {
+        if (i + zero <= high) {
+            dp[i + zero] = (dp[i + zero] + dp[i]) % MOD;
+        }
+
+        if (i + one <= high) {
+            dp[i + one] = (dp[i + one] + dp[i]) % MOD;
+        }
+
+        if (i >= low && i <= high) {
+            res = (res + dp[i]) % MOD;
+        }
+    }
+
+    return res;
+}
+
+// 1218. Longest Arithmetic Subsequence of Given Difference
+
+int longestSubsequence(std::vector<int>& arr, int difference) {
+    int n = arr.size();
+
+    std::unordered_map<int, int> dp;
+
+    int ans = 0;
+    for (int i = 0; i < n; ++i) {
+        dp[arr[i]] = dp[arr[i] - difference] + 1;
+
+        ans = std::max(ans, dp[arr[i]]);
+    }
+
+    return ans;
+}
+
 int main() {
-    auto v = std::vector<int>{2,2,3,3,3,4};
-    std::cout << deleteAndEarn(v) << std::endl;
+    auto v = std::vector<int>{1, 1};
+    std::cout << predictTheWinner(v) << std::endl;
     return 0;
 }
