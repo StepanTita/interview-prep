@@ -74,6 +74,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 740. **Delete and Earn**
 486. **Predict the Winner**
 2466. **Count Ways To Build Good Strings**
+2140. **Solving Questions With Brainpower**
+1049. **Last Stone Weight II**
 
 
 

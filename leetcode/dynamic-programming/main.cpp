@@ -1824,11 +1824,11 @@ std::vector<TreeNode *> generateTrees(int n) {
 
 // 740. Delete and Earn
 
-int deleteAndEarn(std::vector<int>& nums) {
+int deleteAndEarn(std::vector<int> &nums) {
     int n = nums.size();
 
     std::vector<int> values(1e4 + 1, 0);
-    for (int num : nums) {
+    for (int num: nums) {
         values[num] += num;
     }
 
@@ -1853,7 +1853,7 @@ int deleteAndEarn(std::vector<int>& nums) {
 0 0 0 0 1
 */
 
-bool predictTheWinner(std::vector<int>& nums) {
+bool predictTheWinner(std::vector<int> &nums) {
     int n = nums.size();
 
     std::vector<int> dp(n, 0);
@@ -1896,7 +1896,7 @@ int countGoodStrings(int low, int high, int zero, int one) {
 
 // 1218. Longest Arithmetic Subsequence of Given Difference
 
-int longestSubsequence(std::vector<int>& arr, int difference) {
+int longestSubsequence(std::vector<int> &arr, int difference) {
     int n = arr.size();
 
     std::unordered_map<int, int> dp;
@@ -1911,8 +1911,51 @@ int longestSubsequence(std::vector<int>& arr, int difference) {
     return ans;
 }
 
+// 2140. Solving Questions With Brainpower
+
+long long mostPoints(std::vector<std::vector<int>> &questions) {
+    int n = questions.size();
+
+    std::vector<long long> dp(n + 1, 0);
+
+    for (int i = n - 1; i >= 0; --i) {
+        if (i + questions[i][1] + 1 >= n + 1) {
+            dp[i] = std::max(dp[i + 1], (long long)questions[i][0]);
+        } else {
+            dp[i] = std::max(dp[i + 1], dp[i + questions[i][1] + 1] + questions[i][0]);
+        }
+    }
+
+    return dp[0];
+}
+
+// 1049. Last Stone Weight II
+
+int dfs(int i, std::vector<int>& stones, int currSum, std::vector<std::unordered_map<int, int>>& memo) {
+    if (i >= stones.size()) {
+        if (currSum < 0) return INF;
+        return currSum;
+    }
+
+    if (memo[i].contains(currSum)) {
+        return memo[i][currSum];
+    }
+
+    return memo[i][currSum] = std::min(
+            dfs(i + 1, stones, currSum - stones[i], memo),
+            dfs(i + 1, stones, currSum + stones[i], memo)
+    );
+}
+
+int lastStoneWeightII(std::vector<int>& stones) {
+    int n = stones.size();
+
+    std::vector<std::unordered_map<int, int>> memo = std::vector<std::unordered_map<int, int>>(n);
+    return dfs(0, stones, 0, memo);
+}
+
 int main() {
-    auto v = std::vector<int>{1, 1};
-    std::cout << predictTheWinner(v) << std::endl;
+    auto v = std::vector<int>{31,26,33,21,40};
+    std::cout << lastStoneWeightII(v) << std::endl;
     return 0;
 }
