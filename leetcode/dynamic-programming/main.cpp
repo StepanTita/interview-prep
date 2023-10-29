@@ -1920,7 +1920,7 @@ long long mostPoints(std::vector<std::vector<int>> &questions) {
 
     for (int i = n - 1; i >= 0; --i) {
         if (i + questions[i][1] + 1 >= n + 1) {
-            dp[i] = std::max(dp[i + 1], (long long)questions[i][0]);
+            dp[i] = std::max(dp[i + 1], (long long) questions[i][0]);
         } else {
             dp[i] = std::max(dp[i + 1], dp[i + questions[i][1] + 1] + questions[i][0]);
         }
@@ -1931,7 +1931,7 @@ long long mostPoints(std::vector<std::vector<int>> &questions) {
 
 // 1049. Last Stone Weight II
 
-int dfs(int i, std::vector<int>& stones, int currSum, std::vector<std::unordered_map<int, int>>& memo) {
+int dfs(int i, std::vector<int> &stones, int currSum, std::vector<std::unordered_map<int, int>> &memo) {
     if (i >= stones.size()) {
         if (currSum < 0) return INF;
         return currSum;
@@ -1947,15 +1947,64 @@ int dfs(int i, std::vector<int>& stones, int currSum, std::vector<std::unordered
     );
 }
 
-int lastStoneWeightII(std::vector<int>& stones) {
+int lastStoneWeightII(std::vector<int> &stones) {
     int n = stones.size();
 
     std::vector<std::unordered_map<int, int>> memo = std::vector<std::unordered_map<int, int>>(n);
     return dfs(0, stones, 0, memo);
 }
 
+// 2063. Vowels of All Substrings
+
+bool isVowel(char c) {
+    if (c == 'a') return true;
+    else if (c == 'e') return true;
+    else if (c == 'i') return true;
+    else if (c == 'o') return true;
+    else if (c == 'u') return true;
+
+    return false;
+}
+
+long long countVowels(std::string word) {
+    int n = word.length();
+
+    long long res = 0;
+    for (int i = 0; i < word.length(); ++i) {
+        if (isVowel(word[i])) {
+            res += (long long) (i + 1) * (long long) (n - i);
+        }
+    }
+
+    return res;
+}
+
+// 337. House Robber III
+
+int dfs(TreeNode *root, std::unordered_map<TreeNode *, std::vector<int>> &memo, bool skip = false) {
+    if (root == NULL) return 0;
+
+    if (memo.contains(root) && memo[root][skip] != -1) return memo[root][skip];
+
+    memo[root] = std::vector<int>(2, -1);
+
+    if (skip) {
+        return memo[root][skip] = dfs(root->left, memo, false) + dfs(root->right, memo, false);
+    }
+
+    return memo[root][skip] = std::max(
+            dfs(root->left, memo, true) + root->val + dfs(root->right, memo, true),
+            dfs(root->left, memo, false) + dfs(root->right, memo, false)
+    );
+}
+
+int rob(TreeNode *root) {
+    std::unordered_map<TreeNode *, std::vector<int>> memo;
+    return dfs(root, memo);
+}
+
 int main() {
-    auto v = std::vector<int>{31,26,33,21,40};
+    auto v = std::vector<int>{31, 26, 33, 21, 40};
     std::cout << lastStoneWeightII(v) << std::endl;
     return 0;
 }

@@ -76,6 +76,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 2466. **Count Ways To Build Good Strings**
 2140. **Solving Questions With Brainpower**
 1049. **Last Stone Weight II**
+2063. **Vowels of All Substrings**
+337. **House Robber III**
 
 
 
