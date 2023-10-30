@@ -78,6 +78,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 1049. **Last Stone Weight II**
 2063. **Vowels of All Substrings**
 337. **House Robber III**
+213. **House Robber II**
+377. **Combination Sum IV**
 
 
 

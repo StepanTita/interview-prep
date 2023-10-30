@@ -2003,6 +2003,45 @@ int rob(TreeNode *root) {
     return dfs(root, memo);
 }
 
+// 213. House Robber II
+
+int robOne(std::vector<int> &nums, int l, int r) {
+    int take = 0;
+    int skip = 0;
+
+    for (int i = l; i < r; ++i) {
+        int t = take;
+        take = std::max(take, skip + nums[i]);
+        skip = t;
+    }
+
+    return take;
+}
+
+int rob2(std::vector<int>& nums) {
+    int n = nums.size();
+    if (n == 1) return nums[0];
+    return std::max(robOne(nums, 0, n - 1), robOne(nums, 1, n));
+}
+
+// 377. Combination Sum IV
+
+int combinationSum4(std::vector<int>& nums, int target) {
+    int n = nums.size();
+
+    std::vector<unsigned long long> dp(target + 1, 0);
+    dp[0] = 1;
+    for (int t = 0; t <= target; ++t) {
+        for (int i = 0; i < n; ++i) {
+            if (t - nums[i] >= 0) {
+                dp[t] += dp[t - nums[i]];
+            }
+        }
+    }
+
+    return dp[target];
+}
+
 int main() {
     auto v = std::vector<int>{31, 26, 33, 21, 40};
     std::cout << lastStoneWeightII(v) << std::endl;
