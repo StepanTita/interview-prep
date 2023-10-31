@@ -104,6 +104,7 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 
 ### BFS & DFS 🔍:
 838. **Push Dominoes**
+854. **K-Similar Strings**
 
 
 ### Math ♾️:

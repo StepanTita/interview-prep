@@ -52,3 +52,40 @@ std::string pushDominoes(std::string dominoes) {
 
     return dominoes;
 }
+
+// 854. K-Similar Strings
+
+int kSimilarity(std::string s1, std::string s2) {
+    int n = s1.length();
+
+    std::queue<std::string> q;
+    q.push(s1);
+
+    std::unordered_map<std::string, int> dist;
+    dist[s1] = 0;
+
+    while (!q.empty()) {
+        auto curr = q.front();
+        q.pop();
+
+        int i = 0;
+        while (i < n && curr[i] == s2[i]) ++i;
+
+        for (int j = i + 1; j < n; ++j) {
+            if (curr[j] == s2[i] && s2[j] != curr[j]) {
+                std::string next = curr;
+                std::swap(next[i], next[j]);
+
+                if (dist.contains(next)) continue;
+
+                q.push(next);
+
+                dist[next] = dist[curr] + 1;
+
+                if (next == s2) return dist[next];
+            }
+        }
+    }
+
+    return dist[s2];
+}
