@@ -2018,7 +2018,7 @@ int robOne(std::vector<int> &nums, int l, int r) {
     return take;
 }
 
-int rob2(std::vector<int>& nums) {
+int rob2(std::vector<int> &nums) {
     int n = nums.size();
     if (n == 1) return nums[0];
     return std::max(robOne(nums, 0, n - 1), robOne(nums, 1, n));
@@ -2026,7 +2026,7 @@ int rob2(std::vector<int>& nums) {
 
 // 377. Combination Sum IV
 
-int combinationSum4(std::vector<int>& nums, int target) {
+int combinationSum4(std::vector<int> &nums, int target) {
     int n = nums.size();
 
     std::vector<unsigned long long> dp(target + 1, 0);
@@ -2040,6 +2040,42 @@ int combinationSum4(std::vector<int>& nums, int target) {
     }
 
     return dp[target];
+}
+
+// 813. Largest Sum of Averages
+
+double partition(int start, std::vector<int> &nums, int k,
+                 std::vector<std::vector<double>> &memo
+) {
+    if (k <= 0) return 0;
+
+    int n = nums.size();
+
+    if (start >= n) return 0;
+
+    if (memo[start][k] != -1) return memo[start][k];
+
+    int currSum = 0;
+    int currCount = 0;
+
+    for (int i = start; i < n; ++i) {
+        currSum += nums[i];
+        ++currCount;
+
+        if (k != 1 || i == n - 1) {
+            memo[start][k] = std::max(memo[start][k],
+                                      ((double) currSum / (double) currCount) + partition(i + 1, nums, k - 1, memo));
+        }
+    }
+
+    return memo[start][k];
+}
+
+double largestSumOfAverages(std::vector<int> &nums, int k) {
+    int n = nums.size();
+
+    std::vector<std::vector<double>> memo(n, std::vector<double>(k + 1, -1));
+    return partition(0, nums, k, memo);
 }
 
 int main() {
