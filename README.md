@@ -113,6 +113,10 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 
 
 
+### Data Structures 🗄️:
+380. **Insert Delete GetRandom O(1)**
+
+
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
 🚀 Happy Learning! 🚀
