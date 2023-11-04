@@ -117,6 +117,11 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 380. **Insert Delete GetRandom O(1)**
 
 
+### LinkedLists 🚈:
+19. **Remove Nth Node From End of List**
+
+
+
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
 🚀 Happy Learning! 🚀
