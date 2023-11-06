@@ -16,6 +16,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 34. **Find First and Last Position of Element in Sorted Array**
 153. **Find Minimum in Rotated Sorted Array**
 4. **Median of Two Sorted Arrays**
+1712. **Ways to Split Array Into Three Subarrays**
 
 ### Dynamic Programming 🧮:
 

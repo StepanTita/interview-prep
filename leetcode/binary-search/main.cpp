@@ -15,6 +15,7 @@
 #include <queue>
 
 const int INF = 1e9;
+const int MOD = 1e9;
 
 // 35. Search Insert Position
 int searchInsert(std::vector<int> &nums, int target) {
@@ -271,4 +272,64 @@ double findMedianSortedArrays(std::vector<int> &a, std::vector<int> &b) {
             r = i - 1;
         }
     }
+}
+
+// 1712. Ways to Split Array Into Three Subarrays
+
+int findPivot(std::vector<int> &prefix, int n, int border, bool leftmost) {
+    int l = 0;
+    int r = border - 1;
+
+    int rightSum = prefix[n - 1] - prefix[border];
+
+    int res = -1;
+
+    while (l <= r) {
+        int m = (l + r) / 2;
+
+        int leftSum = prefix[m];
+        int midSum = prefix[n - 1] - rightSum - leftSum;
+        if (midSum <= rightSum && midSum >= leftSum) {
+            res = m;
+            if (leftmost) {
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
+        } else if (midSum <= rightSum) {
+            r = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+
+    return res;
+}
+
+int waysToSplit(std::vector<int> &nums) {
+    int n = nums.size();
+
+    std::vector<int> prefix(n, 0);
+    prefix[0] = nums[0];
+    for (int i = 1; i < n; ++i) {
+        prefix[i] = prefix[i - 1] + nums[i];
+    }
+
+    int res = 0;
+    for (int r = n - 2; r >= 0; --r) {
+        int leftPivot = findPivot(prefix, n, r, true);
+        int rightPivot = findPivot(prefix, n, r, false);
+
+        if (leftPivot == -1 || rightPivot == -1) continue;
+
+        res = (res + (rightPivot - leftPivot + 1) % MOD) % MOD;
+    }
+
+    return res;
+}
+
+int main() {
+    auto v = std::vector<int>{1, 2, 2, 2, 5, 0};
+    std::cout << waysToSplit(v) << std::endl;
+    return 0;
 }
