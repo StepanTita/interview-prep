@@ -1,10 +1,13 @@
 # LeetCode Problem Solutions in C++
 
-Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ solutions to a variety of interesting problems across different categories. Feel free to explore and learn from these solutions as you tackle your own LeetCode challenges. If you find this repository helpful, please consider giving it a ⭐️!
+Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ solutions to a variety of interesting
+problems across different categories. Feel free to explore and learn from these solutions as you tackle your own
+LeetCode challenges. If you find this repository helpful, please consider giving it a ⭐️!
 
 ## Problems
 
 ### Binary Search 🔍:
+
 35. **Search Insert Position**
 74. **Search a 2D Matrix**
 240. **Search a 2D Matrix II**
@@ -14,9 +17,8 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 153. **Find Minimum in Rotated Sorted Array**
 4. **Median of Two Sorted Arrays**
 
-
-
 ### Dynamic Programming 🧮:
+
 70. **Climbing Stairs**
 198. **House Robber**
 139. **Word Break**
@@ -40,13 +42,16 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 413. **Arithmetic Slices**
 712. **Minimum ASCII Delete Sum for Two Strings**
 712. **Minimum ASCII Delete Sum for Two Strings**
-526. **Beautiful Arrangement** [Solution](https://leetcode.com/problems/beautiful-arrangement/solutions/4121549/faster-100-dp-backtracking-bit-mask-with-explanation/)
+526. **Beautiful Arrangement
+     ** [Solution](https://leetcode.com/problems/beautiful-arrangement/solutions/4121549/faster-100-dp-backtracking-bit-mask-with-explanation/)
 1664. **Ways to Make a Fair Array**
 1035. **Uncrossed Lines**
 516. **Longest Palindromic Subsequence**
 1947. **Maximum Compatibility Score Sum**
-926. **Flip String to Monotone Increasing** [Solution](https://leetcode.com/problems/flip-string-to-monotone-increasing/solutions/4134539/c-bottom-up-dp-concise-clear-on-time-on-memory/)
-241. **Different Ways to Add Parentheses** [Solution](https://leetcode.com/problems/different-ways-to-add-parentheses/solutions/4121360/c-recursion-dp-faster-100-clear-and-concise-with-explanation/)
+926. **Flip String to Monotone Increasing
+     ** [Solution](https://leetcode.com/problems/flip-string-to-monotone-increasing/solutions/4134539/c-bottom-up-dp-concise-clear-on-time-on-memory/)
+241. **Different Ways to Add Parentheses
+     ** [Solution](https://leetcode.com/problems/different-ways-to-add-parentheses/solutions/4121360/c-recursion-dp-faster-100-clear-and-concise-with-explanation/)
 583. **Delete Operation for Two Strings**
 1048. **Longest String Chain**
 96. **Unique Binary Search Trees**
@@ -82,45 +87,42 @@ Welcome to my LeetCode problem solutions repository! 👋 Here, you'll find C++ 
 377. **Combination Sum IV**
 813. **Largest Sum of Averages**
 
-
-
 ### Heap 📊:
+
 215. **Kth Largest Element in an Array**
 502. **IPO**
 373. **Find K Pairs with Smallest Sums**
 295. **Find Median from Data Stream**
 
-
-
 ### Stack 📥:
+
 84. **Largest Rectangle in Histogram**
 1504. **Count Submatrices With All Ones**
 
-
-
 ### Greedy 💰:
+
 2900. **Longest Unequal Adjacent Groups Subsequence I**
 
-
-
 ### BFS & DFS 🔍:
+
 838. **Push Dominoes**
 854. **K-Similar Strings**
 
-
 ### Math ♾️:
+
 1131. Maximum of Absolute Value Expression
 
-
-
 ### Data Structures 🗄️:
+
 380. **Insert Delete GetRandom O(1)**
 
-
 ### LinkedLists 🚈:
+
 19. **Remove Nth Node From End of List**
 
+### Arrays 🎞:
 
+2270. **Number of Ways to Split Array**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
