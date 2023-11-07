@@ -144,3 +144,43 @@ public:
         return lower.top();
     }
 };
+
+// 857. Minimum Cost to Hire K Workers
+
+double mincostToHireWorkers(std::vector<int> &quality, std::vector<int> &wage, int k) {
+    std::vector<std::pair<int, int>> workers;
+
+    for (int i = 0; i < quality.size(); ++i) {
+        workers.emplace_back(std::pair<int, int>{quality[i], wage[i]});
+    }
+
+    std::sort(workers.begin(), workers.end(), [](std::pair<int, int> a, std::pair<int, int> b) {
+        return ((double) a.second / a.first) < ((double) b.second / b.first);
+    });
+
+    std::priority_queue<int> pq;
+
+    double sumq = 0;
+    double ans = INF;
+    for (auto worker: workers) {
+        pq.push(worker.first);
+
+        sumq -= worker.first;
+        if (pq.size() > k) {
+            sumq += pq.top();
+            pq.pop();
+        }
+        if (pq.size() == k) {
+            ans = std::min(ans, sumq * ((double) worker.second / (double) worker.first));
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+    auto a = std::vector<int>{10,20,5};
+    auto b = std::vector<int>{70,50,30};
+    std::cout << mincostToHireWorkers(a, b, 2) << std::endl;
+    return 0;
+}

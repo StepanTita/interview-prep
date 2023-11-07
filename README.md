@@ -94,6 +94,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 502. **IPO**
 373. **Find K Pairs with Smallest Sums**
 295. **Find Median from Data Stream**
+857. **Minimum Cost to Hire K Workers**
 
 ### Stack 📥:
 
@@ -121,9 +122,19 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 
 19. **Remove Nth Node From End of List**
 
+### Graphs:
+
+399. **Evaluate Division**
+
 ### Arrays 🎞:
 
 2270. **Number of Ways to Split Array**
+
+### Other:
+
+766. **Toeplitz Matrix**
+299. **Bulls and Cows**
+
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
