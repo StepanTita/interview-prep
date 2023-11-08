@@ -2078,6 +2078,18 @@ double largestSumOfAverages(std::vector<int> &nums, int k) {
     return partition(0, nums, k, memo);
 }
 
+// 55. Jump Game
+
+bool canJump(std::vector<int> &nums) {
+    int maxJump = 0;
+    for (int i = 0; i < nums.size() - 1; ++i) {
+        if (maxJump < i) return false;
+        maxJump = std::max(maxJump, i + nums[i]);
+    }
+
+    return maxJump >= nums.size() - 1;
+}
+
 int main() {
     auto v = std::vector<int>{31, 26, 33, 21, 40};
     std::cout << lastStoneWeightII(v) << std::endl;

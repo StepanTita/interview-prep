@@ -43,16 +43,13 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 413. **Arithmetic Slices**
 712. **Minimum ASCII Delete Sum for Two Strings**
 712. **Minimum ASCII Delete Sum for Two Strings**
-526. **Beautiful Arrangement
-     ** [Solution](https://leetcode.com/problems/beautiful-arrangement/solutions/4121549/faster-100-dp-backtracking-bit-mask-with-explanation/)
+526. **Beautiful Arrangement** [Solution](https://leetcode.com/problems/beautiful-arrangement/solutions/4121549/faster-100-dp-backtracking-bit-mask-with-explanation/)
 1664. **Ways to Make a Fair Array**
 1035. **Uncrossed Lines**
 516. **Longest Palindromic Subsequence**
 1947. **Maximum Compatibility Score Sum**
-926. **Flip String to Monotone Increasing
-     ** [Solution](https://leetcode.com/problems/flip-string-to-monotone-increasing/solutions/4134539/c-bottom-up-dp-concise-clear-on-time-on-memory/)
-241. **Different Ways to Add Parentheses
-     ** [Solution](https://leetcode.com/problems/different-ways-to-add-parentheses/solutions/4121360/c-recursion-dp-faster-100-clear-and-concise-with-explanation/)
+926. **Flip String to Monotone Increasing** [Solution](https://leetcode.com/problems/flip-string-to-monotone-increasing/solutions/4134539/c-bottom-up-dp-concise-clear-on-time-on-memory/)
+241. **Different Ways to Add Parentheses** [Solution](https://leetcode.com/problems/different-ways-to-add-parentheses/solutions/4121360/c-recursion-dp-faster-100-clear-and-concise-with-explanation/)
 583. **Delete Operation for Two Strings**
 1048. **Longest String Chain**
 96. **Unique Binary Search Trees**
@@ -87,6 +84,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 213. **House Robber II**
 377. **Combination Sum IV**
 813. **Largest Sum of Averages**
+55. **Jump Game**
 
 ### Heap 📊:
 
@@ -134,6 +132,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 
 766. **Toeplitz Matrix**
 299. **Bulls and Cows**
+1096. **Brace Expansion II** [Solution](https://leetcode.com/problems/brace-expansion-ii/solutions/4265563/python-clear-and-concise-faster-than-73-explained/)
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
