@@ -73,3 +73,99 @@ std::string getHint(std::string secret, std::string guess) {
 
     return std::to_string(bulls) + "A" + std::to_string(cows) + "B";
 }
+
+// 980. Unique Paths III
+
+bool bitSet(int n, int i) {
+    return n & (1 << i);
+}
+
+int setBit(int n, int i) {
+    return n | (1 << i);
+}
+
+bool isValid(int i, int j, std::vector<std::vector<int>> &grid, int visited) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    if (i < 0 || j < 0 || i >= n || j >= m) {
+        return false;
+    }
+
+    return grid[i][j] != -1 && !bitSet(visited, i * m + j);
+}
+
+int dfs(int i, int j, std::vector<std::vector<int>> &grid, int visited, int target) {
+    if (grid[i][j] == 2 && target == 0) return 1;
+
+    int n = grid.size();
+    int m = grid[0].size();
+
+    std::vector<std::pair<int, int>> dirs{{-1, 0},
+                                          {0,  -1},
+                                          {0,  1},
+                                          {1,  0}};
+
+    int count = 0;
+    for (auto [di, dj]: dirs) {
+        if (!isValid(i + di, j + dj, grid, visited)) continue;
+
+        count += dfs(i + di, j + dj, grid, setBit(visited, (i + di) * m + (j + dj)), target - 1);
+    }
+
+    return count;
+}
+
+int uniquePathsIII(std::vector<std::vector<int>> &grid) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    int start_i = -1;
+    int start_j = -1;
+
+    int target = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (grid[i][j] == 0) ++target;
+            if (grid[i][j] != 1) continue;
+            start_i = i;
+            start_j = j;
+        }
+    }
+
+    return dfs(start_i, start_j, grid, setBit(0, start_i * m + start_j), target + 1);
+}
+
+// 807. Max Increase to Keep City Skyline
+
+int maxIncreaseKeepingSkyline(std::vector<std::vector<int>>& grid) {
+    int n = grid.size();
+
+    std::vector<int> rows(n, 0);
+    std::vector<int> cols(n, 0);
+    for (int i = 0; i < n; ++i) {
+        int row_max = 0;
+        for (int j = 0; j < n; ++j) {
+            cols[j] = std::max(cols[j], grid[i][j]);
+            rows[i] = std::max(rows[i], grid[i][j]);
+        }
+    }
+
+    int res = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            res += std::min(rows[i], cols[j]) - grid[i][j];
+        }
+    }
+    return res;
+}
+
+int main() {
+    auto g = std::vector<std::vector<int>>{
+            {1, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 2, -1},
+    };
+    std::cout << uniquePathsIII(g) << std::endl;
+    return 0;
+}

@@ -127,12 +127,15 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 ### Arrays 🎞:
 
 2270. **Number of Ways to Split Array**
+922. **Sort Array By Parity II**
 
 ### Other:
 
 766. **Toeplitz Matrix**
 299. **Bulls and Cows**
 1096. **Brace Expansion II** [Solution](https://leetcode.com/problems/brace-expansion-ii/solutions/4265563/python-clear-and-concise-faster-than-73-explained/)
+980. **Unique Paths III**
+808. **Max Increase to Keep City Skyline**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

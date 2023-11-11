@@ -37,3 +37,17 @@ int waysToSplitArray(std::vector<int> &nums) {
 
     return count;
 }
+
+std::vector<int> sortArrayByParityII(std::vector<int>& nums) {
+    for (int searcher = 1, waiter = 0; searcher < nums.size(); ++searcher) {
+        while (waiter < nums.size() && nums[waiter] % 2 == waiter % 2) {
+            ++waiter;
+            searcher = std::max(searcher, waiter + 1);
+        }
+        if (searcher < nums.size() && nums[searcher] % 2 != searcher % 2) {
+            std::swap(nums[waiter], nums[searcher]);
+        }
+    }
+
+    return nums;
+}
