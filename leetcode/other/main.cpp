@@ -160,12 +160,44 @@ int maxIncreaseKeepingSkyline(std::vector<std::vector<int>>& grid) {
     return res;
 }
 
+// 73. Set Matrix Zeroes
+
+void setZeroes(std::vector<std::vector<int>>& matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+
+    bool col0 = true;
+
+    for (int i = 0; i < n; ++i) {
+        if (matrix[i][0] == 0) {
+            col0 = false;
+        }
+        for (int j = 1; j < m; ++j) {
+            if (matrix[i][j] == 0) {
+                matrix[i][0] = 0;
+                matrix[0][j] = 0;
+            }
+        }
+    }
+
+    for (int i = n - 1; i >= 0; --i) {
+        for (int j = m - 1; j >= 1; --j) {
+            if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                matrix[i][j] = 0;
+            }
+        }
+        if (!col0) matrix[i][0] = 0;
+    }
+
+    return;
+}
+
 int main() {
     auto g = std::vector<std::vector<int>>{
-            {1, 0, 0, 0},
-            {0, 0, 0, 0},
-            {0, 0, 2, -1},
+            {0, 1, 2, 0},
+            {3, 4, 5, 2},
+            {1, 3, 1, 5},
     };
-    std::cout << uniquePathsIII(g) << std::endl;
+    setZeroes(g);
     return 0;
 }
