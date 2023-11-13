@@ -66,39 +66,39 @@ int findMaximizedCapital(int k, int w, std::vector<int> &profits, std::vector<in
 
 // 373. Find K Pairs with Smallest Sums
 
-std::vector<std::vector<int>> kSmallestPairs(std::vector<int> &nums1, std::vector<int> &nums2, int k) {
-    int n = nums1.size();
-    int m = nums2.size();
-
-    std::priority_queue<std::vector<int>> q;
-
-    q.push(std::vector<int>{-(nums1[0] + nums2[0]), 0, 0});
-
-    std::set<std::pair<int, int>> visited;
-
-    std::vector<std::vector<int>> res;
-    while (!q.empty() && k--) {
-        auto curr = q.top();
-
-        int i = curr[1];
-        int j = curr[2];
-
-        q.pop();
-        res.emplace_back(std::vector<int>{nums1[i], nums2[j]});
-
-        if (i + 1 < n && !visited.contains({i + 1, j})) {
-            q.push(std::vector<int>{-(nums1[i + 1] + nums2[j]), i + 1, j});
-            visited.insert({i + 1, j});
-        }
-
-        if (j + 1 < m && !visited.contains({i, j + 1})) {
-            q.push(std::vector<int>{-(nums1[i] + nums2[j + 1]), i, j + 1});
-            visited.insert({i, j + 1});
-        }
-    }
-
-    return res;
-}
+//std::vector<std::vector<int>> kSmallestPairs(std::vector<int> &nums1, std::vector<int> &nums2, int k) {
+//    int n = nums1.size();
+//    int m = nums2.size();
+//
+//    std::priority_queue<std::vector<int>> q;
+//
+//    q.push(std::vector<int>{-(nums1[0] + nums2[0]), 0, 0});
+//
+//    std::set<std::pair<int, int>> visited;
+//
+//    std::vector<std::vector<int>> res;
+//    while (!q.empty() && k--) {
+//        auto curr = q.top();
+//
+//        int i = curr[1];
+//        int j = curr[2];
+//
+//        q.pop();
+//        res.emplace_back(std::vector<int>{nums1[i], nums2[j]});
+//
+//        if (i + 1 < n && !visited.contains({i + 1, j})) {
+//            q.push(std::vector<int>{-(nums1[i + 1] + nums2[j]), i + 1, j});
+//            visited.insert({i + 1, j});
+//        }
+//
+//        if (j + 1 < m && !visited.contains({i, j + 1})) {
+//            q.push(std::vector<int>{-(nums1[i] + nums2[j + 1]), i, j + 1});
+//            visited.insert({i, j + 1});
+//        }
+//    }
+//
+//    return res;
+//}
 
 
 // 295. Find Median from Data Stream
@@ -178,9 +178,48 @@ double mincostToHireWorkers(std::vector<int> &quality, std::vector<int> &wage, i
     return ans;
 }
 
+// 1439. Find the Kth Smallest Sum of a Matrix With Sorted Rows
+
+int kthSmallest(std::vector<std::vector<int>> &mat, int k) {
+    int n = mat.size();
+    int m = mat[0].size();
+
+    std::set<std::vector<int>> visited;
+    std::priority_queue<std::pair<int, std::vector<int>>> pq;
+
+    int sum = 0;
+    for (int i = 0; i < n; ++i) {
+        sum += mat[i][0];
+    }
+
+    pq.push({-sum, std::vector<int>(n, 0)});
+
+    std::vector<int> res;
+
+    while (res.size() < k) {
+        auto [currSum, idxs] = pq.top();
+        res.emplace_back(-pq.top().first);
+
+        pq.pop();
+
+        for (int i = 0; i < n; ++i) {
+            if (idxs[i] + 1 >= m) continue;
+
+            std::vector<int> next(idxs.begin(), idxs.end());
+            next[i] = idxs[i] + 1;
+
+            if (visited.find(next) != visited.end()) continue;
+
+            pq.push({currSum + mat[i][idxs[i]] - mat[i][next[i]], next});
+            visited.insert(next);
+        }
+    }
+
+    return res.back();
+}
+
 int main() {
-    auto a = std::vector<int>{10,20,5};
-    auto b = std::vector<int>{70,50,30};
-    std::cout << mincostToHireWorkers(a, b, 2) << std::endl;
+    auto m = std::vector<std::vector<int>>{{1, 3, 11}, {2, 4, 6}};
+    std::cout << kthSmallest(m, 9) << std::endl;
     return 0;
 }

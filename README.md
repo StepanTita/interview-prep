@@ -93,6 +93,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 373. **Find K Pairs with Smallest Sums**
 295. **Find Median from Data Stream**
 857. **Minimum Cost to Hire K Workers**
+1439. **Find the Kth Smallest Sum of a Matrix With Sorted Rows**
 
 ### Stack 📥:
 
@@ -123,6 +124,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 ### Graphs:
 
 399. **Evaluate Division**
+1305. **All Elements in Two Binary Search Trees**
 
 ### Arrays 🎞:
 

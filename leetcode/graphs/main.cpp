@@ -78,3 +78,63 @@ std::vector<double> calcEquation(
 
     return res;
 }
+
+// 1305. All Elements in Two Binary Search Trees
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+void postOrder(TreeNode *curr, std::stack<int> &out) {
+    if (curr == NULL) {
+        return;
+    }
+
+    postOrder(curr->right, out);
+    out.push(curr->val);
+    postOrder(curr->left, out);
+}
+
+std::vector<int> getAllElements(TreeNode *a, TreeNode *b) {
+    std::vector<int> res;
+
+    std::stack<int> postA;
+    std::stack<int> postB;
+
+    postOrder(a, postA);
+    postOrder(b, postB);
+
+    while (!postA.empty() && !postB.empty()) {
+        while (!postA.empty() && postA.top() <= postB.top()) {
+            res.emplace_back(postA.top());
+            postA.pop();
+        }
+
+        if (postA.empty()) break;
+
+        while (!postB.empty() && postB.top() < postA.top()) {
+            res.emplace_back(postB.top());
+            postB.pop();
+        }
+    }
+
+    while (!postA.empty()) {
+        res.emplace_back(postA.top());
+        postA.pop();
+    }
+
+    while (!postB.empty()) {
+        res.emplace_back(postB.top());
+        postB.pop();
+    }
+
+    return res;
+}
