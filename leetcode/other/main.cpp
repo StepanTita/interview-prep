@@ -138,7 +138,7 @@ int uniquePathsIII(std::vector<std::vector<int>> &grid) {
 
 // 807. Max Increase to Keep City Skyline
 
-int maxIncreaseKeepingSkyline(std::vector<std::vector<int>>& grid) {
+int maxIncreaseKeepingSkyline(std::vector<std::vector<int>> &grid) {
     int n = grid.size();
 
     std::vector<int> rows(n, 0);
@@ -162,7 +162,7 @@ int maxIncreaseKeepingSkyline(std::vector<std::vector<int>>& grid) {
 
 // 73. Set Matrix Zeroes
 
-void setZeroes(std::vector<std::vector<int>>& matrix) {
+void setZeroes(std::vector<std::vector<int>> &matrix) {
     int n = matrix.size();
     int m = matrix[0].size();
 
@@ -192,12 +192,71 @@ void setZeroes(std::vector<std::vector<int>>& matrix) {
     return;
 }
 
+// 419. Battleships in a Board
+
+int countBattleships(std::vector<std::vector<char>> &board) {
+    int n = board.size();
+    int m = board[0].size();
+
+    int count = 0;
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (board[i][j] != 'X') continue;
+
+            if ((i - 1 >= 0 && board[i - 1][j] == 'X') || (j - 1 >= 0 && board[i][j - 1] == 'X')) continue;
+
+            ++count;
+        }
+    }
+
+    return count;
+}
+
+// 1016. Binary String With Substrings Representing 1 To N
+
+std::string toBin(int n) {
+    std::string res;
+
+    while (n > 0) {
+        res += (n % 2) + '0';
+        n = n >> 1;
+    }
+
+    std::reverse(res.begin(), res.end());
+
+    return res;
+}
+
+bool queryString(std::string s, int N) {
+    if (N > 2047) return false;
+
+    for (int n = 1; n <= N; ++n) {
+        std::string bin = toBin(n);
+
+        bool fail = true;
+        for (int start = 0; start < s.length(); ++start) {
+            bool found = true;
+            for (int i = 0; i < bin.length(); ++i) {
+                if (s[start + i] != bin[i]) {
+                    found = false;
+                    break;
+                }
+            }
+
+            if (found) {
+                fail = false;
+                break;
+            }
+        }
+
+        if (fail) return false;
+    }
+
+    return true;
+}
+
 int main() {
-    auto g = std::vector<std::vector<int>>{
-            {0, 1, 2, 0},
-            {3, 4, 5, 2},
-            {1, 3, 1, 5},
-    };
-    setZeroes(g);
+    queryString("10010111100001110010", 10);
     return 0;
 }

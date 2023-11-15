@@ -103,6 +103,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 ### Greedy 💰:
 
 2900. **Longest Unequal Adjacent Groups Subsequence I**
+1090. **Largest Values From Labels**
 
 ### BFS & DFS 🔍:
 
@@ -139,6 +140,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 980. **Unique Paths III**
 808. **Max Increase to Keep City Skyline**
 73. **Set Matrix Zeroes 🤢** _(genuinely hate this problem)_
+419. **Battleships in a Board**
+1016. **Binary String With Substrings Representing 1 To N**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
