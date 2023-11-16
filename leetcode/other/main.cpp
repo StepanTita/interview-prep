@@ -256,7 +256,94 @@ bool queryString(std::string s, int N) {
     return true;
 }
 
+// 135. Candy
+
+int candy(std::vector<int> &ratings) {
+    int n = ratings.size();
+
+    if (n == 1) return 1;
+
+    std::vector<int> candies(n, 1);
+
+    int candy = n;
+    int giving = 0;
+    for (int i = 1; i < n; ++i) {
+        if (ratings[i] > ratings[i - 1]) {
+            ++giving;
+        } else {
+            giving = 0;
+        }
+
+        candy += giving;
+        candies[i] += giving;
+    }
+
+    for (int i = n - 2; i >= 0; --i) {
+        if (ratings[i] > ratings[i + 1] && candies[i] <= candies[i + 1]) {
+            candy += (candies[i + 1] - candies[i] + 1);
+            candies[i] = candies[i + 1] + 1;
+        }
+    }
+
+    return candy;
+}
+
+// 93. Restore IP Addresses
+
+std::string toIP(std::vector<std::string> &domains) {
+    int last = domains.size() - 1;
+
+    std::string res = "";
+    for (int i = 0; i < last; ++i) {
+        res += domains[i] + ".";
+    }
+
+    return res + domains[last];
+}
+
+void dfs(int start, std::string &s, std::vector<std::string> &domains, std::unordered_set<std::string> &res) {
+    if ((domains.size() >= 4 && start < s.length())) return;
+
+    if (start >= s.length()) {
+        if (domains.size() < 4) return;
+        res.insert(toIP(domains));
+        return;
+    }
+
+    std::string curr = "";
+    for (int i = start; i < start + 3 && i < s.length(); ++i) {
+        curr += s[i];
+
+        if (std::stoi(curr) > 255) break;
+
+        domains.emplace_back(curr);
+
+        dfs(i + 1, s, domains, res);
+
+        domains.pop_back();
+
+        if (curr == "0") return;
+    }
+}
+
+std::vector<std::string> restoreIpAddresses(std::string s) {
+    if (s.length() > 12) {
+        return std::vector<std::string>{};
+    }
+
+    std::vector<std::string> domains;
+
+    std::unordered_set < std::string > container;
+    dfs(0, s, domains, container);
+
+    std::vector<std::string> res(container.begin(), container.end());
+
+    std::sort(res.begin(), res.end());
+
+    return res;
+}
+
 int main() {
-    queryString("10010111100001110010", 10);
+    std::vector<int> v{1, 2, 2};
     return 0;
 }

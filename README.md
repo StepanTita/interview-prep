@@ -142,6 +142,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 73. **Set Matrix Zeroes 🤢** _(genuinely hate this problem)_
 419. **Battleships in a Board**
 1016. **Binary String With Substrings Representing 1 To N**
+135. **Candy**
+93. **Restore IP Addresses**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
