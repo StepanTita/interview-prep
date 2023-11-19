@@ -126,6 +126,9 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 
 399. **Evaluate Division**
 1305. **All Elements in Two Binary Search Trees**
+207. **Course Schedule**
+210. **Course Schedule II**
+124. **Binary Tree Maximum Path Sum**
 
 ### Arrays 🎞:
 

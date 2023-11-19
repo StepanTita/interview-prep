@@ -138,3 +138,129 @@ std::vector<int> getAllElements(TreeNode *a, TreeNode *b) {
 
     return res;
 }
+
+// 207. Course Schedule
+
+bool dfs(
+        std::vector<std::vector<int>> &adj,
+        int curr,
+        std::vector<bool> &visited,
+        std::vector<bool> &inStack
+) {
+    visited[curr] = true;
+    inStack[curr] = true;
+
+    for (int next: adj[curr]) {
+        if (!visited[next] && dfs(adj, next, visited, inStack)) {
+            return true;
+        } else if (inStack[next]) return true;
+    }
+
+    inStack[curr] = false;
+
+    return false;
+}
+
+bool canFinish(int n, std::vector<std::vector<int>> &prerequisites) {
+    std::vector<std::vector<int>> adj(n, std::vector<int>());
+    for (auto p: prerequisites) {
+        adj[p[1]].emplace_back(p[0]);
+    }
+
+    std::vector<bool> visited(n);
+    std::vector<bool> inStack(n);
+    for (int i = 0; i < n; i++) {
+        if (dfs(adj, i, visited, inStack)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// 210. Course Schedule II
+
+bool dfs(int curr,
+         std::vector<std::vector<int>> &adj,
+         std::vector<int> &res,
+         std::vector<bool> &visited,
+         std::vector<bool> &inStack
+) {
+    visited[curr] = true;
+    inStack[curr] = true;
+
+    for (auto next: adj[curr]) {
+        if (!visited[next] && dfs(next, adj, res, visited, inStack)) {
+            return true;
+        } else if (inStack[next]) {
+            return true;
+        }
+    }
+
+    inStack[curr] = false;
+    res.emplace_back(curr);
+
+    return false;
+}
+
+std::vector<int> findOrder(int n, std::vector<std::vector<int>> &prerequisites) {
+    std::vector<std::vector<int>> adj(n, std::vector<int>());
+
+    for (auto p: prerequisites) {
+        adj[p[1]].emplace_back(p[0]);
+    }
+
+    std::vector<int> res;
+    std::vector<bool> visited(n, false);
+    std::vector<bool> inStack(n, false);
+
+    for (int i = 0; i < n; ++i) {
+        if (visited[i]) continue;
+        if (dfs(i, adj, res, visited, inStack)) {
+            res.clear();
+            return res;
+        }
+    }
+
+    std::reverse(res.begin(), res.end());
+    return res;
+}
+
+// 124. Binary Tree Maximum Path Sum
+
+int buildMax(TreeNode *curr, int &ans) {
+    if (curr == NULL) return -INF;
+
+    // take left + curr
+    // take right + curr
+    // take left + curr + right
+    // take only curr
+
+    auto left = buildMax(curr->left, ans);
+    auto right = buildMax(curr->right, ans);
+
+    curr->val = std::max(
+            {
+                    left + curr->val,
+                    right + curr->val,
+                    curr->val
+            }
+    );
+
+    ans = std::max({ans, curr->val, left + curr->val + right});
+
+    return curr->val;
+}
+
+int maxPathSum(TreeNode *root) {
+    int ans = -INF;
+    buildMax(root, ans);
+    return ans;
+}
+
+
+int main() {
+    auto t = new TreeNode(2, new TreeNode(1), new TreeNode(3));
+    std::cout << maxPathSum(t) << std::endl;
+    return 0;
+}

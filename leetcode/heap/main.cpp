@@ -219,7 +219,5 @@ int kthSmallest(std::vector<std::vector<int>> &mat, int k) {
 }
 
 int main() {
-    auto m = std::vector<std::vector<int>>{{1, 3, 11}, {2, 4, 6}};
-    std::cout << kthSmallest(m, 9) << std::endl;
     return 0;
 }
