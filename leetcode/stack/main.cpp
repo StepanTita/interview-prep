@@ -18,39 +18,30 @@ const int INF = 1e9;
 
 // 84. Largest Rectangle in Histogram
 
-int largestRectangleArea(std::vector<int> &heights) {
-    std::stack<int> bars;
+int largestRectangleArea(std::vector<int>& heights) {
+    heights.emplace_back(0);
+
+    std::stack<int> hist;
     std::stack<int> indexes;
 
-    int ans = 0;
+    int maxArea = 0;
     for (int i = 0; i < heights.size(); ++i) {
-        if (bars.empty() || heights[i] >= bars.top()) {
-            bars.push(heights[i]);
-            indexes.push(i);
-        } else {
-            int nextIndex = i;
-            while (!bars.empty() && bars.top() > heights[i]) {
-                ans = std::max(ans, (i - indexes.top()) * bars.top());
+        int prev = i;
+        while (!hist.empty() && heights[i] < hist.top()) {
+            int h = hist.top();
+            hist.pop();
 
-                nextIndex = indexes.top();
-                bars.pop();
-                indexes.pop();
-            }
-            bars.push(heights[i]);
-            indexes.push(nextIndex);
+            prev = indexes.top();
+            indexes.pop();
+
+            maxArea = std::max(maxArea, h * (i - prev));
         }
+
+        hist.push(heights[i]);
+        indexes.push(prev);
     }
 
-    int lastIndex = heights.size();
-
-    while (!bars.empty()) {
-        auto currIndex = indexes.top();
-        ans = std::max(ans, (lastIndex - currIndex) * bars.top());
-        bars.pop();
-        indexes.pop();
-    }
-
-    return ans;
+    return maxArea;
 }
 
 // 1504. Count Submatrices With All Ones

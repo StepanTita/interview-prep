@@ -343,6 +343,45 @@ std::vector<std::string> restoreIpAddresses(std::string s) {
     return res;
 }
 
+// 1578. Minimum Time to Make Rope Colorful
+
+int minCost(std::string colors, std::vector<int> &neededTime) {
+    auto prev_color = colors[0];
+
+    int min_time = 0;
+    int prev_sum = neededTime[0];
+    int max_val = neededTime[0];
+    for (int i = 1; i < colors.size(); ++i) {
+        if (prev_color != colors[i]) {
+            min_time += prev_sum - max_val;
+            prev_sum = 0;
+            max_val = 0;
+        }
+        prev_color = colors[i];
+        prev_sum += neededTime[i];
+        max_val = std::max(max_val, neededTime[i]);
+    }
+
+    return min_time + prev_sum - max_val;
+}
+
+// 50. Pow(x, n)
+
+double myPow(double x, long long n) {
+    if (n == 0) return 1;
+
+    if (n < 0) {
+        return 1.0 / myPow(x, -n);
+    }
+
+    if (n % 2 == 0) {
+        double p = myPow(x, n / 2);
+        return p * p;
+    } else {
+        return x * myPow(x, n - 1);
+    }
+}
+
 int main() {
     std::vector<int> v{1, 2, 2};
     return 0;
