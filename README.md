@@ -147,6 +147,9 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1016. **Binary String With Substrings Representing 1 To N**
 135. **Candy**
 93. **Restore IP Addresses**
+1578. **Minimum Time to Make Rope Colorful**
+50. **Pow(x, n)**
+915. **Partition Array into Disjoint Intervals**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

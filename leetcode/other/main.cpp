@@ -382,6 +382,33 @@ double myPow(double x, long long n) {
     }
 }
 
+// 915. Partition Array into Disjoint Intervals
+
+int partitionDisjoint(std::vector<int>& nums) {
+    // keep a vector for the left part
+    // keep min element for the right part
+    // whenever max from left is less than min from right -> calculate minLen
+    int n = nums.size();
+
+    std::vector<int> maxLeft(n, 0);
+    maxLeft[0] = nums[0];
+    for (int i = 1; i < n; ++i) {
+        maxLeft[i] = std::max(maxLeft[i - 1], nums[i]);
+    }
+
+    int minRight = INF;
+    int minLen = n;
+    for (int i = n - 1; i >= 0; --i) {
+        if (maxLeft[i] <= minRight) {
+            minLen = std::min(minLen, i + 1);
+        }
+
+        minRight = std::min(minRight, nums[i]);
+    }
+
+    return minLen;
+}
+
 int main() {
     std::vector<int> v{1, 2, 2};
     return 0;
