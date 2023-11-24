@@ -150,6 +150,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1578. **Minimum Time to Make Rope Colorful**
 50. **Pow(x, n)**
 915. **Partition Array into Disjoint Intervals**
+554. **Brick Wall**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

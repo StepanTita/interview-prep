@@ -409,6 +409,29 @@ int partitionDisjoint(std::vector<int>& nums) {
     return minLen;
 }
 
+// 554. Brick Wall
+
+int leastBricks(std::vector<std::vector<int>>& wall) {
+    std::unordered_map<int, int> pref;
+
+    int n = wall.size();
+
+    for (int i = 0; i < n; ++i) {
+        int prefSum = 0;
+        for (int j = 0; j < wall[i].size() - 1; ++j) {
+            prefSum += wall[i][j];
+            ++pref[prefSum];
+        }
+    }
+
+    int count = 0;
+    for (auto [w, c] : pref) {
+        count = std::max(count, c);
+    }
+
+    return n - count;
+}
+
 int main() {
     std::vector<int> v{1, 2, 2};
     return 0;
