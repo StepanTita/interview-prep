@@ -151,6 +151,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 50. **Pow(x, n)**
 915. **Partition Array into Disjoint Intervals**
 554. **Brick Wall**
+565. **Array Nesting**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

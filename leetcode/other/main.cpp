@@ -432,6 +432,29 @@ int leastBricks(std::vector<std::vector<int>>& wall) {
     return n - count;
 }
 
+// 565. Array Nesting
+
+int arrayNesting(std::vector<int>& nums) {
+    int n = nums.size();
+
+    int maxLen = 0;
+
+    std::vector<bool> visited(n, false);
+    for (int i = 0; i < n; ++i) {
+        int k = i;
+
+        int len = 0;
+        while (!visited[k]) {
+            visited[k] = true;
+            k = nums[k];
+            ++len;
+            maxLen = std::max(maxLen, len);
+        }
+    }
+
+    return maxLen;
+}
+
 int main() {
     std::vector<int> v{1, 2, 2};
     return 0;
