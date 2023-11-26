@@ -258,9 +258,49 @@ int maxPathSum(TreeNode *root) {
     return ans;
 }
 
+// 787. Cheapest Flights Within K Stops
+
+int findCheapestPrice(int n, std::vector<std::vector<int>>& flights, int src, int dst, int K) {
+    std::vector<std::vector<std::pair<int, int>>> adjList(n);
+
+    for (auto flight : flights) {
+        int from = flight[0];
+        int to = flight[1];
+        int cost = flight[2];
+        adjList[from].emplace_back(std::pair<int, int>{to, cost});
+    }
+
+    std::vector<std::vector<int>> dp(n, std::vector<int>(K + 2, INF));
+    dp[src][0] = 0;
+
+    for (int k = 0; k <= K; ++k) {
+        for (int i = 0; i < n; ++i) {
+            for (auto [next, cost] : adjList[i]) {
+                dp[next][k + 1] = std::min(dp[next][k + 1], dp[i][k] + cost);
+            }
+        }
+    }
+
+    int ans = INF;
+
+    for (int k = 0; k <= K + 1; ++k) {
+        ans = std::min(ans, dp[dst][k]);
+    }
+
+    if (ans == INF) return -1;
+
+    return ans;
+}
+
 
 int main() {
-    auto t = new TreeNode(2, new TreeNode(1), new TreeNode(3));
-    std::cout << maxPathSum(t) << std::endl;
+    auto t = std::vector<std::vector<int>>{
+            {0,1,100},
+            {1,2,100},
+            {2,0,100},
+            {1,3,600},
+            {2,3,200}
+    };
+    std::cout << findCheapestPrice(4, t, 0, 3, 1) << std::endl;
     return 0;
 }

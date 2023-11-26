@@ -129,6 +129,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 207. **Course Schedule**
 210. **Course Schedule II**
 124. **Binary Tree Maximum Path Sum**
+787. **Cheapest Flights Within K Stops**
 
 ### Arrays 🎞:
 
