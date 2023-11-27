@@ -260,10 +260,10 @@ int maxPathSum(TreeNode *root) {
 
 // 787. Cheapest Flights Within K Stops
 
-int findCheapestPrice(int n, std::vector<std::vector<int>>& flights, int src, int dst, int K) {
+int findCheapestPrice(int n, std::vector<std::vector<int>> &flights, int src, int dst, int K) {
     std::vector<std::vector<std::pair<int, int>>> adjList(n);
 
-    for (auto flight : flights) {
+    for (auto flight: flights) {
         int from = flight[0];
         int to = flight[1];
         int cost = flight[2];
@@ -275,7 +275,7 @@ int findCheapestPrice(int n, std::vector<std::vector<int>>& flights, int src, in
 
     for (int k = 0; k <= K; ++k) {
         for (int i = 0; i < n; ++i) {
-            for (auto [next, cost] : adjList[i]) {
+            for (auto [next, cost]: adjList[i]) {
                 dp[next][k + 1] = std::min(dp[next][k + 1], dp[i][k] + cost);
             }
         }
@@ -292,14 +292,43 @@ int findCheapestPrice(int n, std::vector<std::vector<int>>& flights, int src, in
     return ans;
 }
 
+// 1145. Binary Tree Coloring Game
+
+int subtreeSize(TreeNode *curr, int n, int x, bool &ans) {
+    if (curr == NULL) return 0;
+
+    int left = subtreeSize(curr->left, n, x, ans);
+    int right = subtreeSize(curr->right, n, x, ans);
+
+    if (curr->val == x) {
+        int prev = n - left - right - 1;
+        // parent
+        if (prev > left + right + 1) {
+            ans = true;
+        } else if (left > (n - left)) { // left
+            ans = true;
+        } else if (right > (n - right)) { // right
+            ans = true;
+        }
+    }
+
+    return left + right + 1;
+}
+
+bool btreeGameWinningMove(TreeNode *root, int n, int x) {
+    bool ans = false;
+    subtreeSize(root, n, x, ans);
+    return ans;
+}
+
 
 int main() {
     auto t = std::vector<std::vector<int>>{
-            {0,1,100},
-            {1,2,100},
-            {2,0,100},
-            {1,3,600},
-            {2,3,200}
+            {0, 1, 100},
+            {1, 2, 100},
+            {2, 0, 100},
+            {1, 3, 600},
+            {2, 3, 200}
     };
     std::cout << findCheapestPrice(4, t, 0, 3, 1) << std::endl;
     return 0;

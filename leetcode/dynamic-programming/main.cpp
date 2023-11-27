@@ -2090,6 +2090,47 @@ bool canJump(std::vector<int> &nums) {
     return maxJump >= nums.size() - 1;
 }
 
+// 97. Interleaving String
+
+bool isInterleave(std::string a, std::string b, std::string t) {
+    if (a.empty()) return b == t;
+    else if (b.empty()) return a == t;
+
+    int n = a.length();
+    int m = b.length();
+
+    if (n + m != t.length()) return false;
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
+
+    dp[n][m] = true;
+    for (int i = n - 1; i >= 0; --i) {
+        dp[i][m] = dp[i + 1][m] && (a[i] == t[i + m]);
+    }
+
+    for (int j = m - 1; j >= 0; --j) {
+        dp[n][j] = dp[n][j + 1] && (b[j] == t[n + j]);
+    }
+
+    for (int i = n - 1; i >= 0; --i) {
+        for (int j = m - 1; j >= 0; --j) {
+            if (a[i] != b[j]) {
+                if (a[i] == t[i + j]) {
+                    dp[i][j] = dp[i + 1][j];
+                } else if (b[j] == t[i + j]) {
+                    dp[i][j] = dp[i][j + 1];
+                }
+            } else {
+                if (a[i] != t[i + j]) continue;
+
+                dp[i][j] = dp[i + 1][j] || dp[i][j + 1];
+            }
+        }
+    }
+
+    return dp[0][0];
+}
+
 int main() {
     auto v = std::vector<int>{31, 26, 33, 21, 40};
     std::cout << lastStoneWeightII(v) << std::endl;
