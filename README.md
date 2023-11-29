@@ -155,6 +155,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 915. **Partition Array into Disjoint Intervals**
 554. **Brick Wall**
 565. **Array Nesting**
+2186. **Minimum Number of Steps to Make Two Strings Anagram II**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

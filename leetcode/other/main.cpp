@@ -455,6 +455,26 @@ int arrayNesting(std::vector<int>& nums) {
     return maxLen;
 }
 
+// 2186. Minimum Number of Steps to Make Two Strings Anagram II
+
+int minSteps(std::string s, std::string t) {
+    std::vector<int> fs('z' - 'a' + 1, 0);
+    for (char c : s) {
+        ++fs[c - 'a'];
+    }
+
+    for (char c : t) {
+        --fs[c - 'a'];
+    }
+
+    int ans = 0;
+    for (int c = 0; c <= 'z' - 'a'; ++c) {
+        ans += std::abs(fs[c]);
+    }
+
+    return ans;
+}
+
 int main() {
     std::vector<int> v{1, 2, 2};
     return 0;
