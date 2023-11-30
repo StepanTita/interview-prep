@@ -2131,8 +2131,38 @@ bool isInterleave(std::string a, std::string b, std::string t) {
     return dp[0][0];
 }
 
+// 1696. Jump Game VI
+
+int maxResult(std::vector<int>& nums, int K) {
+    int n = nums.size();
+
+    std::vector<int> dp(n, 0);
+
+    dp[0] = nums[0];
+
+    std::priority_queue<std::pair<int, int>> pq;
+    pq.push(std::pair<int, int>{dp[0], 0});
+
+    for (int i = 1; i < n; ++i) {
+        auto maxPrev = pq.top();
+        while (maxPrev.second < i - K) {
+            pq.pop();
+
+            if (!pq.empty()) {
+                maxPrev = pq.top();
+            }
+        }
+
+        dp[i] = maxPrev.first + nums[i];
+
+        pq.push({dp[i], i});
+    }
+
+    return dp[n - 1];
+}
+
 int main() {
-    auto v = std::vector<int>{31, 26, 33, 21, 40};
-    std::cout << lastStoneWeightII(v) << std::endl;
+    auto v = std::vector<int>{1,-1,-2,4,-7,3};
+    std::cout << maxResult(v, 2) << std::endl;
     return 0;
 }

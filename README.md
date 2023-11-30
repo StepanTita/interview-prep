@@ -86,6 +86,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 813. **Largest Sum of Averages**
 55. **Jump Game**
 97. **Interleaving String**
+1696. **Jump Game VI**
 
 ### Heap 📊:
 
@@ -95,6 +96,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 295. **Find Median from Data Stream**
 857. **Minimum Cost to Hire K Workers**
 1439. **Find the Kth Smallest Sum of a Matrix With Sorted Rows**
+239. **Sliding Window Maximum**
 
 ### Stack 📥:
 

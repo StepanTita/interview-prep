@@ -218,6 +218,59 @@ int kthSmallest(std::vector<std::vector<int>> &mat, int k) {
     return res.back();
 }
 
+// 239. Sliding Window Maximum
+
+// O(n log n)
+std::vector<int> maxSlidingWindow(std::vector<int>& nums, int k) {
+    int n = nums.size();
+
+    std::map<int, int> valCount;
+
+    for (int i = 0; i < k; ++i) {
+        ++valCount[nums[i]];
+    }
+
+    std::vector<int> res;
+    res.emplace_back(valCount.rbegin()->first);
+
+    int l = 0;
+    for (int r = k; r < n; ++r, ++l) {
+        if (--valCount[nums[l]] == 0) {
+            valCount.erase(nums[l]);
+        }
+
+        ++valCount[nums[r]];
+
+        res.emplace_back(valCount.rbegin()->first);
+    }
+
+    return res;
+}
+
+// O(n)
+std::vector<int> maxSlidingWindow2(std::vector<int>& nums, int k) {
+    int n = nums.size();
+
+    std::vector<int> res;
+    std::deque<int> window;
+    for (int i = 0; i < n; ++i) {
+        if (!window.empty() && window.front() < i - k + 1) {
+            window.pop_front();
+        }
+
+        while (!window.empty() && nums[window.back()] < nums[i]) {
+            window.pop_back();
+        }
+
+        window.push_back(i);
+
+        if (i >= k - 1)
+            res.emplace_back(nums[window.front()]);
+    }
+
+    return res;
+}
+
 int main() {
     return 0;
 }
