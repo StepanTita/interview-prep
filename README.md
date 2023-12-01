@@ -87,6 +87,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 55. **Jump Game**
 97. **Interleaving String**
 1696. **Jump Game VI**
+823. **Binary Trees With Factors**
 
 ### Heap 📊:
 
@@ -107,6 +108,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 
 2900. **Longest Unequal Adjacent Groups Subsequence I**
 1090. **Largest Values From Labels**
+1402. **Reducing Dishes**
 
 ### BFS & DFS 🔍:
 

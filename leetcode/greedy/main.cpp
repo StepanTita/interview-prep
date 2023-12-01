@@ -62,3 +62,20 @@ int largestValsFromLabels(std::vector<int> &values, std::vector<int> &labels, in
 
     return score;
 }
+
+// 1402. Reducing Dishes
+
+int maxSatisfaction(std::vector<int>& sat) {
+    std::sort(sat.begin(), sat.end(), std::greater<>());
+
+    int n = sat.size();
+
+    int res = 0;
+    int curr = 0;
+    for (int i = 0; i < n && sat[i] > -curr; ++i) {
+        curr += sat[i];
+        res += curr;
+    }
+
+    return std::max(0, res);
+}

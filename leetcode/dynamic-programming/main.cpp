@@ -2161,6 +2161,33 @@ int maxResult(std::vector<int>& nums, int K) {
     return dp[n - 1];
 }
 
+// 823. Binary Trees With Factors
+
+int numFactoredBinaryTrees(std::vector<int>& arr) {
+    // j > i
+    // if (arr[j] % arr[i] == 0)
+    // then dp[arr[j]] += dp[arr[i]] * dp[arr[j] / arr[i]]
+
+    std::sort(arr.begin(), arr.end());
+
+    int n = arr.size();
+
+    std::unordered_map<int, long long> dp;
+
+    long long total = 0;
+    for (int i = 0; i < n; ++i) {
+        dp[arr[i]] = 1;
+        for (int j = 0; j < i; ++j) {
+            if (arr[i] % arr[j] == 0) {
+                dp[arr[i]] = (dp[arr[i]] + dp[arr[j]] * dp[arr[i] / arr[j]]) % MOD;
+            }
+        }
+        total = (total + dp[arr[i]]) % MOD;
+    }
+
+    return total;
+}
+
 int main() {
     auto v = std::vector<int>{1,-1,-2,4,-7,3};
     std::cout << maxResult(v, 2) << std::endl;
