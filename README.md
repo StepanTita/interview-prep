@@ -160,6 +160,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 554. **Brick Wall**
 565. **Array Nesting**
 2186. **Minimum Number of Steps to Make Two Strings Anagram II**
+2423. **Remove Letter To Equalize Frequency**
+997. **Find the Town Judge**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

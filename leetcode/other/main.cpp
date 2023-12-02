@@ -475,7 +475,64 @@ int minSteps(std::string s, std::string t) {
     return ans;
 }
 
+// 2423. Remove Letter To Equalize Frequency
+
+bool equalFrequency(std::string word) {
+    std::unordered_map<int, int> freq;
+    for (char c : word) {
+        ++freq[c];
+    }
+
+    std::unordered_map<int, int> countFreq;
+
+    int countMax = 0;
+    int maxFreq = 0;
+    int minFreq = INF;
+    for (auto [c, f] : freq) {
+        if (maxFreq == f) {
+            ++countMax;
+        }
+        if (f > maxFreq) {
+            countMax = 1;
+        }
+
+        ++countFreq[f];
+        maxFreq = std::max(maxFreq, f);
+        minFreq = std::min(minFreq, f);
+    }
+
+    if (countFreq.size() != 2) {
+        if (countFreq.size() == 1) return countFreq.contains(1) || freq.size() == 1;
+        return false;
+    };
+
+    if (countFreq[1] == 1) return true;
+
+    return maxFreq - minFreq == 1 && countMax == 1;
+}
+
+// 997. Find the Town Judge
+
+int findJudge(int n, std::vector<std::vector<int>>& trust) {
+    std::vector<int> trustsTo(n, 0);
+    std::vector<int> trustsFrom(n, 0);
+
+    for (auto tr : trust) {
+        auto to = tr[0];
+        auto from = tr[1];
+
+        ++trustsTo[to - 1];
+        ++trustsFrom[from - 1];
+    }
+
+    for (int i = 0; i < n; ++i) {
+        if (trustsTo[i] == 0 && trustsFrom[i] == n - 1) return i + 1;
+    }
+
+    return -1;
+}
+
 int main() {
-    std::vector<int> v{1, 2, 2};
+    equalFrequency("babbdd");
     return 0;
 }
