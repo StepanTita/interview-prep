@@ -2188,8 +2188,53 @@ int numFactoredBinaryTrees(std::vector<int>& arr) {
     return total;
 }
 
+// 2707. Extra Characters in a String
+
+bool startsWith(std::string &s, std::string &t, int pos) {
+    if (t.length() - pos < s.length()) return false;
+    for (int i = 0; pos + i < t.length() && i < s.length(); ++i) {
+        if (s[i] != t[pos + i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int dfs(std::string &s, std::vector<std::string> &dict, int start, std::vector<int> &memo) {
+    if (start >= s.length()) {
+        return 0;
+    }
+
+    if (memo[start] != -1) return memo[start];
+
+    memo[start] = INF;
+    int uncovered = 0;
+    for (int i = start; i < s.length(); ++i) {
+        for (auto word : dict) {
+
+            if (startsWith(word, s, i)) {
+                memo[start] = std::min(memo[start], dfs(s, dict, i + word.length(), memo) + uncovered);
+            }
+        }
+
+        ++uncovered;
+    }
+
+    if (memo[start] == INF) {
+        return memo[start] = s.length() - start;
+    }
+
+    return memo[start];
+}
+
+int minExtraChar(std::string s, std::vector<std::string>& dictionary) {
+    std::vector<int> memo(s.length(), -1);
+    return dfs(s, dictionary, 0, memo);
+}
+
 int main() {
-    auto v = std::vector<int>{1,-1,-2,4,-7,3};
-    std::cout << maxResult(v, 2) << std::endl;
+    auto v = std::vector<std::string>{"ox","lb","diz","gu","v","ksv","o","nuq","r","txhe","e","wmo","cehy","tskz","ds","kzbu"};
+    std::cout << minExtraChar("dwmodizxvvbosxxw", v) << std::endl;
     return 0;
 }

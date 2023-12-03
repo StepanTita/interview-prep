@@ -89,3 +89,51 @@ int kSimilarity(std::string s1, std::string s2) {
 
     return dist[s2];
 }
+
+// 1028. Recover a Tree From Preorder Traversal
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+TreeNode* recoverFromPreorder(std::string traversal) {
+    int depth = 0;
+    std::string val = "";
+
+    std::unordered_map<int, TreeNode*> prev;
+    for (int i = 0; i < traversal.length();) {
+        if (traversal[i] == '-') {
+            ++depth;
+            ++i;
+        } else {
+            val = "";
+            while (i < traversal.length() && traversal[i] != '-') {
+                val += traversal[i];
+                ++i;
+            }
+
+            int num = std::stoi(val);
+            prev[depth] = new TreeNode(num);
+
+            if (depth != 0) {
+                if (prev[depth - 1]->left) {
+                    prev[depth - 1]->right = prev[depth];
+                } else {
+                    prev[depth - 1]->left = prev[depth];
+                }
+            }
+
+            depth = 0;
+        }
+    }
+
+    return prev[0];
+}

@@ -88,6 +88,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 97. **Interleaving String**
 1696. **Jump Game VI**
 823. **Binary Trees With Factors**
+2707. **Extra Characters in a String**
 
 ### Heap 📊:
 
@@ -114,6 +115,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 
 838. **Push Dominoes**
 854. **K-Similar Strings**
+1028. **Recover a Tree From Preorder Traversal**
 
 ### Math ♾️:
 
