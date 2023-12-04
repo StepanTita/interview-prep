@@ -532,6 +532,33 @@ int findJudge(int n, std::vector<std::vector<int>>& trust) {
     return -1;
 }
 
+// 435. Non-overlapping Intervals
+
+bool intersect(std::vector<int> &a, std::vector<int> &b) {
+    return a[1] > b[0];
+}
+
+int eraseOverlapIntervals(std::vector<std::vector<int>>& intervals) {
+    std::sort(intervals.begin(), intervals.end());
+
+    int n = intervals.size();
+    auto prev = intervals[0];
+    int count = 0;
+    for (int i = 1; i < n; ++i) {
+        auto curr = intervals[i];
+        if (intersect(prev, curr)) {
+            if (prev[1] > curr[1]) {
+                prev = curr;
+            }
+            ++count;
+        } else {
+            prev = curr;
+        }
+    }
+
+    return count;
+}
+
 int main() {
     equalFrequency("babbdd");
     return 0;

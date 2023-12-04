@@ -2233,8 +2233,36 @@ int minExtraChar(std::string s, std::vector<std::string>& dictionary) {
     return dfs(s, dictionary, 0, memo);
 }
 
+// 357. Count Numbers with Unique Digits
+
+long long choose(int n, int k) {
+    if (k > n) return 0;
+    if (n == k) return 1;
+    if (k <= 0 || n <= 0) return 1;
+    return choose(n - 1, k - 1) + choose(n - 1, k);
+}
+
+long long fact(int n) {
+    if (n <= 1) return 1;
+    return n * fact(n - 1);
+}
+
+int countNumbersWithUniqueDigits(int n) {
+    // fix last digit as 1, then all the rest can be 9!
+    // + fix prelast digit as one of 9, all the rest can be 9!
+    // + fix preprelast digit as one of 9, all the rest can be 9!
+
+    long long count = 1;
+
+    while(n > 0) {
+        count += 9 * choose(9, --n) * fact(n);
+    }
+
+    return count;
+}
+
 int main() {
     auto v = std::vector<std::string>{"ox","lb","diz","gu","v","ksv","o","nuq","r","txhe","e","wmo","cehy","tskz","ds","kzbu"};
-    std::cout << minExtraChar("dwmodizxvvbosxxw", v) << std::endl;
+    std::cout << countNumbersWithUniqueDigits(3) << std::endl;
     return 0;
 }
