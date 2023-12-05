@@ -164,6 +164,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2186. **Minimum Number of Steps to Make Two Strings Anagram II**
 2423. **Remove Letter To Equalize Frequency**
 997. **Find the Town Judge**
+638. **Shopping Offers**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

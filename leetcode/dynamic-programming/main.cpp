@@ -2133,7 +2133,7 @@ bool isInterleave(std::string a, std::string b, std::string t) {
 
 // 1696. Jump Game VI
 
-int maxResult(std::vector<int>& nums, int K) {
+int maxResult(std::vector<int> &nums, int K) {
     int n = nums.size();
 
     std::vector<int> dp(n, 0);
@@ -2163,7 +2163,7 @@ int maxResult(std::vector<int>& nums, int K) {
 
 // 823. Binary Trees With Factors
 
-int numFactoredBinaryTrees(std::vector<int>& arr) {
+int numFactoredBinaryTrees(std::vector<int> &arr) {
     // j > i
     // if (arr[j] % arr[i] == 0)
     // then dp[arr[j]] += dp[arr[i]] * dp[arr[j] / arr[i]]
@@ -2211,7 +2211,7 @@ int dfs(std::string &s, std::vector<std::string> &dict, int start, std::vector<i
     memo[start] = INF;
     int uncovered = 0;
     for (int i = start; i < s.length(); ++i) {
-        for (auto word : dict) {
+        for (auto word: dict) {
 
             if (startsWith(word, s, i)) {
                 memo[start] = std::min(memo[start], dfs(s, dict, i + word.length(), memo) + uncovered);
@@ -2228,7 +2228,7 @@ int dfs(std::string &s, std::vector<std::string> &dict, int start, std::vector<i
     return memo[start];
 }
 
-int minExtraChar(std::string s, std::vector<std::string>& dictionary) {
+int minExtraChar(std::string s, std::vector<std::string> &dictionary) {
     std::vector<int> memo(s.length(), -1);
     return dfs(s, dictionary, 0, memo);
 }
@@ -2254,15 +2254,73 @@ int countNumbersWithUniqueDigits(int n) {
 
     long long count = 1;
 
-    while(n > 0) {
+    while (n > 0) {
         count += 9 * choose(9, --n) * fact(n);
     }
 
     return count;
 }
 
+// 638. Shopping Offers
+
+bool canApply(std::vector<int> &offer, std::vector<int> &needs) {
+    for (int i = 0; i < needs.size(); ++i) {
+        if (needs[i] - offer[i] < 0) return false;
+    }
+    return true;
+}
+
+void apply(std::vector<int> &offer, std::vector<int> &needs, int sign) {
+    for (int i = 0; i < needs.size(); ++i) {
+        needs[i] += sign * offer[i];
+    }
+}
+
+int backtrack(std::vector<int> &price, std::vector<std::vector<int>> &special, std::vector<int> &needs,
+              std::map<std::vector<int>, int> &memo) {
+    // try to use offers while you still can,
+    // if you cannot then just add what is necessary
+
+    int n = price.size();
+
+    if (memo.contains(std::vector<int>(needs))) return memo[std::vector<int>(needs)];
+
+    memo[needs] = INF;
+    for (auto &offer: special) {
+        if (canApply(offer, needs)) {
+            int ans = memo[needs];
+            apply(offer, needs, -1);
+            ans = std::min(ans, backtrack(price, special, needs, memo) + offer[n]);
+            apply(offer, needs, 1);
+            memo[needs] = ans;
+        }
+    }
+
+    int diff = 0;
+    for (int i = 0; i < n; ++i) {
+        if (needs[i] > 0) {
+            diff += needs[i] * price[i];
+        }
+    }
+
+    return memo[needs] = std::min(memo[needs], diff);
+}
+
+int shoppingOffers(std::vector<int> &price, std::vector<std::vector<int>> &special, std::vector<int> &needs) {
+    // price[i] - price of i-th item
+    // special[i][j] - number of j-th item in i-th offer
+    // special[i][n] - cost of i-th offer
+    // needs[i] - number of i-th item
+
+    std::map<std::vector<int>, int> memo;
+
+    return backtrack(price, special, needs, memo);
+}
+
 int main() {
-    auto v = std::vector<std::string>{"ox","lb","diz","gu","v","ksv","o","nuq","r","txhe","e","wmo","cehy","tskz","ds","kzbu"};
-    std::cout << countNumbersWithUniqueDigits(3) << std::endl;
+    auto p = std::vector<int>{2, 5};
+    auto s = std::vector<std::vector<int>>{{3, 0, 5}, { 1, 2, 10 }};
+    auto n = std::vector<int>{3, 2};
+    std::cout << shoppingOffers(p, s, n) << std::endl;
     return 0;
 }
