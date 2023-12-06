@@ -165,6 +165,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2423. **Remove Letter To Equalize Frequency**
 997. **Find the Town Judge**
 638. **Shopping Offers**
+2369. **Check if There is a Valid Partition For The Array**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

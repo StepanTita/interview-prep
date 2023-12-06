@@ -2317,6 +2317,37 @@ int shoppingOffers(std::vector<int> &price, std::vector<std::vector<int>> &speci
     return backtrack(price, special, needs, memo);
 }
 
+// 2369. Check if There is a Valid Partition For The Array
+
+bool dfs(std::vector<int> &nums, int i, std::vector<int> &memo) {
+    if (i >= nums.size()) return true;
+
+    if (memo[i] != -1) return memo[i];
+
+    if (i + 1 >= nums.size()) return false;
+
+    bool ans = false;
+    if (nums[i] == nums[i + 1]) {
+        ans = ans || dfs(nums, i + 2, memo);
+    }
+
+    if (i + 2 >= nums.size()) return memo[i] = ans;
+
+    if (nums[i] == nums[i + 1] && nums[i + 1] == nums[i + 2] ||
+        nums[i + 2] - nums[i + 1] == nums[i + 1] - nums[i] &&
+        nums[i + 1] - nums[i] == 1)
+    {
+        ans = ans || dfs(nums, i + 3, memo);
+    }
+
+    return memo[i] = ans;
+}
+
+bool validPartition(std::vector<int>& nums) {
+    std::vector<int> memo(nums.size(), -1);
+    return dfs(nums, 0, memo);
+}
+
 int main() {
     auto p = std::vector<int>{2, 5};
     auto s = std::vector<std::vector<int>>{{3, 0, 5}, { 1, 2, 10 }};
