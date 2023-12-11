@@ -2335,23 +2335,52 @@ bool dfs(std::vector<int> &nums, int i, std::vector<int> &memo) {
 
     if (nums[i] == nums[i + 1] && nums[i + 1] == nums[i + 2] ||
         nums[i + 2] - nums[i + 1] == nums[i + 1] - nums[i] &&
-        nums[i + 1] - nums[i] == 1)
-    {
+        nums[i + 1] - nums[i] == 1) {
         ans = ans || dfs(nums, i + 3, memo);
     }
 
     return memo[i] = ans;
 }
 
-bool validPartition(std::vector<int>& nums) {
+bool validPartition(std::vector<int> &nums) {
     std::vector<int> memo(nums.size(), -1);
     return dfs(nums, 0, memo);
 }
 
+// 2767. Partition String Into Minimum Beautiful Substrings
+
+int minimumBeautifulSubstrings(std::string s) {
+    std::unordered_set < std::string > pows{
+            "1",
+            "101",
+            "11001",
+            "1111101",
+            "1001110001",
+            "110000110101",
+            "11110100001001"
+    };
+
+    int n = s.length();
+
+    std::vector<int> dp(n + 1, INF);
+
+    dp[0] = 0;
+
+    for (int i = 0; i < n; ++i) {
+        if (s[i] == '0') continue;
+
+        std::string curr = "";
+        for (int j = i; j < n; ++j) {
+            curr += s[j];
+            if (pows.contains(curr)) {
+                dp[j + 1] = std::min(dp[j + 1], dp[i] + 1);
+            }
+        }
+    }
+
+    return dp[n] >= INF ? -1 : dp[n];
+}
+
 int main() {
-    auto p = std::vector<int>{2, 5};
-    auto s = std::vector<std::vector<int>>{{3, 0, 5}, { 1, 2, 10 }};
-    auto n = std::vector<int>{3, 2};
-    std::cout << shoppingOffers(p, s, n) << std::endl;
     return 0;
 }

@@ -89,6 +89,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1696. **Jump Game VI**
 823. **Binary Trees With Factors**
 2707. **Extra Characters in a String**
+2767. **Partition String Into Minimum Beautiful Substrings**
 
 ### Heap 📊:
 
