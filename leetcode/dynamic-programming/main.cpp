@@ -2347,6 +2347,26 @@ bool validPartition(std::vector<int> &nums) {
     return dfs(nums, 0, memo);
 }
 
+// bottom-up
+bool validPartition2(std::vector<int> &nums) {
+    int n = nums.size();
+
+    std::vector<bool> dp(4, false);
+    dp[0] = true;
+    dp[1] = false;
+    dp[2] = nums[0] == nums[1];
+
+    for (int i = 2; i < n; ++i) {
+        bool two = nums[i] == nums[i - 1];
+        bool three = (two && nums[i] == nums[i - 2]) ||
+                     (nums[i] - 1 == nums[i - 1] && nums[i] - 2 == nums[i - 2]);
+
+        dp[(i + 1) % 4] = (dp[(i - 1) % 4] && two) || (dp[(i - 2) % 4] && three);
+    }
+
+    return dp[n % 4];
+}
+
 // 2767. Partition String Into Minimum Beautiful Substrings
 
 int minimumBeautifulSubstrings(std::string s) {
@@ -2379,6 +2399,33 @@ int minimumBeautifulSubstrings(std::string s) {
     }
 
     return dp[n] >= INF ? -1 : dp[n];
+}
+
+// 790. Domino and Tromino Tiling
+
+long long countTilings(int n, int trimino, std::vector<std::vector<int>> &memo) {
+    if (n < 0) return 0;
+
+    if (n == 0 && trimino == 0) return 1;
+
+    if (memo[n][trimino] != -1) return memo[n][trimino];
+
+    if (trimino == 1) {
+        return memo[n][trimino] = (countTilings(n - 1, 0, memo) + countTilings(n - 1, 2, memo)) % MOD;
+    } else if (trimino == 2) {
+        return memo[n][trimino] = (countTilings(n - 1, 0, memo) + countTilings(n - 1, 1, memo)) % MOD;
+    }
+
+    return memo[n][trimino] =
+                   (countTilings(n - 1, 0, memo) +
+                    countTilings(n - 2, 0, memo) +
+                    countTilings(n - 2, 1, memo) +
+                    countTilings(n - 2, 2, memo)) % MOD;
+}
+
+int numTilings(int n) {
+    std::vector<std::vector<int>> memo(n + 1, std::vector<int>(3, -1));
+    return countTilings(n, 0, memo);
 }
 
 int main() {

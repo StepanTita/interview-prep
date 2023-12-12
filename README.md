@@ -90,6 +90,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 823. **Binary Trees With Factors**
 2707. **Extra Characters in a String**
 2767. **Partition String Into Minimum Beautiful Substrings**
+790. **Domino and Tromino Tiling**
 
 ### Heap 📊:
 
@@ -117,6 +118,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 838. **Push Dominoes**
 854. **K-Similar Strings**
 1028. **Recover a Tree From Preorder Traversal**
+1162. **As Far from Land as Possible**
 
 ### Math ♾️:
 

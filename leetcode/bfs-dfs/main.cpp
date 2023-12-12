@@ -137,3 +137,63 @@ TreeNode* recoverFromPreorder(std::string traversal) {
 
     return prev[0];
 }
+
+// 1162. As Far from Land as Possible
+
+bool isValid(int n, int m, int i, int j) {
+    if (i < 0 || j < 0 || i >= n || j >= m) {
+        return false;
+    }
+    return true;
+}
+
+int maxDistance(std::vector<std::vector<int>> &grid) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    std::queue<std::pair<int, int>> q;
+    std::vector<std::vector<int>> dist(n, std::vector<int>(m, -1));
+
+    int isls = 0;
+    int water = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (grid[i][j] == 1) {
+                dist[i][j] = 0;
+                q.push(std::pair<int, int>{i, j});
+                ++isls;
+            } else {
+                ++water;
+            }
+        }
+    }
+
+    if (isls == 0 || water == 0) return -1;
+
+    while (!q.empty()) {
+        auto [i, j] = q.front();
+        q.pop();
+
+        std::vector<std::pair<int, int>> dirs{
+                {-1, 0},
+                {0,  -1},
+                {0,  1},
+                {1,  0}
+        };
+        for (auto [di, dj] : dirs) {
+            if (isValid(n, m, i + di, j + dj) && grid[i + di][j + dj] == 0 && dist[i + di][j + dj] == -1) {
+                dist[i + di][j + dj] = dist[i][j] + std::abs(di) + std::abs(dj);
+                q.push({i + di, j + dj});
+            }
+        }
+    }
+
+    int maxDist = -1;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            maxDist = std::max(maxDist, dist[i][j]);
+        }
+    }
+
+    return maxDist;
+}
