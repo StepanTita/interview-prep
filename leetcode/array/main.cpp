@@ -51,3 +51,21 @@ std::vector<int> sortArrayByParityII(std::vector<int>& nums) {
 
     return nums;
 }
+
+// 1184. Distance Between Bus Stops
+
+int distanceBetweenBusStops(std::vector<int>& distance, int start, int destination) {
+    int n = distance.size();
+
+    int forwardPath = 0;
+    for (int i = start; i != destination; i = (i + 1) % n) {
+        forwardPath += distance[i];
+    }
+
+    int backwardPath = 0;
+    for (int i = destination; i != start; i = (i + 1) % n) {
+        backwardPath += distance[i];
+    }
+
+    return std::min(forwardPath, backwardPath);
+}
