@@ -69,3 +69,18 @@ int distanceBetweenBusStops(std::vector<int>& distance, int start, int destinati
 
     return std::min(forwardPath, backwardPath);
 }
+
+// 1732. Find the Highest Altitude
+
+int largestAltitude(std::vector<int>& gain) {
+    int maxSum = 0;
+    int currSum = 0;
+
+    for (int i = 0; i < gain.size(); ++i) {
+        currSum += gain[i];
+
+        maxSum = std::max(maxSum, currSum);
+    }
+
+    return maxSum;
+}

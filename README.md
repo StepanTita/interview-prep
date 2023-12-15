@@ -147,6 +147,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2270. **Number of Ways to Split Array**
 922. **Sort Array By Parity II**
 1184. **Distance Between Bus Stops**
+1732. **Find the Highest Altitude**
 
 ### Other:
 
