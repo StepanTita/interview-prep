@@ -2428,6 +2428,44 @@ int numTilings(int n) {
     return countTilings(n, 0, memo);
 }
 
+// 1024. Video Stitching
+
+int dfs(std::vector<std::vector<int>>& clips, int pos, int time, int limit, std::vector<std::vector<int>> &memo) {
+    if (pos >= clips.size() || time - limit <= 0) {
+        if (time - limit <= 0) return 0;
+        return INF;
+    }
+
+    if (memo[pos][limit] != -1) return memo[pos][limit];
+
+    memo[pos][limit] = INF;
+    for (int i = pos; i < clips.size(); ++i) {
+        if (clips[i][0] <= limit) {
+            memo[pos][limit] = std::min(memo[pos][limit], dfs(clips, i + 1, time, std::max(limit, clips[i][1]), memo) + 1);
+        }
+    }
+
+    return memo[pos][limit];
+}
+
+int videoStitching(std::vector<std::vector<int>>& clips, int time) {
+    std::sort(clips.begin(), clips.end());
+
+    int n = clips.size();
+
+    std::vector<std::vector<int>> memo(n, std::vector<int>(101, -1));
+
+    int res = dfs(clips, 0, time, 0, memo);
+
+    if (res == INF) return -1;
+
+    return res;
+}
+
 int main() {
+    auto v = std::vector<std::vector<int>>{
+            {5, 7}, {1, 8}, {0, 0}, {2, 3}, {4, 5}, {0, 6}, {5, 10}, {7, 10}
+    };
+    videoStitching(v, 10);
     return 0;
 }

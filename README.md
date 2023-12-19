@@ -91,6 +91,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2707. **Extra Characters in a String**
 2767. **Partition String Into Minimum Beautiful Substrings**
 790. **Domino and Tromino Tiling**
+1024. **Video Stitching**
 
 ### Heap 📊:
 
@@ -171,6 +172,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 997. **Find the Town Judge**
 638. **Shopping Offers**
 2369. **Check if There is a Valid Partition For The Array**
+792. **Number of Matching Subsequences**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

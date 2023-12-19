@@ -384,7 +384,7 @@ double myPow(double x, long long n) {
 
 // 915. Partition Array into Disjoint Intervals
 
-int partitionDisjoint(std::vector<int>& nums) {
+int partitionDisjoint(std::vector<int> &nums) {
     // keep a vector for the left part
     // keep min element for the right part
     // whenever max from left is less than min from right -> calculate minLen
@@ -411,7 +411,7 @@ int partitionDisjoint(std::vector<int>& nums) {
 
 // 554. Brick Wall
 
-int leastBricks(std::vector<std::vector<int>>& wall) {
+int leastBricks(std::vector<std::vector<int>> &wall) {
     std::unordered_map<int, int> pref;
 
     int n = wall.size();
@@ -425,7 +425,7 @@ int leastBricks(std::vector<std::vector<int>>& wall) {
     }
 
     int count = 0;
-    for (auto [w, c] : pref) {
+    for (auto [w, c]: pref) {
         count = std::max(count, c);
     }
 
@@ -434,7 +434,7 @@ int leastBricks(std::vector<std::vector<int>>& wall) {
 
 // 565. Array Nesting
 
-int arrayNesting(std::vector<int>& nums) {
+int arrayNesting(std::vector<int> &nums) {
     int n = nums.size();
 
     int maxLen = 0;
@@ -459,11 +459,11 @@ int arrayNesting(std::vector<int>& nums) {
 
 int minSteps(std::string s, std::string t) {
     std::vector<int> fs('z' - 'a' + 1, 0);
-    for (char c : s) {
+    for (char c: s) {
         ++fs[c - 'a'];
     }
 
-    for (char c : t) {
+    for (char c: t) {
         --fs[c - 'a'];
     }
 
@@ -479,7 +479,7 @@ int minSteps(std::string s, std::string t) {
 
 bool equalFrequency(std::string word) {
     std::unordered_map<int, int> freq;
-    for (char c : word) {
+    for (char c: word) {
         ++freq[c];
     }
 
@@ -488,7 +488,7 @@ bool equalFrequency(std::string word) {
     int countMax = 0;
     int maxFreq = 0;
     int minFreq = INF;
-    for (auto [c, f] : freq) {
+    for (auto [c, f]: freq) {
         if (maxFreq == f) {
             ++countMax;
         }
@@ -513,11 +513,11 @@ bool equalFrequency(std::string word) {
 
 // 997. Find the Town Judge
 
-int findJudge(int n, std::vector<std::vector<int>>& trust) {
+int findJudge(int n, std::vector<std::vector<int>> &trust) {
     std::vector<int> trustsTo(n, 0);
     std::vector<int> trustsFrom(n, 0);
 
-    for (auto tr : trust) {
+    for (auto tr: trust) {
         auto to = tr[0];
         auto from = tr[1];
 
@@ -538,7 +538,7 @@ bool intersect(std::vector<int> &a, std::vector<int> &b) {
     return a[1] > b[0];
 }
 
-int eraseOverlapIntervals(std::vector<std::vector<int>>& intervals) {
+int eraseOverlapIntervals(std::vector<std::vector<int>> &intervals) {
     std::sort(intervals.begin(), intervals.end());
 
     int n = intervals.size();
@@ -554,6 +554,34 @@ int eraseOverlapIntervals(std::vector<std::vector<int>>& intervals) {
         } else {
             prev = curr;
         }
+    }
+
+    return count;
+}
+
+// 792. Number of Matching Subsequences
+
+bool isSubsequence(const std::string &s, std::string &t) {
+    int j = 0;
+    for (int i = 0; i < t.length(); ++i) {
+        if (s[j] == t[i]) {
+            ++j;
+        }
+    }
+
+    return j == s.length();
+}
+
+int numMatchingSubseq(std::string s, std::vector<std::string> &words) {
+    std::unordered_map<std::string, int> wd;
+
+    for (auto w: words) {
+        ++wd[w];
+    }
+
+    int count = 0;
+    for (auto [w, f]: wd) {
+        count += f * isSubsequence(w, s);
     }
 
     return count;
