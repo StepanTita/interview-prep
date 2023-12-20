@@ -2430,7 +2430,7 @@ int numTilings(int n) {
 
 // 1024. Video Stitching
 
-int dfs(std::vector<std::vector<int>>& clips, int pos, int time, int limit, std::vector<std::vector<int>> &memo) {
+int dfs(std::vector<std::vector<int>> &clips, int pos, int time, int limit, std::vector<std::vector<int>> &memo) {
     if (pos >= clips.size() || time - limit <= 0) {
         if (time - limit <= 0) return 0;
         return INF;
@@ -2441,14 +2441,15 @@ int dfs(std::vector<std::vector<int>>& clips, int pos, int time, int limit, std:
     memo[pos][limit] = INF;
     for (int i = pos; i < clips.size(); ++i) {
         if (clips[i][0] <= limit) {
-            memo[pos][limit] = std::min(memo[pos][limit], dfs(clips, i + 1, time, std::max(limit, clips[i][1]), memo) + 1);
+            memo[pos][limit] = std::min(memo[pos][limit],
+                                        dfs(clips, i + 1, time, std::max(limit, clips[i][1]), memo) + 1);
         }
     }
 
     return memo[pos][limit];
 }
 
-int videoStitching(std::vector<std::vector<int>>& clips, int time) {
+int videoStitching(std::vector<std::vector<int>> &clips, int time) {
     std::sort(clips.begin(), clips.end());
 
     int n = clips.size();
@@ -2462,10 +2463,53 @@ int videoStitching(std::vector<std::vector<int>>& clips, int time) {
     return res;
 }
 
+// 718. Maximum Length of Repeated Subarray
+
+int findLength(std::vector<int>& a, std::vector<int>& b) {
+    int n = a.size();
+    int m = b.size();
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
+
+    int ans = 0;
+
+    for (int i = n - 1; i >= 0; --i) {
+        for (int j = m - 1; j >= 0; --j) {
+            if (a[i] == b[j]) {
+                dp[i][j] = dp[i + 1][j + 1] + 1;
+            }
+
+            ans = std::max(ans, dp[i][j]);
+        }
+    }
+
+    return ans;
+}
+
+// 1262. Greatest Sum Divisible by Three
+
+int maxSumDivThree(std::vector<int>& nums) {
+    int n = nums.size();
+
+    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(3, 0));
+
+    int ans = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int r = 0; r < 3; ++r) {
+            int sum = dp[i][r] + nums[i];
+            dp[i + 1][sum % 3] = std::max(dp[i + 1][sum % 3], sum);
+            dp[i + 1][r] = std::max(dp[i + 1][r], dp[i][r]);
+        }
+
+        ans = std::max(ans, dp[i + 1][0]);
+    }
+
+    return ans;
+}
+
 int main() {
-    auto v = std::vector<std::vector<int>>{
-            {5, 7}, {1, 8}, {0, 0}, {2, 3}, {4, 5}, {0, 6}, {5, 10}, {7, 10}
-    };
-    videoStitching(v, 10);
+    auto a = std::vector<int>{3,6,5,1,8};
+    auto b = std::vector<int>{0, 0, 0, 0, 0, 0, 0, 1, 0, 0};
+    std::cout << maxSumDivThree(a) << std::endl;
     return 0;
 }

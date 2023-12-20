@@ -92,6 +92,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2767. **Partition String Into Minimum Beautiful Substrings**
 790. **Domino and Tromino Tiling**
 1024. **Video Stitching**
+718. **Maximum Length of Repeated Subarray**
+1262. **Greatest Sum Divisible by Three**
 
 ### Heap 📊:
 
