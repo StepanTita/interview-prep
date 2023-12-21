@@ -2465,7 +2465,7 @@ int videoStitching(std::vector<std::vector<int>> &clips, int time) {
 
 // 718. Maximum Length of Repeated Subarray
 
-int findLength(std::vector<int>& a, std::vector<int>& b) {
+int findLength(std::vector<int> &a, std::vector<int> &b) {
     int n = a.size();
     int m = b.size();
 
@@ -2488,7 +2488,7 @@ int findLength(std::vector<int>& a, std::vector<int>& b) {
 
 // 1262. Greatest Sum Divisible by Three
 
-int maxSumDivThree(std::vector<int>& nums) {
+int maxSumDivThree(std::vector<int> &nums) {
     int n = nums.size();
 
     std::vector<std::vector<int>> dp(n + 1, std::vector<int>(3, 0));
@@ -2507,9 +2507,44 @@ int maxSumDivThree(std::vector<int>& nums) {
     return ans;
 }
 
+// 1626. Best Team With No Conflicts
+
+int dfs(std::vector<std::pair<int, int>>& players, int start, int prev, std::vector<int> &memo) {
+    int n = players.size();
+
+    if (start >= n) return 0;
+
+    if (memo[start] != -1) return memo[start];
+
+    memo[start] = 0;
+    for (int i = start; i < n; ++i) {
+        if (prev != -1 && players[i].first > players[prev].first && players[i].second < players[prev].second) {
+            continue;
+        }
+        memo[start] = std::max(memo[start], dfs(players, i + 1, i, memo) + players[i].second);
+    }
+
+    return memo[start];
+}
+
+int bestTeamScore(std::vector<int>& scores, std::vector<int>& ages) {
+    int n = scores.size();
+    std::vector<std::pair<int, int>> players(n);
+
+    for (int i = 0; i < scores.size(); ++i) {
+        players[i] = std::pair<int, int>{ages[i], scores[i]};
+    }
+
+    std::sort(players.begin(), players.end());
+
+    std::vector<int> memo(n, -1);
+
+    return dfs(players, 0, -1, memo);
+}
+
 int main() {
-    auto a = std::vector<int>{3,6,5,1,8};
-    auto b = std::vector<int>{0, 0, 0, 0, 0, 0, 0, 1, 0, 0};
-    std::cout << maxSumDivThree(a) << std::endl;
+    auto a = std::vector<int>{1, 2, 3, 5};
+    auto b = std::vector<int>{8, 9, 10, 1};
+    std::cout << bestTeamScore(a, b) << std::endl;
     return 0;
 }
