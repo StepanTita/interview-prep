@@ -95,6 +95,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 718. **Maximum Length of Repeated Subarray**
 1262. **Greatest Sum Divisible by Three**
 1626. **Best Team With No Conflicts**
+2222. **Number of Ways to Select Buildings**
 
 
 ### Heap 📊:

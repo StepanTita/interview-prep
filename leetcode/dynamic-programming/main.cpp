@@ -2509,7 +2509,7 @@ int maxSumDivThree(std::vector<int> &nums) {
 
 // 1626. Best Team With No Conflicts
 
-int dfs(std::vector<std::pair<int, int>>& players, int start, int prev, std::vector<int> &memo) {
+int dfs(std::vector<std::pair<int, int>> &players, int start, int prev, std::vector<int> &memo) {
     int n = players.size();
 
     if (start >= n) return 0;
@@ -2527,7 +2527,7 @@ int dfs(std::vector<std::pair<int, int>>& players, int start, int prev, std::vec
     return memo[start];
 }
 
-int bestTeamScore(std::vector<int>& scores, std::vector<int>& ages) {
+int bestTeamScore(std::vector<int> &scores, std::vector<int> &ages) {
     int n = scores.size();
     std::vector<std::pair<int, int>> players(n);
 
@@ -2542,9 +2542,38 @@ int bestTeamScore(std::vector<int>& scores, std::vector<int>& ages) {
     return dfs(players, 0, -1, memo);
 }
 
+// 2222. Number of Ways to Select Buildings
+
+// 0 1 0
+// 1 0 1
+long long numberOfWays(std::string s) {
+    // dp[i][l][0] - number of sequence of length l ending with 0
+    // dp[i][l][1] - number of sequence of length l ending with 1
+    int n = s.length();
+
+    long long ans = 0;
+
+    long long n0 = 0, n1 = 0, n01 = 0, n10 = 0;
+
+    for (int i = 0; i < n; ++i) {
+        int zero = s[i] == '0';
+        bool one = s[i] == '1';
+
+        ans += n10 * one + n01 * zero;
+
+        n10 += n1 * zero;
+        n01 += n0 * one;
+
+        n0 += zero;
+        n1 += one;
+    }
+
+    return ans;
+}
+
 int main() {
     auto a = std::vector<int>{1, 2, 3, 5};
     auto b = std::vector<int>{8, 9, 10, 1};
-    std::cout << bestTeamScore(a, b) << std::endl;
+    std::cout << numberOfWays("001101") << std::endl;
     return 0;
 }
