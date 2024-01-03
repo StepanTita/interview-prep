@@ -178,6 +178,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 638. **Shopping Offers**
 2369. **Check if There is a Valid Partition For The Array**
 792. **Number of Matching Subsequences**
+1605. **Find Valid Matrix Given Row and Column Sums**
+1320. **Minimum Distance to Type a Word Using Two Fingers**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

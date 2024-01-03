@@ -2571,6 +2571,75 @@ long long numberOfWays(std::string s) {
     return ans;
 }
 
+// 1320. Minimum Distance to Type a Word Using Two Fingers
+
+// alphabet size
+const int L = 26;
+
+int cost(int a, int b, std::vector<std::pair<int, int>> &dist) {
+    auto [x1, y1] = dist[a];
+    auto [x2, y2] = dist[b];
+    return std::abs(x2 - x1) + std::abs(y2 - y1);
+}
+
+int minimumDistance(std::string word) {
+    // dp[i][f1][f2]
+    // answer - min(dp[n][f1][f2])
+
+    int n = word.size();
+
+    std::vector<std::pair<int, int>> dist(L);
+
+    const std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    int x = 0, y = 0;
+
+    for (char ch: alphabet) {
+        dist[ch - 'A'] = std::make_pair(x, y);
+
+        y++;
+        if (y > 5) {
+            y = 0;
+            x++;
+        }
+    }
+
+    std::vector<std::vector<std::vector<int>>> dp(
+            n + 1,
+            std::vector<std::vector<int>>(L, std::vector<int>(L, INF))
+    );
+
+    for (int f1 = 0; f1 < L; ++f1) {
+        for (int f2 = 0; f2 < L; ++f2) {
+            dp[0][f1][f2] = 0;
+        }
+    }
+
+    int ans = INF;
+    for (int i = 0; i < n; ++i) {
+        for (int f1 = 0; f1 < L; ++f1) {
+            for (int f2 = 0; f2 < L; ++f2) {
+                int wIdx = word[i] - 'A';
+
+                dp[i + 1][wIdx][f2] = std::min({
+                                                       dp[i + 1][wIdx][f2],
+                                                       dp[i][f1][f2] + cost(f1, wIdx, dist)
+                                               });
+
+                dp[i + 1][f1][wIdx] = std::min({
+                                                       dp[i + 1][f1][wIdx],
+                                                       dp[i][f1][f2] + cost(f2, wIdx, dist)
+                                               });
+
+                if (i + 1 == n) {
+                    ans = std::min({ans, dp[i + 1][wIdx][f2], dp[i + 1][f1][wIdx]});
+                }
+            }
+        }
+    }
+
+    return ans;
+}
+
 int main() {
     auto a = std::vector<int>{1, 2, 3, 5};
     auto b = std::vector<int>{8, 9, 10, 1};

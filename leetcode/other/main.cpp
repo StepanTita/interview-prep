@@ -587,6 +587,25 @@ int numMatchingSubseq(std::string s, std::vector<std::string> &words) {
     return count;
 }
 
+// 1605. Find Valid Matrix Given Row and Column Sums
+
+std::vector<std::vector<int>> restoreMatrix(std::vector<int>& rowSum, std::vector<int>& colSum) {
+    int n = rowSum.size();
+    int m = colSum.size();
+
+    std::vector<std::vector<int>> mat(n, std::vector<int>(m, 0));
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            mat[i][j] = std::min(rowSum[i], colSum[j]);
+            rowSum[i] -= mat[i][j];
+            colSum[j] -= mat[i][j];
+        }
+    }
+
+    return mat;
+}
+
 int main() {
     equalFrequency("babbdd");
     return 0;
