@@ -56,3 +56,64 @@ public:
         return container[num];
     }
 };
+
+// 855. Exam Room
+
+class ExamRoom {
+private:
+    int n;
+    std::set<int> room;
+public:
+    // 1 0 0 0 1 0 0 0 1
+    ExamRoom(int n) {
+        this->n = n;
+    }
+
+    int seat() {
+        int dist = 0;
+        int pos = 0;
+
+        if (!room.empty()) {
+            auto prev = room.begin();
+            dist = *prev;
+
+            auto curr = next(prev);
+
+            while (curr != room.end()) {
+                int mid = (*curr - *prev) / 2;
+
+                if(dist < mid){
+                    dist = mid;
+
+                    pos = *prev + dist;
+                }
+
+                prev = curr;
+                curr = next(curr);
+            }
+
+            if(dist < ((n-1) - *(room.rbegin()))){
+                pos = n - 1;
+            }
+        }
+
+        room.insert(pos);
+        return pos;
+    }
+
+    void leave(int p) {
+        // when leave compare freed segment with the current one
+        room.erase(p);
+    }
+};
+
+int main() {
+    ExamRoom *examRoom = new ExamRoom(10);
+    examRoom->seat(); // return 0, no one is in the room, then the student sits at seat number 0.
+    examRoom->seat(); // return 9, the student sits at the last seat number 9.
+    examRoom->seat(); // return 4, the student sits at the last seat number 4.
+    examRoom->seat(); // return 2, the student sits at the last seat number 2.
+    examRoom->leave(4);
+    examRoom->seat(); // return 5, the student sits at the last seat number 5.
+    return 0;
+}
