@@ -96,6 +96,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1262. **Greatest Sum Divisible by Three**
 1626. **Best Team With No Conflicts**
 2222. **Number of Ways to Select Buildings**
+416. **Partition Equal Subset Sum**
 
 
 ### Heap 📊:
@@ -181,6 +182,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 792. **Number of Matching Subsequences**
 1605. **Find Valid Matrix Given Row and Column Sums**
 1320. **Minimum Distance to Type a Word Using Two Fingers**
+438. **Find All Anagrams in a String**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

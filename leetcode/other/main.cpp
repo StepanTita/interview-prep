@@ -606,7 +606,43 @@ std::vector<std::vector<int>> restoreMatrix(std::vector<int>& rowSum, std::vecto
     return mat;
 }
 
+// 438. Find All Anagrams in a String
+
+std::vector<int> findAnagrams(std::string s, std::string p) {
+    if (s.length() < p.length()) return std::vector<int>{};
+
+    std::unordered_map<char, int> freqP;
+    std::unordered_map<char, int> freqS;
+
+    int w = p.length();
+    for (int i = 0; i < w; ++i) {
+        ++freqP[p[i]];
+        --freqP[s[i]];
+    }
+
+
+    std::vector<int> res;
+
+    for (int i = 0; i <= s.length() - w; ++i) {
+        bool fail = false;
+        for (auto [k, f] : freqP) {
+            if (f != 0) {
+                fail = true;
+                break;
+            }
+        }
+        if (!fail) {
+            res.emplace_back(i);
+        }
+
+        ++freqP[s[i]];
+        --freqP[s[i + w]];
+    }
+
+    return res;
+}
+
 int main() {
-    equalFrequency("babbdd");
+    findAnagrams("cbaebabacd", "abc");
     return 0;
 }

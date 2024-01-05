@@ -2640,9 +2640,38 @@ int minimumDistance(std::string word) {
     return ans;
 }
 
+// 416. Partition Equal Subset Sum
+
+bool canPartition(std::vector<int>& nums) {
+    int n = nums.size();
+
+    int total = 0;
+    for (int i = 0; i < n; ++i) {
+        total += nums[i];
+    }
+
+    if (total % 2 != 0) return false;
+
+    int target = total / 2;
+
+    std::vector<int> dp(target + 1, -1);
+    dp[0] = INF;
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j <= target; ++j) {
+            if (dp[j] != -1 && dp[j] != i && j + nums[i] <= target) {
+                if (dp[j + nums[i]] == -1) {
+                    dp[j + nums[i]] = i;
+                }
+            }
+        }
+    }
+
+    return dp[target] != -1;
+}
+
 int main() {
-    auto a = std::vector<int>{1, 2, 3, 5};
-    auto b = std::vector<int>{8, 9, 10, 1};
-    std::cout << numberOfWays("001101") << std::endl;
+    auto a = std::vector<int>{1, 1, 1, 1};
+    std::cout << canPartition(a) << std::endl;
     return 0;
 }
