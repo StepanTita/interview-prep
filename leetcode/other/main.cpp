@@ -589,7 +589,7 @@ int numMatchingSubseq(std::string s, std::vector<std::string> &words) {
 
 // 1605. Find Valid Matrix Given Row and Column Sums
 
-std::vector<std::vector<int>> restoreMatrix(std::vector<int>& rowSum, std::vector<int>& colSum) {
+std::vector<std::vector<int>> restoreMatrix(std::vector<int> &rowSum, std::vector<int> &colSum) {
     int n = rowSum.size();
     int m = colSum.size();
 
@@ -625,7 +625,7 @@ std::vector<int> findAnagrams(std::string s, std::string p) {
 
     for (int i = 0; i <= s.length() - w; ++i) {
         bool fail = false;
-        for (auto [k, f] : freqP) {
+        for (auto [k, f]: freqP) {
             if (f != 0) {
                 fail = true;
                 break;
@@ -640,6 +640,110 @@ std::vector<int> findAnagrams(std::string s, std::string p) {
     }
 
     return res;
+}
+
+// 809. Expressive Words
+
+std::pair<std::unordered_map<int, char>, std::unordered_map<int, int>> transform(std::string &s) {
+    std::unordered_map<int, char> pos;
+    std::unordered_map<int, int> freq;
+
+    int p = 0;
+    ++freq[p];
+    pos[0] = s[0];
+    for (int i = 1; i < s.length(); ++i) {
+        if (s[i - 1] != s[i]) {
+            pos[++p] = s[i];
+        }
+        ++freq[p];
+    }
+
+    return std::make_pair(pos, freq);
+}
+
+bool stretchy(
+        std::unordered_map < int, char > &originalPos,
+        std::unordered_map < int, int > &originalFreq,
+
+        std::unordered_map < int, char > &pos,
+        std::unordered_map < int, int > &freq
+) {
+    if (freq.size() != originalFreq.size()) return false;
+
+    for (auto [p, c]: originalPos) {
+        if (pos[p] != c) {
+            return false;
+        }
+
+        if (originalFreq[p] < freq[p] || originalFreq[p] < 3) return false;
+    }
+
+    return true;
+}
+
+int expressiveWords(std::string s, std::vector<std::string> &words) {
+    auto [originalPos, originalFreq] = transform(s);
+
+    int count = 0;
+    for (int i = 0; i < words.size(); ++i) {
+        if (words[i].length() > s.length()) continue;
+        auto [pos, freq] = transform(words[i]);
+        if (stretchy(originalPos, originalFreq, pos, freq)) {
+            ++count;
+        }
+    }
+
+    return count;
+}
+
+// 2 pointers
+
+bool stretchy(
+        std::string &s,
+        std::string &w
+) {
+    int n = s.length();
+    int m = w.length();
+
+    if (n < m) return false;
+
+    int wi = 0;
+
+    int count = 1;
+    for (int i = 0; i < n; ++i) {
+        if (wi >= m || s[i] != w[wi]) return false;
+
+        if (i + 1 < n && s[i + 1] == s[i]) {
+            ++count;
+            continue;
+        }
+
+        bool enough = count >= 3;
+
+        while (wi < m && w[wi] == s[i]) {
+            --count;
+            ++wi;
+        }
+
+        if (count < 0 || (count != 0 && !enough)) {
+            return false;
+        }
+
+        count = 1;
+    }
+
+    return wi == w.length();
+}
+
+int expressiveWords2(std::string s, std::vector<std::string>& words) {
+    int count = 0;
+    for (int i = 0; i < words.size(); ++i) {
+        if (stretchy(s, words[i])) {
+            ++count;
+        }
+    }
+
+    return count;
 }
 
 int main() {

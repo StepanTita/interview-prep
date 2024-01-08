@@ -149,6 +149,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 124. **Binary Tree Maximum Path Sum**
 787. **Cheapest Flights Within K Stops**
 1145. **Binary Tree Coloring Game**
+1123. **Lowest Common Ancestor of Deepest Leaves**
 
 ### Arrays 🎞:
 
@@ -188,6 +189,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1605. **Find Valid Matrix Given Row and Column Sums**
 1320. **Minimum Distance to Type a Word Using Two Fingers**
 438. **Find All Anagrams in a String**
+809. **Expressive Words**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.

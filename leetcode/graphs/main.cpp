@@ -321,6 +321,26 @@ bool btreeGameWinningMove(TreeNode *root, int n, int x) {
     return ans;
 }
 
+// 1123. Lowest Common Ancestor of Deepest Leaves
+
+std::pair<TreeNode*, int> findLCA(TreeNode* curr) {
+    if (curr == NULL) return std::make_pair<TreeNode*, int>(NULL, 0);
+
+    auto [left, ldepth] = findLCA(curr->left);
+    auto [right, rdepth] = findLCA(curr->right);
+
+    if (ldepth < rdepth) {
+        return std::make_pair(right, rdepth + 1);
+    } else if (ldepth > rdepth) {
+        return std::make_pair(left, ldepth + 1);
+    }
+
+    return std::make_pair(curr, ldepth + 1);
+}
+
+TreeNode* lcaDeepestLeaves(TreeNode* root) {
+    return findLCA(root).first;
+}
 
 int main() {
     auto t = std::vector<std::vector<int>>{
