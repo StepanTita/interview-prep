@@ -735,7 +735,7 @@ bool stretchy(
     return wi == w.length();
 }
 
-int expressiveWords2(std::string s, std::vector<std::string>& words) {
+int expressiveWords2(std::string s, std::vector<std::string> &words) {
     int count = 0;
     for (int i = 0; i < words.size(); ++i) {
         if (stretchy(s, words[i])) {
@@ -744,6 +744,88 @@ int expressiveWords2(std::string s, std::vector<std::string>& words) {
     }
 
     return count;
+}
+
+// 28. Find the Index of the First Occurrence in a String
+
+// KMP (Knuth-Morris-Pratt)
+
+int strStr(std::string haystack, std::string needle) {
+    int n = haystack.size();
+    int m = needle.size();
+
+    std::vector<int> border(m, 0);
+
+    int prev = 0;
+    int curr = 1;
+    while (curr < m) {
+        if (needle[prev] == needle[curr]) {
+            border[curr] = prev + 1;
+            ++prev;
+            ++curr;
+        } else if (prev == 0) {
+            border[curr] = 0;
+            ++curr;
+        } else {
+            prev = border[prev - 1];
+        }
+    }
+
+    int i = 0, j = 0;
+    while (i < n) {
+        if (haystack[i] == needle[j]) {
+            ++i;
+            ++j;
+        } else {
+            if (j == 0) {
+                ++i;
+            } else {
+                j = border[j - 1];
+            }
+        }
+
+        if (j == m) {
+            return i - m;
+        }
+    }
+
+    return -1;
+}
+
+// 218. The Skyline Problem
+
+std::vector<std::vector<int>> getSkyline(std::vector<std::vector<int>>& buildings) {
+    std::vector<std::pair<int, int>> points;
+
+    for (auto b : buildings) {
+        points.emplace_back(std::make_pair(b[0], -b[2]));
+        points.emplace_back(std::make_pair(b[1], b[2]));
+    }
+
+    std::sort(points.begin(), points.end());
+
+    std::vector<std::vector<int>> ans;
+
+    std::multiset<int> fallback{0};
+
+    int currH = 0;
+    for (int i = 0; i < points.size(); ++i) {
+        auto [p, h] = points[i];
+
+        if (h < 0) {
+            fallback.insert(-h);
+        } else {
+            fallback.erase(fallback.find(h));
+        }
+
+        auto fallbackTop = *fallback.rbegin();
+        if (fallbackTop != currH) {
+            currH = fallbackTop;
+            ans.emplace_back(std::vector<int>{p, currH});
+        }
+    }
+
+    return ans;
 }
 
 int main() {
