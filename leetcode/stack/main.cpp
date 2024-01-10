@@ -85,6 +85,39 @@ int numSubmat(std::vector<std::vector<int>> &mat) {
     return res;
 }
 
+// 1249. Minimum Remove to Make Valid Parentheses
+
+std::string minRemoveToMakeValid(std::string s) {
+    std::stack<char> st;
+
+    int balance = 0;
+
+    for (int i = 0; i < s.length(); ++i) {
+        if (s[i] == ')' && balance - 1 < 0) continue;
+
+        balance += s[i] == '(';
+        balance -= s[i] == ')';
+        st.push(s[i]);
+    }
+
+    std::string res = "";
+
+    balance = 0;
+    while (!st.empty()) {
+        auto curr = st.top();
+        st.pop();
+
+        if (curr == '(' && balance - 1 < 0) continue;
+        res += curr;
+
+        balance -= curr == '(';
+        balance += curr == ')';
+    }
+
+    std::reverse(res.begin(), res.end());
+
+    return res;
+}
 
 int main() {
     auto v = std::vector<int>{2, 1, 5, 6, 2, 3};

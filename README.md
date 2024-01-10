@@ -97,6 +97,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1626. **Best Team With No Conflicts**
 2222. **Number of Ways to Select Buildings**
 416. **Partition Equal Subset Sum**
+1411. **Number of Ways to Paint N × 3 Grid**
 
 
 ### Heap 📊:
@@ -113,6 +114,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 
 84. **Largest Rectangle in Histogram**
 1504. **Count Submatrices With All Ones**
+1249. **Minimum Remove to Make Valid Parentheses**
 
 ### Greedy 💰:
 

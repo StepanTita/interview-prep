@@ -2670,6 +2670,22 @@ bool canPartition(std::vector<int>& nums) {
     return dp[target] != -1;
 }
 
+// 1411. Number of Ways to Paint N × 3 Grid
+
+int numOfWays(int n) {
+    long long a121 = 6, a123 = 6, b121 = 0, b123 = 0;
+
+    for (int i = 1; i < n; ++i) {
+        b121 = (3 * a121 + 2 * a123) % MOD;
+        b123 = (2 * a121 + 2 * a123) % MOD;
+
+        a121 = b121;
+        a123 = b123;
+    }
+
+    return (a121 + a123) % MOD;
+}
+
 int main() {
     auto a = std::vector<int>{1, 1, 1, 1};
     std::cout << canPartition(a) << std::endl;
