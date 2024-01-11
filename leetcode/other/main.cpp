@@ -828,6 +828,19 @@ std::vector<std::vector<int>> getSkyline(std::vector<std::vector<int>>& building
     return ans;
 }
 
+
+// 2957. Remove Adjacent Almost-Equal Characters
+
+int removeAlmostEqualCharacters(std::string word) {
+    int count = 0;
+    for (int i = 1; i < word.size(); ++i) {
+        if (std::abs(word[i] - word[i - 1]) <= 1) {
+            ++count; ++i;
+        }
+    }
+    return count;
+}
+
 int main() {
     findAnagrams("cbaebabacd", "abc");
     return 0;
