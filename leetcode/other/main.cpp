@@ -841,6 +841,63 @@ int removeAlmostEqualCharacters(std::string word) {
     return count;
 }
 
+// 149. Max Points on a Line
+
+std::string convertToStr(std::vector<int> &v1, std::vector<int> &v2) {
+    return "p1:" + std::to_string(v1[0]) + ";" + std::to_string(v1[1]) + ";"
+                                                                         "p2:" + std::to_string(v2[0]) + ";" + std::to_string(v2[1]);
+}
+
+bool isAligned(std::vector<int> &a, std::vector<int> &b, std::vector<int> &c) {
+    // Calculate vectors formed by pairs of points (b-a) and (c-a)
+    int v1_x = b[0] - a[0];
+    int v1_y = b[1] - a[1];
+
+    int v2_x = c[0] - a[0];
+    int v2_y = c[1] - a[1];
+
+    // Calculate the cross product
+    int crossProduct = v1_x * v2_y - v1_y * v2_x;
+
+    // If cross product is zero, points are collinear
+    return crossProduct == 0;
+}
+
+int maxPoints(std::vector<std::vector<int>>& points) {
+    // need used pairs
+    // need mapping from used pair to count
+
+    if (points.size() < 3) return points.size();
+
+    int n = points.size();
+
+    std::unordered_set<std::string> usedPairs;
+    std::unordered_map<std::string, int> pointsCount;
+
+    int maxCount = 0;
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            auto key = convertToStr(points[i], points[j]);
+
+            if (usedPairs.contains(key)) continue;
+
+            usedPairs.insert(key);
+
+            pointsCount[key] = 2;
+            for (int k = j + 1; k < n; ++k) {
+                if (isAligned(points[i], points[j], points[k])) {
+                    ++pointsCount[key];
+                }
+            }
+
+            maxCount = std::max(maxCount, pointsCount[key]);
+        }
+    }
+
+    return maxCount;
+}
+
 int main() {
     findAnagrams("cbaebabacd", "abc");
     return 0;

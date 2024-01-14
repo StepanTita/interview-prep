@@ -194,6 +194,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 809. **Expressive Words**
 218. **The Skyline Problem**
 2957. **Remove Adjacent Almost-Equal Characters**
+149. **Max Points on a Line**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
