@@ -323,8 +323,8 @@ bool btreeGameWinningMove(TreeNode *root, int n, int x) {
 
 // 1123. Lowest Common Ancestor of Deepest Leaves
 
-std::pair<TreeNode*, int> findLCA(TreeNode* curr) {
-    if (curr == NULL) return std::make_pair<TreeNode*, int>(NULL, 0);
+std::pair<TreeNode *, int> findLCA(TreeNode *curr) {
+    if (curr == NULL) return std::make_pair<TreeNode *, int>(NULL, 0);
 
     auto [left, ldepth] = findLCA(curr->left);
     auto [right, rdepth] = findLCA(curr->right);
@@ -338,18 +338,33 @@ std::pair<TreeNode*, int> findLCA(TreeNode* curr) {
     return std::make_pair(curr, ldepth + 1);
 }
 
-TreeNode* lcaDeepestLeaves(TreeNode* root) {
+TreeNode *lcaDeepestLeaves(TreeNode *root) {
     return findLCA(root).first;
 }
 
+// 1026. Maximum Difference Between Node and Ancestor
+
+int dfs(TreeNode *curr, int currMin, int currMax) {
+    if (curr == NULL) return 0;
+
+    int left = dfs(curr->left, std::min(curr->val, currMin), std::max(curr->val, currMax));
+    int right = dfs(curr->right, std::min(curr->val, currMin), std::max(curr->val, currMax));
+
+    return std::max({
+                            left,
+                            right,
+                            std::abs(curr->val - currMin),
+                            std::abs(curr->val - currMax)
+                    });
+}
+
+int maxAncestorDiff(TreeNode *root) {
+    return dfs(root, root->val, root->val);
+}
+
 int main() {
-    auto t = std::vector<std::vector<int>>{
-            {0, 1, 100},
-            {1, 2, 100},
-            {2, 0, 100},
-            {1, 3, 600},
-            {2, 3, 200}
-    };
-    std::cout << findCheapestPrice(4, t, 0, 3, 1) << std::endl;
+    auto tree = new TreeNode(8, new TreeNode(3, new TreeNode(1), new TreeNode(6, new TreeNode(4), new TreeNode(7))),
+                             NULL);
+    maxAncestorDiff(tree);
     return 0;
 }

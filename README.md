@@ -152,6 +152,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 787. **Cheapest Flights Within K Stops**
 1145. **Binary Tree Coloring Game**
 1123. **Lowest Common Ancestor of Deepest Leaves**
+1026. **Maximum Difference Between Node and Ancestor**
 
 ### Arrays 🎞:
 
