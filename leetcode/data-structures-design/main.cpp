@@ -82,7 +82,7 @@ public:
             while (curr != room.end()) {
                 int mid = (*curr - *prev) / 2;
 
-                if(dist < mid){
+                if (dist < mid) {
                     dist = mid;
 
                     pos = *prev + dist;
@@ -92,7 +92,7 @@ public:
                 curr = next(curr);
             }
 
-            if(dist < ((n-1) - *(room.rbegin()))){
+            if (dist < ((n - 1) - *(room.rbegin()))) {
                 pos = n - 1;
             }
         }
@@ -104,6 +104,36 @@ public:
     void leave(int p) {
         // when leave compare freed segment with the current one
         room.erase(p);
+    }
+};
+
+// 1396. Design Underground System
+
+class UndergroundSystem {
+private:
+    std::unordered_map<std::string, std::unordered_map<std::string, int>> time;
+    std::unordered_map<std::string, std::unordered_map<std::string, int>> count;
+
+    std::unordered_map<int, std::pair<std::string, int>> checkIns;
+public:
+    UndergroundSystem() {
+    }
+
+    void checkIn(int id, std::string stationName, int t) {
+        checkIns[id] = std::make_pair(stationName, t);
+    }
+
+    void checkOut(int id, std::string endStation, int t) {
+        auto [startStation, startTime] = checkIns[id];
+
+        time[startStation][endStation] += t - startTime;
+        ++count[startStation][endStation];
+
+        checkIns.erase(id);
+    }
+
+    double getAverageTime(std::string startStation, std::string endStation) {
+        return double(time[startStation][endStation]) / double(count[startStation][endStation]);
     }
 };
 
