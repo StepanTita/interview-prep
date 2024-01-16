@@ -79,3 +79,56 @@ int maxSatisfaction(std::vector<int>& sat) {
 
     return std::max(0, res);
 }
+
+// 31. Next Permutation
+
+void nextPermutation(std::vector<int>& nums) {
+    int n = nums.size();
+
+    int pivot = -1;
+    for (int i = n - 2; i >= 0; --i) {
+        if (nums[i] < nums[i + 1]) {
+            pivot = i;
+            break;
+        }
+    }
+
+    if (pivot == -1) {
+        std::reverse(nums.begin(), nums.end());
+        return;
+    }
+
+    for (int i = n - 1; i > pivot; --i) {
+        if (nums[i] > nums[pivot]) {
+            std::swap(nums[i], nums[pivot]);
+            break;
+        }
+    }
+
+    std::reverse(nums.begin() + pivot + 1, nums.end());
+}
+
+// 1053. Previous Permutation With One Swap
+
+std::vector<int> prevPermOpt1(std::vector<int>& arr) {
+    int n = arr.size();
+
+    int pivot = n - 2;
+    for (; pivot >= 0; --pivot) {
+        if (arr[pivot] > arr[pivot + 1]) {
+            break;
+        }
+    }
+
+    if (pivot < 0) return arr;
+
+    int currMaxIdx = pivot + 1;
+    for (int i = pivot + 1; i < n; ++i) {
+        if (arr[i] > arr[currMaxIdx] && arr[i] < arr[pivot]) {
+            currMaxIdx = i;
+        }
+    }
+
+    std::swap(arr[pivot], arr[currMaxIdx]);
+    return arr;
+}

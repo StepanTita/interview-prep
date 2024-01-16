@@ -115,12 +115,15 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 84. **Largest Rectangle in Histogram**
 1504. **Count Submatrices With All Ones**
 1249. **Minimum Remove to Make Valid Parentheses**
+316. **Remove Duplicate Letters**
 
 ### Greedy 💰:
 
 2900. **Longest Unequal Adjacent Groups Subsequence I**
 1090. **Largest Values From Labels**
 1402. **Reducing Dishes**
+31. **Next Permutation**
+1053. **Previous Permutation With One Swap**
 
 ### BFS & DFS 🔍:
 

@@ -119,6 +119,59 @@ std::string minRemoveToMakeValid(std::string s) {
     return res;
 }
 
+int setBit(int n, int i) {
+    return n | (1 << i);
+}
+
+int unsetBit(int n, int i) {
+    return n & (~(1 << i));
+}
+
+int bitSet(int n, int i) {
+    return (n & (1 << i)) != 0;
+}
+
+int toNum(char c) {
+    return c - 'a';
+}
+
+// 316. Remove Duplicate Letters
+
+std::string removeDuplicateLetters(std::string s) {
+    int n = s.length();
+
+    int used = 0;
+
+    std::vector<int> lastIdx(26, 0);
+    for (int i = 0; i < n; ++i) {
+        lastIdx[toNum(s[i])] = i;
+    }
+
+    std::stack<char> st;
+    for (int i = 0; i < n; ++i) {
+        if (bitSet(used, toNum(s[i])))
+            continue;
+
+        while (!st.empty() && st.top() > s[i] && lastIdx[toNum(st.top())] > i) {
+            used = unsetBit(used, toNum(st.top()));
+            st.pop();
+        }
+
+        st.push(s[i]);
+        used = setBit(used, toNum(s[i]));
+    }
+
+    std::string res;
+    while (!st.empty()) {
+        res += st.top();
+        st.pop();
+    }
+
+    std::reverse(res.begin(), res.end());
+
+    return res;
+}
+
 int main() {
     auto v = std::vector<int>{2, 1, 5, 6, 2, 3};
     std::cout << largestRectangleArea(v) << std::endl;
