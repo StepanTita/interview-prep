@@ -2642,7 +2642,7 @@ int minimumDistance(std::string word) {
 
 // 416. Partition Equal Subset Sum
 
-bool canPartition(std::vector<int>& nums) {
+bool canPartition(std::vector<int> &nums) {
     int n = nums.size();
 
     int total = 0;
@@ -2684,6 +2684,66 @@ int numOfWays(int n) {
     }
 
     return (a121 + a123) % MOD;
+}
+
+// 1463. Cherry Pickup II
+
+template<typename T>
+using matrix2d = std::vector<std::vector<T>>;
+
+bool isValid(int n, int m, int i, int j) {
+    if (i < 0 || j < 0 || i >= n || j >= m) return false;
+    return true;
+}
+
+int dfs(std::vector<std::vector<int>> &grid,
+        int i, int j, int k,
+        matrix2d<std::vector<int>> &memo) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    if (i == n) return 0;
+
+    if (memo[i][j][k] != -1) return memo[i][j][k];
+
+    int score = 0;
+
+    std::vector<int> dirs{-1, 0, 1};
+    for (int dj: dirs) {
+        if (!isValid(n, m, i + 1, j + dj)) continue;
+
+        int t1 = grid[i + 1][j + dj];
+        grid[i + 1][j + dj] = 0;
+
+        for (int dk: dirs) {
+            if (!isValid(n, m, i + 1, k + dk)) continue;
+
+            int t2 = grid[i + 1][k + dk];
+            grid[i + 1][k + dk] = 0;
+
+            score = std::max(score, dfs(grid, i + 1, j + dj, k + dk, memo) + t1 + t2);
+
+            grid[i + 1][k + dk] = t2;
+        }
+
+        grid[i + 1][j + dj] = t1;
+    }
+    return memo[i][j][k] = score;
+}
+
+int cherryPickup(std::vector<std::vector<int>> &grid) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    matrix2d<std::vector<int>> memo(
+            n, std::vector<std::vector<int>>(
+                    m, std::vector<int>(
+                            m, -1
+                    )
+            )
+    );
+
+    return dfs(grid, 0, 0, m - 1, memo) + grid[0][0] + grid[0][m - 1];
 }
 
 int main() {
