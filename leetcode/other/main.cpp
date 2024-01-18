@@ -794,10 +794,10 @@ int strStr(std::string haystack, std::string needle) {
 
 // 218. The Skyline Problem
 
-std::vector<std::vector<int>> getSkyline(std::vector<std::vector<int>>& buildings) {
+std::vector<std::vector<int>> getSkyline(std::vector<std::vector<int>> &buildings) {
     std::vector<std::pair<int, int>> points;
 
-    for (auto b : buildings) {
+    for (auto b: buildings) {
         points.emplace_back(std::make_pair(b[0], -b[2]));
         points.emplace_back(std::make_pair(b[1], b[2]));
     }
@@ -835,7 +835,8 @@ int removeAlmostEqualCharacters(std::string word) {
     int count = 0;
     for (int i = 1; i < word.size(); ++i) {
         if (std::abs(word[i] - word[i - 1]) <= 1) {
-            ++count; ++i;
+            ++count;
+            ++i;
         }
     }
     return count;
@@ -845,7 +846,8 @@ int removeAlmostEqualCharacters(std::string word) {
 
 std::string convertToStr(std::vector<int> &v1, std::vector<int> &v2) {
     return "p1:" + std::to_string(v1[0]) + ";" + std::to_string(v1[1]) + ";"
-                                                                         "p2:" + std::to_string(v2[0]) + ";" + std::to_string(v2[1]);
+                                                                         "p2:" + std::to_string(v2[0]) + ";" +
+           std::to_string(v2[1]);
 }
 
 bool isAligned(std::vector<int> &a, std::vector<int> &b, std::vector<int> &c) {
@@ -863,7 +865,7 @@ bool isAligned(std::vector<int> &a, std::vector<int> &b, std::vector<int> &c) {
     return crossProduct == 0;
 }
 
-int maxPoints(std::vector<std::vector<int>>& points) {
+int maxPoints(std::vector<std::vector<int>> &points) {
     // need used pairs
     // need mapping from used pair to count
 
@@ -871,7 +873,7 @@ int maxPoints(std::vector<std::vector<int>>& points) {
 
     int n = points.size();
 
-    std::unordered_set<std::string> usedPairs;
+    std::unordered_set < std::string > usedPairs;
     std::unordered_map<std::string, int> pointsCount;
 
     int maxCount = 0;
@@ -898,7 +900,79 @@ int maxPoints(std::vector<std::vector<int>>& points) {
     return maxCount;
 }
 
+// 54. Spiral Matrix
+
+std::vector<int> spiralOrder(std::vector<std::vector<int>> &matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+
+    int bl = 0;
+    int br = m - 1;
+
+    int bt = 1;
+    int bb = n - 1;
+
+    int i = 0;
+    int j = -1;
+
+    int count = n * m;
+
+    std::vector<int> res;
+    while (count > 0) {
+        for (j = j + 1; j <= br && count > 0; ++j) {
+            res.emplace_back(matrix[i][j]);
+            --count;
+        }
+        --br;
+        --j;
+
+        for (i = i + 1; i <= bb && count > 0; ++i) {
+            res.emplace_back(matrix[i][j]);
+            --count;
+        }
+        --bb;
+        --i;
+
+        for (j = j - 1; j >= bl && count > 0; --j) {
+            res.emplace_back(matrix[i][j]);
+            --count;
+        }
+        ++bl;
+        ++j;
+
+        for (i = i - 1; i >= bt && count > 0; --i) {
+            res.emplace_back(matrix[i][j]);
+            --count;
+        }
+        ++bt;
+        ++i;
+    }
+
+    return res;
+}
+
+// 722. Remove Comments
+
+std::vector<std::string> removeComments(std::vector<std::string>& source) {
+    std::vector<std::string> ans;
+    std::string s;
+    bool comment = false;
+    for(auto line : source) {
+        int n = line.size();
+        for(int j = 0; j < line.size(); j++) {
+            if(!comment && j + 1 < n && line[j] == '/' && line[j+1]=='/') break;
+            else if(!comment && j + 1 < n && line[j] == '/' && line[j+1]=='*') comment = true, j++;
+            else if(comment && j + 1 < n && line[j] == '*' && line[j+1]=='/') comment = false, j++;
+            else if(!comment) s.push_back(line[j]);
+        }
+
+        if(!comment && s.size()) ans.push_back(s), s.clear();
+    }
+    return ans;
+}
+
 int main() {
-    findAnagrams("cbaebabacd", "abc");
+    auto v = std::vector<std::string>{"a/*/b//*c","blank","d/*/e*//f"};
+    removeComments(v);
     return 0;
 }

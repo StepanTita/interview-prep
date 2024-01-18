@@ -201,6 +201,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 218. **The Skyline Problem**
 2957. **Remove Adjacent Almost-Equal Characters**
 149. **Max Points on a Line**
+54. **Spiral Matrix**
+722. **Remove Comments**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
