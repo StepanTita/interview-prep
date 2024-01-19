@@ -203,6 +203,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 149. **Max Points on a Line**
 54. **Spiral Matrix**
 722. **Remove Comments**
+961. **N-Repeated Element in Size 2N Array**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
