@@ -971,6 +971,27 @@ std::vector<std::string> removeComments(std::vector<std::string>& source) {
     return ans;
 }
 
+// 454. 4Sum II
+
+int fourSumCount(std::vector<int>& nums1, std::vector<int>& nums2, std::vector<int>& nums3, std::vector<int>& nums4) {
+    int ans = 0;
+    std::unordered_map<int, int> sum;
+
+    for (int k = 0; k < nums3.size(); ++k) {
+        for (int t = 0; t < nums4.size(); ++t) {
+            ++sum[nums3[k] + nums4[t]];
+        }
+    }
+
+    for (int i = 0; i < nums1.size(); ++i) {
+        for (int j = 0; j < nums2.size(); ++j) {
+            ans += sum[-(nums1[i] + nums2[j])];
+        }
+    }
+
+    return ans;
+}
+
 int main() {
     auto v = std::vector<std::string>{"a/*/b//*c","blank","d/*/e*//f"};
     removeComments(v);

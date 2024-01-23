@@ -271,6 +271,35 @@ std::vector<int> maxSlidingWindow2(std::vector<int>& nums, int k) {
     return res;
 }
 
+// 692. Top K Frequent Words
+
+std::vector<std::string> topKFrequent(std::vector<std::string>& words, int k) {
+    // hashmap[word] = count ~ O(1)
+
+    std::unordered_map<std::string, int> freq;
+    for (auto w : words) {
+        ++freq[w];
+    }
+
+    auto compare = [](std::pair<int, std::string> a, std::pair<int, std::string> b) {
+        return a.first < b.first || (a.first == b.first && b.second < a.second);
+    };
+
+    std::priority_queue<std::pair<int, std::string>, std::vector<std::pair<int, std::string>>, decltype(compare)> pq(compare);
+
+    for (auto [k, v] : freq) {
+        pq.push(std::make_pair(v, k));
+    }
+
+    std::vector<std::string> res;
+    for (int i = 0; i < k; ++i) {
+        res.emplace_back(pq.top().second);
+        pq.pop();
+    }
+
+    return res;
+}
+
 int main() {
     return 0;
 }

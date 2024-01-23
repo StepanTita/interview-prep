@@ -110,6 +110,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 857. **Minimum Cost to Hire K Workers**
 1439. **Find the Kth Smallest Sum of a Matrix With Sorted Rows**
 239. **Sliding Window Maximum**
+692. **Top K Frequent Words**
 
 ### Stack 📥:
 
@@ -204,6 +205,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 54. **Spiral Matrix**
 722. **Remove Comments**
 961. **N-Repeated Element in Size 2N Array**
+454. **4Sum II**
 
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
