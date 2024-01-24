@@ -137,6 +137,30 @@ public:
     }
 };
 
+// 528. Random Pick with Weight
+
+class Solution {
+private:
+    int n = 0;
+    int sum = 0;
+    std::vector<int> prefixSum;
+public:
+    Solution(std::vector<int> &w) {
+        n = w.size();
+        prefixSum = std::vector<int>(n, 0);
+
+        prefixSum[0] = w[0];
+        for (int i = 1; i < w.size(); ++i) {
+            prefixSum[i] = prefixSum[i - 1] + w[i];
+        }
+    }
+
+    int pickIndex() {
+        double v = ((double) rand() / (RAND_MAX)) * prefixSum[n - 1];
+        return std::lower_bound(prefixSum.begin(), prefixSum.end(), v) - prefixSum.begin();
+    }
+};
+
 int main() {
     ExamRoom *examRoom = new ExamRoom(10);
     examRoom->seat(); // return 0, no one is in the room, then the student sits at seat number 0.

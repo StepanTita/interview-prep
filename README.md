@@ -118,6 +118,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1504. **Count Submatrices With All Ones**
 1249. **Minimum Remove to Make Valid Parentheses**
 316. **Remove Duplicate Letters**
+1019. **Next Greater Node In Linked List**
 
 ### Greedy 💰:
 
@@ -143,6 +144,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 380. **Insert Delete GetRandom O(1)**
 855. **Exam Room**
 1396. **Design Underground System**
+528. **Random Pick with Weight**
 
 ### LinkedLists 🚈:
 

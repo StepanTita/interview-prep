@@ -2131,6 +2131,35 @@ bool isInterleave(std::string a, std::string b, std::string t) {
     return dp[0][0];
 }
 
+// O(n) memory solution (hate how implicit it is)
+bool isInterleave2(std::string a, std::string b, std::string t) {
+    if (a.empty()) return b == t;
+    else if (b.empty()) return a == t;
+
+    int n = a.length();
+    int m = b.length();
+
+    if (n + m != t.length()) return false;
+
+    std::vector<bool> dp(m + 1, false);
+
+    for (int i = 0; i <= n; ++i) {
+        for (int j = 0; j <= m; ++j) {
+            if (i == 0 && j == 0) {
+                dp[j] = true;
+            } else if (i == 0) {
+                dp[j] = dp[j - 1] && b[j - 1] == t[i + j - 1];
+            } else if (j == 0) {
+                dp[j] = dp[j] && a[i - 1] == t[i + j - 1];
+            } else {
+                dp[j] = (dp[j] && t[i + j - 1] == a[i - 1]) || (dp[j - 1] && t[i + j - 1] == b[j - 1]);
+            }
+        }
+    }
+
+    return dp[m];
+}
+
 // 1696. Jump Game VI
 
 int maxResult(std::vector<int> &nums, int K) {

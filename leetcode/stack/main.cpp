@@ -18,7 +18,7 @@ const int INF = 1e9;
 
 // 84. Largest Rectangle in Histogram
 
-int largestRectangleArea(std::vector<int>& heights) {
+int largestRectangleArea(std::vector<int> &heights) {
     heights.emplace_back(0);
 
     std::stack<int> hist;
@@ -168,6 +168,50 @@ std::string removeDuplicateLetters(std::string s) {
     }
 
     std::reverse(res.begin(), res.end());
+
+    return res;
+}
+
+// 1019. Next Greater Node In Linked List
+
+struct ListNode {
+    int val;
+    ListNode *next;
+
+    ListNode() : val(0), next(nullptr) {}
+
+    ListNode(int x) : val(x), next(nullptr) {}
+
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+std::vector<int> nextLargerNodes(ListNode *head) {
+    std::vector<int> res;
+
+    auto curr = head;
+
+    // decreasing stack
+    std::stack<std::pair<int, int>> st;
+    int idx = 0;
+    res.emplace_back(0);
+
+    while (curr != NULL) {
+        if (st.empty() || st.top().first >= curr->val) {
+            st.push({curr->val, idx});
+        } else {
+            while (!st.empty() && st.top().first < curr->val) {
+                res[st.top().second] = curr->val;
+                st.pop();
+            }
+
+            st.push({curr->val, idx});
+        }
+
+        curr = curr->next;
+        ++idx;
+        if (curr != NULL)
+            res.emplace_back(0);
+    }
 
     return res;
 }
