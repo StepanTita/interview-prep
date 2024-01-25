@@ -992,6 +992,33 @@ int fourSumCount(std::vector<int>& nums1, std::vector<int>& nums2, std::vector<i
     return ans;
 }
 
+// 334. Increasing Triplet Subsequence
+
+bool increasingTriplet(std::vector<int>& nums) {
+    int i = 0;
+    int j = 1;
+
+    for (j = 1; j < nums.size() && nums[j] <= nums[i]; ++j) {
+        if (nums[j] < nums[i]) {
+            i = j;
+        }
+    }
+
+    for (int k = j + 1; k < nums.size(); ++k) {
+        if (nums[k] < nums[i]) {
+            i = k;
+        }
+        if (nums[k] > nums[i] && nums[k] < nums[j]) {
+            j = k;
+        }
+        if (nums[k] > nums[j]) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 int main() {
     auto v = std::vector<std::string>{"a/*/b//*c","blank","d/*/e*//f"};
     removeComments(v);
