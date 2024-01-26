@@ -953,27 +953,27 @@ std::vector<int> spiralOrder(std::vector<std::vector<int>> &matrix) {
 
 // 722. Remove Comments
 
-std::vector<std::string> removeComments(std::vector<std::string>& source) {
+std::vector<std::string> removeComments(std::vector<std::string> &source) {
     std::vector<std::string> ans;
     std::string s;
     bool comment = false;
-    for(auto line : source) {
+    for (auto line: source) {
         int n = line.size();
-        for(int j = 0; j < line.size(); j++) {
-            if(!comment && j + 1 < n && line[j] == '/' && line[j+1]=='/') break;
-            else if(!comment && j + 1 < n && line[j] == '/' && line[j+1]=='*') comment = true, j++;
-            else if(comment && j + 1 < n && line[j] == '*' && line[j+1]=='/') comment = false, j++;
-            else if(!comment) s.push_back(line[j]);
+        for (int j = 0; j < line.size(); j++) {
+            if (!comment && j + 1 < n && line[j] == '/' && line[j + 1] == '/') break;
+            else if (!comment && j + 1 < n && line[j] == '/' && line[j + 1] == '*') comment = true, j++;
+            else if (comment && j + 1 < n && line[j] == '*' && line[j + 1] == '/') comment = false, j++;
+            else if (!comment) s.push_back(line[j]);
         }
 
-        if(!comment && s.size()) ans.push_back(s), s.clear();
+        if (!comment && s.size()) ans.push_back(s), s.clear();
     }
     return ans;
 }
 
 // 454. 4Sum II
 
-int fourSumCount(std::vector<int>& nums1, std::vector<int>& nums2, std::vector<int>& nums3, std::vector<int>& nums4) {
+int fourSumCount(std::vector<int> &nums1, std::vector<int> &nums2, std::vector<int> &nums3, std::vector<int> &nums4) {
     int ans = 0;
     std::unordered_map<int, int> sum;
 
@@ -994,7 +994,7 @@ int fourSumCount(std::vector<int>& nums1, std::vector<int>& nums2, std::vector<i
 
 // 334. Increasing Triplet Subsequence
 
-bool increasingTriplet(std::vector<int>& nums) {
+bool increasingTriplet(std::vector<int> &nums) {
     int i = 0;
     int j = 1;
 
@@ -1019,8 +1019,50 @@ bool increasingTriplet(std::vector<int>& nums) {
     return false;
 }
 
+// 11. Container With Most Water
+
+int maxArea(std::vector<int> &height) {
+    int l = 0;
+    int r = height.size() - 1;
+
+    int maxAr = 0;
+    while (l < r) {
+        maxAr = std::max(maxAr, (r - l) * std::min(height[l], height[r]));
+        if (height[l] < height[r]) {
+            ++l;
+        } else {
+            --r;
+        }
+    }
+
+    return maxAr;
+}
+
+// 48. Rotate Image
+
+void rotate(std::vector<std::vector<int>> &matrix) {
+    int n = matrix.size();
+    for (int i = 0; i < n; ++i) {
+        for (int j = i; j < n - i - 1; ++j) {
+            // {i, j},
+            std::vector<std::pair<int, int>> dirs = {{j,         n - 1 - i},
+                                                     {n - 1 - i, n - 1 - j},
+                                                     {n - 1 - j, i},
+                                                     {i,         j}};
+            int carry = matrix[i][j];
+            for (auto [di, dj]: dirs) {
+                std::swap(matrix[di][dj], carry);
+            }
+        }
+    }
+}
+
 int main() {
-    auto v = std::vector<std::string>{"a/*/b//*c","blank","d/*/e*//f"};
-    removeComments(v);
+    auto v = std::vector<std::vector<int>>{
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+    };
+    rotate(v);
     return 0;
 }
