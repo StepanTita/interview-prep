@@ -362,9 +362,57 @@ int maxAncestorDiff(TreeNode *root) {
     return dfs(root, root->val, root->val);
 }
 
+// 743. Network Delay Time
+
+int networkDelayTime(std::vector<std::vector<int>> &times, int n, int k) {
+    --k;
+    std::vector<std::vector<int>> adj_mat(n, std::vector<int>(n, INF));
+
+    for (auto edge: times) {
+        int u = edge[0] - 1, v = edge[1] - 1, w = edge[2];
+        adj_mat[u][v] = w;
+    }
+
+    std::vector<int> dist(n, INF);
+    std::vector<bool> visited(n, false);
+    dist[k] = 0;
+
+    std::priority_queue<std::pair<int, int>> pq;
+    pq.push(std::make_pair(0, k));
+
+    while (!pq.empty()) {
+        auto [_, u] = pq.top();
+        pq.pop();
+
+        if (visited[u]) continue;
+        visited[u] = true;
+
+        for (int v = 0; v < n; ++v) {
+            int w = adj_mat[u][v];
+            if (w == INF) continue;
+
+            if (dist[v] > dist[u] + w) {
+                dist[v] = dist[u] + w;
+                pq.push(std::make_pair(-dist[v], v));
+            }
+        }
+    }
+
+    int total = 0;
+    for (int i = 0; i < n; ++i) {
+        if (dist[i] >= INF) return -1;
+        total = std::max(total, dist[i]);
+    }
+
+    return total;
+}
+
 int main() {
-    auto tree = new TreeNode(8, new TreeNode(3, new TreeNode(1), new TreeNode(6, new TreeNode(4), new TreeNode(7))),
-                             NULL);
-    maxAncestorDiff(tree);
+    auto t = std::vector<std::vector<int>>{
+            {1, 2, 1},
+            {2, 3, 2},
+            {1, 3, 4}
+    };
+    networkDelayTime(t, 3, 1);
     return 0;
 }
