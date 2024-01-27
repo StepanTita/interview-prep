@@ -161,13 +161,125 @@ public:
     }
 };
 
+// 146. LRU Cache
+
+struct LNode {
+    int key;
+    int val;
+
+    LNode *prev;
+    LNode *next;
+
+    LNode(int key, int value) {
+        this->key = key;
+        this->val = value;
+
+        prev = NULL;
+        next = NULL;
+    }
+};
+
+class LRUCache {
+private:
+    int cap;
+    int len;
+
+    LNode *head;
+    LNode *tail;
+
+    std::unordered_map<int, LNode *> lruMap;
+public:
+    LRUCache(int capacity) {
+        cap = capacity;
+        len = 0;
+
+        head = NULL;
+        tail = NULL;
+    }
+
+    LNode *getNode(int key) {
+        if (!lruMap.contains(key)) return NULL;
+
+        auto curr = lruMap[key];
+
+        if (head != tail && curr != head) {
+            auto prev = curr->prev;
+            auto next = curr->next;
+
+            if (next != NULL) {
+                next->prev = curr->prev;
+            }
+
+            prev->next = next;
+            curr->next = head;
+            head->prev = curr;
+            curr->prev = NULL;
+
+            head = curr;
+            if (curr == tail) {
+                tail = prev;
+            }
+        }
+
+        return curr;
+    }
+
+    int get(int key) {
+        auto node = getNode(key);
+        if (node == NULL) return -1;
+
+        return node->val;
+    }
+
+    void put(int key, int value) {
+        if (lruMap.contains(key)) {
+            auto curr = getNode(key);
+            curr->val = value;
+            return;
+        }
+
+        auto curr = new LNode(key, value);
+
+        if (head == NULL) {
+            head = curr;
+            tail = head;
+        } else {
+            curr->next = head;
+            head->prev = curr;
+            head = curr;
+        }
+        lruMap[key] = curr;
+        ++len;
+
+        if (len > cap) {
+            --len;
+            lruMap.erase(tail->key);
+
+            tail = tail->prev;
+            if (tail == NULL) {
+                head = NULL;
+            } else {
+                tail->next = NULL;
+            }
+        }
+    }
+};
+
 int main() {
-    ExamRoom *examRoom = new ExamRoom(10);
-    examRoom->seat(); // return 0, no one is in the room, then the student sits at seat number 0.
-    examRoom->seat(); // return 9, the student sits at the last seat number 9.
-    examRoom->seat(); // return 4, the student sits at the last seat number 4.
-    examRoom->seat(); // return 2, the student sits at the last seat number 2.
-    examRoom->leave(4);
-    examRoom->seat(); // return 5, the student sits at the last seat number 5.
+    LRUCache *cache = new LRUCache(3);
+    cache->put(1, 1);
+    cache->put(2, 2);
+    cache->put(3, 3);
+    cache->put(4, 4);
+    cache->get(4);
+    cache->get(3);
+    cache->get(2);
+    cache->get(1);
+    cache->put(5, 5);
+    cache->get(1);
+    cache->get(2);
+    cache->get(3);
+    cache->get(4);
+    cache->get(5);
     return 0;
 }

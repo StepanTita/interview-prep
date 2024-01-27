@@ -134,6 +134,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 854. **K-Similar Strings**
 1028. **Recover a Tree From Preorder Traversal**
 1162. **As Far from Land as Possible**
+103. **Binary Tree Zigzag Level Order Traversal**
 
 ### Math ♾️:
 
@@ -145,6 +146,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 855. **Exam Room**
 1396. **Design Underground System**
 528. **Random Pick with Weight**
+146. **LRU Cache**
 
 ### LinkedLists 🚈:
 
@@ -172,6 +174,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 
 ### Union Find 🇺🇳:
 947. **Most Stones Removed with Same Row or Column**
+200. **Number of Islands**
 
 
 ### Other:

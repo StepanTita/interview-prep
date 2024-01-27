@@ -76,3 +76,76 @@ public:
         return n - components.size();
     }
 };
+
+// 200. Number of Islands
+
+class NumberOfIslands {
+private:
+    std::vector<int> parent;
+    std::vector<int> rank;
+public:
+    int find(int x) {
+        if (parent[x] == -1) return parent[x] = x;
+        if (parent[x] == x) return x;
+        return parent[x] = find(parent[x]);
+    }
+
+    void unite(int a, int b) {
+        int pa = find(a);
+        int pb = find(b);
+
+        if (pa == pb) return;
+
+        if (rank[pa] > rank[pb]) {
+            parent[pb] = pa;
+        } else if (rank[pa] < rank[pb]) {
+            parent[pa] = pb;
+        } else {
+            parent[pa] = pb;
+            ++rank[pb];
+        }
+    }
+
+    int toIndex(int i, int j) {
+        return i | (j << 9);
+    }
+
+    int numIslands(std::vector<std::vector<char>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+
+        parent = std::vector<int>(1 << 18, -1);
+        rank = std::vector<int>(1 << 18, 0);
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (grid[i][j] != '1') continue;
+
+                if (i - 1 >= 0 && grid[i - 1][j] == '1') {
+                    unite(toIndex(i - 1, j), toIndex(i, j));
+                }
+                if (i + 1 < n && grid[i + 1][j] == '1') {
+                    unite(toIndex(i, j), toIndex(i + 1, j));
+                }
+
+                if (j - 1 >= 0 && grid[i][j - 1] == '1') {
+                    unite(toIndex(i, j), toIndex(i, j - 1));
+                }
+                if (j + 1 < m && grid[i][j + 1] == '1') {
+                    unite(toIndex(i, j), toIndex(i, j + 1));
+                }
+            }
+        }
+
+        std::unordered_set<int> islands;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (grid[i][j] != '1') continue;
+
+                islands.insert(find(toIndex(i, j)));
+            }
+        }
+
+        return islands.size();
+    }
+};

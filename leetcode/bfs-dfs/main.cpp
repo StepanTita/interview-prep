@@ -197,3 +197,70 @@ int maxDistance(std::vector<std::vector<int>> &grid) {
 
     return maxDist;
 }
+
+// 103. Binary Tree Zigzag Level Order Traversal
+
+void reverseQueue(std::queue<TreeNode*> &q) {
+    std::stack<TreeNode*> st;
+    while (!q.empty()) {
+        st.push(q.front());
+        q.pop();
+    }
+
+    while (!st.empty()) {
+        q.push(st.top());
+        st.pop();
+    }
+}
+
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+    std::queue<TreeNode*> q;
+
+    std::vector<std::vector<int>> res;
+    if (root == NULL) return res;
+
+    res.emplace_back(std::vector<int>());
+
+    bool forward = true;
+
+    q.push(root);
+    q.push(NULL);
+    while (!q.empty()) {
+        auto curr = q.front();
+        q.pop();
+
+        res.back().emplace_back(curr->val);
+
+        if (forward) {
+            if (curr->left != NULL) {
+                q.push(curr->left);
+            }
+            if (curr->right != NULL) {
+                q.push(curr->right);
+            }
+        } else {
+            if (curr->right != NULL) {
+                q.push(curr->right);
+            }
+            if (curr->left != NULL) {
+                q.push(curr->left);
+            }
+        }
+
+        if (q.front() == NULL) {
+            q.pop();
+
+            reverseQueue(q);
+            forward = !forward;
+
+            q.push(NULL);
+            if (q.front() == NULL) {
+                break;
+            }
+
+            res.emplace_back(std::vector<int>());
+        }
+    }
+
+    return res;
+}
