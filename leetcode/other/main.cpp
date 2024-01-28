@@ -1057,6 +1057,42 @@ void rotate(std::vector<std::vector<int>> &matrix) {
     }
 }
 
+// 46. Permutations
+
+bool nextPermutation(vector<int> &nums) {
+    int n = nums.size();
+
+    int pivot = n - 2;
+    while (pivot >= 0 && nums[pivot] >= nums[pivot + 1]) --pivot;
+
+    if (pivot < 0) return false;
+
+    // min element > nums[pivot]
+    int i = n - 1;
+    while (i >= 0 && nums[i] <= nums[pivot]) --i;
+
+    std::swap(nums[i], nums[pivot]);
+
+    std::reverse(nums.begin() + pivot + 1, nums.end());
+
+    return true;
+}
+
+vector<vector<int>> permute(vector<int>& nums) {
+    if (nums.size() == 1) return vector<vector<int>>{nums};
+
+    std::sort(nums.begin(), nums.end());
+
+    vector<vector<int>> res;
+    res.emplace_back(vector<int>(nums.begin(), nums.end()));
+
+    while (nextPermutation(nums)) {
+        res.emplace_back(vector<int>(nums.begin(), nums.end()));
+    }
+
+    return res;
+}
+
 int main() {
     auto v = std::vector<std::vector<int>>{
             {1, 2, 3},

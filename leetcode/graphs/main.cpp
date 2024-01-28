@@ -407,6 +407,50 @@ int networkDelayTime(std::vector<std::vector<int>> &times, int n, int k) {
     return total;
 }
 
+bool isValid(int i, int j, int n, int m) {
+    if (i < 0 || i >= n || j < 0 || j >= m) return false;
+    return true;
+}
+
+int minimumEffortPath(std::vector<std::vector<int>>& heights) {
+    int n = heights.size();
+    int m = heights[0].size();
+
+    std::vector<std::vector<int>> dist(n, std::vector<int>(m, INF));
+    std::vector<std::vector<bool>> visited(n, std::vector<bool>(m, false));
+
+    // diff, i, j
+    std::priority_queue<std::vector<int>> pq;
+    pq.push({0, 0, 0});
+
+    dist[0][0] = 0;
+
+    std::vector<std::pair<int, int>> dirs{{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+
+    while (!pq.empty()) {
+        auto u = pq.top();
+        pq.pop();
+
+        int i = u[1];
+        int j = u[2];
+
+        if (visited[i][j]) continue;
+        visited[i][j] = true;
+
+        for (auto [di, dj] : dirs) {
+            if (!isValid(i + di, j + dj, n, m)) continue;
+
+            int w = std::abs(heights[i][j] - heights[i + di][j + dj]);
+            if (dist[i + di][j + dj] > std::max(dist[i][j], w)) {
+                dist[i + di][j + dj] = std::max(dist[i][j], w);
+                pq.push({-dist[i + di][j + dj], i + di, j + dj});
+            }
+        }
+    }
+
+    return dist[n - 1][m - 1];
+}
+
 int main() {
     auto t = std::vector<std::vector<int>>{
             {1, 2, 1},

@@ -147,6 +147,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1396. **Design Underground System**
 528. **Random Pick with Weight**
 146. **LRU Cache**
+208. **Implement Trie (Prefix Tree)**
 
 ### LinkedLists 🚈:
 
@@ -164,6 +165,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1123. **Lowest Common Ancestor of Deepest Leaves**
 1026. **Maximum Difference Between Node and Ancestor**
 743. **Network Delay Time** (Dijkstra)
+1631. **Path With Minimum Effort** (Dijkstra)
 
 ### Arrays 🎞:
 
@@ -215,7 +217,16 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 334. **Increasing Triplet Subsequence**
 334. **Increasing Triplet Subsequence**
 48. **Rotate Image**
+46. **Permutations**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
 🚀 Happy Learning! 🚀
+
+
+### TODO:
+* ~~Knuth-Morris-Pratt (KMP)~~
+* Dijkstra
+* Floyd-Warshall
+* DSU
+* NextPermutation

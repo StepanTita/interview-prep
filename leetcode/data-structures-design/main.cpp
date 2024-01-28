@@ -265,6 +265,58 @@ public:
     }
 };
 
+// 208. Implement Trie (Prefix Tree)
+
+struct Node {
+    std::unordered_map<char, Node*> next;
+    bool isTerminal;
+
+    Node(bool terminal = false) : isTerminal(terminal) {}
+};
+
+class Trie {
+private:
+    Node *head;
+public:
+    Trie() {
+        head = new Node();
+    }
+
+    void insert(std::string word) {
+        auto curr = head;
+        for (char c : word) {
+            if (!curr->next.contains(c)) {
+                curr->next[c] = new Node();
+            }
+
+            curr = curr->next[c];
+        }
+
+        curr->isTerminal = true;
+    }
+
+    bool search(std::string word) {
+        auto curr = head;
+
+        for (char c : word) {
+            if (!curr->next.contains(c)) return false;
+            curr = curr->next[c];
+        }
+        return curr->isTerminal;
+    }
+
+    bool startsWith(std::string prefix) {
+        auto curr = head;
+
+        for (char c : prefix) {
+            if (!curr->next.contains(c)) return false;
+            curr = curr->next[c];
+        }
+
+        return true;
+    }
+};
+
 int main() {
     LRUCache *cache = new LRUCache(3);
     cache->put(1, 1);
