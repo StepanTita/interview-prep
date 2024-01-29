@@ -104,11 +104,11 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-TreeNode* recoverFromPreorder(std::string traversal) {
+TreeNode *recoverFromPreorder(std::string traversal) {
     int depth = 0;
     std::string val = "";
 
-    std::unordered_map<int, TreeNode*> prev;
+    std::unordered_map<int, TreeNode *> prev;
     for (int i = 0; i < traversal.length();) {
         if (traversal[i] == '-') {
             ++depth;
@@ -180,7 +180,7 @@ int maxDistance(std::vector<std::vector<int>> &grid) {
                 {0,  1},
                 {1,  0}
         };
-        for (auto [di, dj] : dirs) {
+        for (auto [di, dj]: dirs) {
             if (isValid(n, m, i + di, j + dj) && grid[i + di][j + dj] == 0 && dist[i + di][j + dj] == -1) {
                 dist[i + di][j + dj] = dist[i][j] + std::abs(di) + std::abs(dj);
                 q.push({i + di, j + dj});
@@ -200,8 +200,8 @@ int maxDistance(std::vector<std::vector<int>> &grid) {
 
 // 103. Binary Tree Zigzag Level Order Traversal
 
-void reverseQueue(std::queue<TreeNode*> &q) {
-    std::stack<TreeNode*> st;
+void reverseQueue(std::queue<TreeNode *> &q) {
+    std::stack<TreeNode *> st;
     while (!q.empty()) {
         st.push(q.front());
         q.pop();
@@ -213,8 +213,8 @@ void reverseQueue(std::queue<TreeNode*> &q) {
     }
 }
 
-vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-    std::queue<TreeNode*> q;
+std::vector<std::vector<int>> zigzagLevelOrder(TreeNode *root) {
+    std::queue<TreeNode *> q;
 
     std::vector<std::vector<int>> res;
     if (root == NULL) return res;

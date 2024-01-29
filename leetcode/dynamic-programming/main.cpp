@@ -2775,8 +2775,59 @@ int cherryPickup(std::vector<std::vector<int>> &grid) {
     return dfs(grid, 0, 0, m - 1, memo) + grid[0][0] + grid[0][m - 1];
 }
 
+// 140. Word Break II
+
+std::string join(std::vector<std::string> &v) {
+    int n = v.size();
+    std::string res = "";
+    for (int i = 0; i < n - 1; ++i) {
+        res = res + v[i] + " ";
+    }
+    return res + v[n - 1];
+}
+
+std::vector<std::string> wordBreak2(std::string s, std::vector<std::string>& wordDict) {
+    int n = s.length();
+
+    std::unordered_set<std::string> dct;
+    for (auto word : wordDict) {
+        dct.insert(word);
+    }
+
+    // a vector where dp[i] is a set of all possible combinations that led to this solution
+    // {
+    //     {"cats", "and"},
+    //     {"cat", "sand"}
+    // }
+    std::vector<std::vector<std::vector<std::string>>> dp(n + 1,
+                                                          std::vector<std::vector<std::string>>());
+    dp[0] = std::vector<std::vector<std::string>>{{}};
+    for (int i = 1; i <= n; ++i) {
+        std::string curr = "";
+        for (int j = i; j > 0; --j) {
+            curr = s[j - 1] + curr;
+
+            if (!dp[j - 1].empty() && dct.contains(curr)) {
+                for (auto prev : dp[j - 1]) {
+                    auto next = std::vector<std::string>(prev.begin(), prev.end());
+                    next.emplace_back(curr);
+                    dp[i].emplace_back(next);
+                }
+            }
+        }
+    }
+
+    std::vector<std::string> res;
+    for (auto v : dp[n]) {
+        res.emplace_back(join(v));
+    }
+
+    return res;
+}
+
 int main() {
-    auto a = std::vector<int>{1, 1, 1, 1};
-    std::cout << canPartition(a) << std::endl;
+    std::string s = "catsanddog";
+    auto dct = std::vector<std::string>{"cat", "cats", "and", "sand", "dog"};
+    wordBreak2(s, dct);
     return 0;
 }

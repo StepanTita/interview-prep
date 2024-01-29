@@ -99,6 +99,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 416. **Partition Equal Subset Sum**
 1411. **Number of Ways to Paint N × 3 Grid**
 1463. **Cherry Pickup II**
+140. **Word Break II**
 
 
 ### Heap 📊:
