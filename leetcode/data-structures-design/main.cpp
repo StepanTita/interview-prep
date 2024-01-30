@@ -268,7 +268,7 @@ public:
 // 208. Implement Trie (Prefix Tree)
 
 struct Node {
-    std::unordered_map<char, Node*> next;
+    std::unordered_map<char, Node *> next;
     bool isTerminal;
 
     Node(bool terminal = false) : isTerminal(terminal) {}
@@ -284,7 +284,7 @@ public:
 
     void insert(std::string word) {
         auto curr = head;
-        for (char c : word) {
+        for (char c: word) {
             if (!curr->next.contains(c)) {
                 curr->next[c] = new Node();
             }
@@ -298,7 +298,7 @@ public:
     bool search(std::string word) {
         auto curr = head;
 
-        for (char c : word) {
+        for (char c: word) {
             if (!curr->next.contains(c)) return false;
             curr = curr->next[c];
         }
@@ -308,12 +308,53 @@ public:
     bool startsWith(std::string prefix) {
         auto curr = head;
 
-        for (char c : prefix) {
+        for (char c: prefix) {
             if (!curr->next.contains(c)) return false;
             curr = curr->next[c];
         }
 
         return true;
+    }
+};
+
+// 911. Online Election
+
+class TopVotedCandidate {
+public:
+    const int INF = 1e9;
+
+    std::vector<int> polls;
+    std::vector<int> times;
+
+    TopVotedCandidate(std::vector<int> &persons, std::vector<int> &times) {
+        int n = persons.size();
+
+        this->times = times;
+
+        std::unordered_map<int, int> votes;
+
+        int max_votes = 0;
+        int max_person = 0;
+
+        polls = std::vector<int>(n, INF);
+        for (int i = 0; i < n; ++i) {
+            ++votes[persons[i]];
+            if (max_votes <= votes[persons[i]]) {
+                max_votes = votes[persons[i]];
+                max_person = persons[i];
+            }
+
+            polls[i] = max_person;
+        }
+    }
+
+    int q(int t) {
+        int i = std::lower_bound(times.begin(), times.end(), t) - times.begin();
+        if (i >= times.size()) return polls.back();
+        if (times[i] > t) {
+            return polls[i - 1];
+        }
+        return polls[i];
     }
 };
 

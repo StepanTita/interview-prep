@@ -149,6 +149,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 528. **Random Pick with Weight**
 146. **LRU Cache**
 208. **Implement Trie (Prefix Tree)**
+911. **Online Election**
 
 ### LinkedLists 🚈:
 
@@ -219,6 +220,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 334. **Increasing Triplet Subsequence**
 48. **Rotate Image**
 46. **Permutations**
+1094. **Car Pooling**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 

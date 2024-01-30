@@ -1078,19 +1078,50 @@ bool nextPermutation(vector<int> &nums) {
     return true;
 }
 
-vector<vector<int>> permute(vector<int>& nums) {
-    if (nums.size() == 1) return vector<vector<int>>{nums};
+std::vector<std::vector<int>> permute(std::vector<int> &nums) {
+    if (nums.size() == 1) return std::vector<std::vector<int>>{nums};
 
     std::sort(nums.begin(), nums.end());
 
-    vector<vector<int>> res;
-    res.emplace_back(vector<int>(nums.begin(), nums.end()));
+    std::vector<std::vector<int>> res;
+    res.emplace_back(std::vector<int>(nums.begin(), nums.end()));
 
     while (nextPermutation(nums)) {
-        res.emplace_back(vector<int>(nums.begin(), nums.end()));
+        res.emplace_back(std::vector<int>(nums.begin(), nums.end()));
     }
 
     return res;
+}
+
+// 1094. Car Pooling
+
+bool carPooling(std::vector<std::vector<int>> &trips, int capacity) {
+    std::vector<std::pair<int, int>> path;
+
+    for (auto trip: trips) {
+        int numPass = trip[0];
+        int from = trip[1];
+        int to = trip[2];
+
+        path.emplace_back(std::pair<int, int>{from, numPass});
+        path.emplace_back(std::pair<int, int>{to, -numPass});
+    }
+
+    std::sort(path.begin(), path.end());
+
+    for (auto [dir, numPass]: path) {
+        if (numPass < 0) {
+            // this adds capacity
+            capacity -= numPass;
+        } else if (capacity - numPass < 0) {
+            return false;
+        } else {
+            // this decreases capacity
+            capacity -= numPass;
+        }
+    }
+
+    return true;
 }
 
 int main() {
