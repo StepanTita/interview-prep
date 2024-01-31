@@ -2825,6 +2825,51 @@ std::vector<std::string> wordBreak2(std::string s, std::vector<std::string>& wor
     return res;
 }
 
+// 368. Largest Divisible Subset
+
+std::vector<int> largestDivisibleSubset(std::vector<int>& nums) {
+    int n = nums.size();
+
+    std::sort(nums.begin(), nums.end());
+
+    // dp[i] = max(dp[j] + 1) for j < i, where nums[i] % nums[j] == 0
+
+    std::vector<int> dp(n, 0);
+    std::vector<int> prev(n, 0);
+
+    int idxMax = -1;
+    int valMax = 0;
+
+    for (int i = 0; i < n; ++i) {
+        dp[i] = 1;
+        prev[i] = -1;
+
+        for (int j = i - 1; j >= 0; --j) {
+            if (nums[i] % nums[j] == 0) {
+                if (dp[j] + 1 > dp[i]) {
+                    dp[i] = dp[j] + 1;
+                    prev[i] = j;
+                }
+            }
+        }
+
+        if (dp[i] > valMax) {
+            valMax = dp[i];
+            idxMax = i;
+        }
+    }
+
+    std::vector<int> res;
+
+
+    while (idxMax != -1) {
+        res.emplace_back(nums[idxMax]);
+        idxMax = prev[idxMax];
+    }
+
+    return res;
+}
+
 int main() {
     std::string s = "catsanddog";
     auto dct = std::vector<std::string>{"cat", "cats", "and", "sand", "dog"};

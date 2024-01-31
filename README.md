@@ -100,6 +100,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1411. **Number of Ways to Paint N × 3 Grid**
 1463. **Cherry Pickup II**
 140. **Word Break II**
+368. **Largest Divisible Subset**
 
 
 ### Heap 📊:
@@ -175,6 +176,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 922. **Sort Array By Parity II**
 1184. **Distance Between Bus Stops**
 1732. **Find the Highest Altitude**
+1365. **How Many Numbers Are Smaller Than the Current Number**
 
 
 ### Union Find 🇺🇳:

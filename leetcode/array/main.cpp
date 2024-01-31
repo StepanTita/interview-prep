@@ -97,3 +97,30 @@ int repeatedNTimes(std::vector<int>& nums) {
     }
     return nums[0];
 }
+
+// 1365. How Many Numbers Are Smaller Than the Current Number
+
+std::vector<int> smallerNumbersThanCurrent(std::vector<int>& nums) {
+    int n = nums.size();
+
+    std::vector<std::pair<int, int>> places(n);
+    for (int i = 0; i < n; ++i) {
+        places[i] = std::pair<int, int>{nums[i], i};
+    }
+
+    std::sort(places.begin(), places.end());
+
+    std::vector<int> res(n, 0);
+
+    int dups = 0;
+    for (int i = 0; i < n; ++i) {
+        if (i - 1 >= 0 && places[i - 1].first == places[i].first) {
+            ++dups;
+        } else {
+            dups = 0;
+        }
+        res[places[i].second] = i - dups;
+    }
+
+    return res;
+}
