@@ -1124,6 +1124,40 @@ bool carPooling(std::vector<std::vector<int>> &trips, int capacity) {
     return true;
 }
 
+// 1156. Swap For Longest Repeated Character Substring
+
+int maxRepOpt1(std::string s) {
+    int n = s.size();
+
+    std::unordered_map<char, std::vector<int>> groups;
+    for (int i = 0; i < n; ++i) {
+        groups[s[i]].emplace_back(i);
+    }
+
+    int res = 0;
+    for (auto [g, idxs] : groups) {
+        int prev = 0;
+        int curr = 1;
+        int ans = 0;
+
+        for (int i = 1; i < idxs.size(); ++i) {
+            if (idxs[i] == idxs[i - 1] + 1) ++curr;
+            else {
+                if (idxs[i] == idxs[i - 1] + 2) {
+                    prev = curr;
+                } else {
+                    prev = 0;
+                }
+                curr = 1;
+            }
+            ans = std::max(ans, prev + curr);
+        }
+        res = std::max(res, ans + (idxs.size() > ans));
+    }
+
+    return res;
+}
+
 int main() {
     auto v = std::vector<std::vector<int>>{
             {1, 2, 3},

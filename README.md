@@ -223,6 +223,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 48. **Rotate Image**
 46. **Permutations**
 1094. **Car Pooling**
+1156. **Swap For Longest Repeated Character Substring**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
