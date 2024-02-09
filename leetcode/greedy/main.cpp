@@ -132,3 +132,77 @@ std::vector<int> prevPermOpt1(std::vector<int>& arr) {
     std::swap(arr[pivot], arr[currMaxIdx]);
     return arr;
 }
+
+std::vector<std::string> fullJustify(std::vector<std::string>& words, int maxWidth) {
+    int n = words.size();
+
+    std::vector<std::string> res;
+
+    std::vector<std::string> line;
+    for (int i = 0; i < n;) {
+        line.emplace_back(words[i]);
+        int textLen = words[i].length();
+        int totalSpLen = 0;
+        ++i;
+
+        int nextWordLen = 0;
+        if (i < n) {
+            nextWordLen = words[i].length();
+        }
+        while (i < n && textLen + nextWordLen + totalSpLen + 1 <= maxWidth) {
+            textLen += nextWordLen;
+            ++totalSpLen;
+            line.emplace_back(words[i]);
+            ++i;
+            if (i < n) {
+                nextWordLen = words[i].length();
+            }
+        }
+
+        int lineLen = line.size();
+
+        int extraSpaces = 0;
+
+        int spLen = 1;
+        if (lineLen > 1) {
+            extraSpaces = (maxWidth - textLen - totalSpLen) % (lineLen - 1);
+            int distSpaces = (maxWidth - textLen - totalSpLen) / (lineLen - 1);
+            spLen = distSpaces + 1;
+        }
+
+        std::string space = "";
+        while (spLen > 0) {
+            space += " ";
+            --spLen;
+        }
+
+        std::string lineStr = "";
+
+        if (i >= n) {
+            space = " ";
+        }
+        for (int l = 0; l < lineLen; ++l) {
+            lineStr += line[l];
+            if (l + 1 < lineLen) {
+                lineStr += space;
+                if (i < n && extraSpaces-- > 0) {
+                    lineStr += " ";
+                }
+            }
+        }
+        while (lineStr.length() < maxWidth) {
+            lineStr += " ";
+        }
+
+        res.emplace_back(lineStr);
+
+        line.clear();
+    }
+
+    return res;
+}
+
+int main() {
+    auto text = std::vector<std::string>{"My","momma","always","said,","\"Life","was","like","a","box","of","chocolates.","You","never","know","what","you're","gonna","get."};
+    fullJustify(text, 20);
+}
