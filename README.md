@@ -129,6 +129,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1402. **Reducing Dishes**
 31. **Next Permutation**
 1053. **Previous Permutation With One Swap**
+68. **Text Justification**
 
 ### BFS & DFS 🔍:
 
@@ -137,6 +138,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1028. **Recover a Tree From Preorder Traversal**
 1162. **As Far from Land as Possible**
 103. **Binary Tree Zigzag Level Order Traversal**
+463. **Island Perimeter**
 
 ### Math ♾️:
 
@@ -155,6 +157,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 ### LinkedLists 🚈:
 
 19. **Remove Nth Node From End of List**
+143. **Reorder List**
 
 ### Graphs:
 
@@ -169,6 +172,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1026. **Maximum Difference Between Node and Ancestor**
 743. **Network Delay Time** (Dijkstra)
 1631. **Path With Minimum Effort** (Dijkstra)
+133. **Clone Graph**
 
 ### Arrays 🎞:
 
@@ -224,7 +228,6 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 46. **Permutations**
 1094. **Car Pooling**
 1156. **Swap For Longest Repeated Character Substring**
-68. **Text Justification**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 

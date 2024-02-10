@@ -451,6 +451,50 @@ int minimumEffortPath(std::vector<std::vector<int>>& heights) {
     return dist[n - 1][m - 1];
 }
 
+// 133. Clone Graph
+
+class Node {
+public:
+    int val;
+    std::vector<Node*> neighbors;
+    Node() {
+        val = 0;
+        neighbors = std::vector<Node*>();
+    }
+    Node(int _val) {
+        val = _val;
+        neighbors = std::vector<Node*>();
+    }
+    Node(int _val, std::vector<Node*> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
+
+Node* dfs(Node* node, std::vector<Node*> &visited) {
+    auto newNode = new Node(node->val, node->neighbors);
+
+    visited[node->val] = newNode;
+
+    for (int i = 0; i < newNode->neighbors.size(); ++i) {
+        if (visited[newNode->neighbors[i]->val] != NULL) {
+            newNode->neighbors[i] = visited[newNode->neighbors[i]->val];
+            continue;
+        }
+        newNode->neighbors[i] = dfs(newNode->neighbors[i], visited);
+    }
+
+    return newNode;
+}
+
+Node* cloneGraph(Node* node) {
+    if (node == NULL) return NULL;
+
+    std::vector<Node*> visited(101, NULL);
+
+    return dfs(node, visited);
+}
+
 int main() {
     auto t = std::vector<std::vector<int>>{
             {1, 2, 1},

@@ -47,3 +47,79 @@ ListNode *removeNthFromEnd(ListNode *head, int n) {
 
     return head;
 }
+
+// 143. Reorder List
+
+void reorderList(ListNode *head) {
+    if (head->next == NULL) return;
+
+    ListNode *prev = NULL;
+    auto slow = head;
+    auto fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+        prev = slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    if (prev != NULL) {
+        prev->next = NULL;
+    }
+
+    // slow - is the first element of the second half
+    // reverse slow
+
+    prev = NULL;
+    auto curr = slow;
+
+    while (curr != NULL) {
+        auto next = curr->next;
+        curr->next = prev;
+        prev = curr;
+
+        curr = next;
+    }
+
+    auto a = head;
+    auto b = prev;
+
+    auto res = new ListNode();
+    curr = res;
+
+    while (a != NULL && b != NULL) {
+        auto nextA = a->next;
+        auto nextB = b->next;
+
+        curr->next = a;
+        curr->next->next = b;
+
+        a = nextA;
+        b = nextB;
+
+        curr = curr->next->next;
+    }
+
+    while (a != NULL) {
+        auto nextA = a->next;
+        curr->next = a;
+        a = nextA;
+
+        curr = curr->next;
+    }
+
+    while (b != NULL) {
+        auto nextB = b->next;
+        curr->next = b;
+        b = nextB;
+
+        curr = curr->next;
+    }
+
+}
+
+int main() {
+    auto l = new ListNode(1);
+    reorderList(l);
+    return 0;
+}

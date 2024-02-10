@@ -264,3 +264,47 @@ std::vector<std::vector<int>> zigzagLevelOrder(TreeNode *root) {
 
     return res;
 }
+
+// 463. Island Perimeter
+
+enum Mark {
+    Empty = 0,
+    Island = 1,
+    Marked = 2
+};
+
+bool empty(std::vector<std::vector<int>> &grid, int i, int j) {
+    if (i < 0 || i >= grid.size()) {
+        return true;
+    }
+
+    if (j < 0 || j >= grid[i].size()) {
+        return true;
+    }
+
+    return grid[i][j] == Empty;
+};
+
+int islandPerimeter(std::vector<std::vector<int>> &grid) {
+    int res = 0;
+    for (int i = 0; i < grid.size(); ++i) {
+        for (int j = 0; j < grid[i].size(); ++j) {
+            if (grid[i][j]) {
+                if (empty(grid, i - 1, j)) {
+                    ++res;
+                }
+                if (empty(grid, i + 1, j)) {
+                    ++res;
+                }
+                if (empty(grid, i, j - 1)) {
+                    ++res;
+                }
+                if (empty(grid, i, j + 1)) {
+                    ++res;
+                }
+                grid[i][j] = Marked;
+            }
+        }
+    }
+    return res;
+}
