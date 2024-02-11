@@ -173,6 +173,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 743. **Network Delay Time** (Dijkstra)
 1631. **Path With Minimum Effort** (Dijkstra)
 133. **Clone Graph**
+117. **Populating Next Right Pointers in Each Node II**
 
 ### Arrays 🎞:
 

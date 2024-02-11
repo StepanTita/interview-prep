@@ -71,7 +71,7 @@ std::vector<double> calcEquation(
             continue;
         }
 
-        std::unordered_set < std::string > visited;
+        std::unordered_set<std::string> visited;
 
         res.emplace_back(find(source, target, adj_nodes, adj_values, visited));
     }
@@ -412,7 +412,7 @@ bool isValid(int i, int j, int n, int m) {
     return true;
 }
 
-int minimumEffortPath(std::vector<std::vector<int>>& heights) {
+int minimumEffortPath(std::vector<std::vector<int>> &heights) {
     int n = heights.size();
     int m = heights[0].size();
 
@@ -425,7 +425,10 @@ int minimumEffortPath(std::vector<std::vector<int>>& heights) {
 
     dist[0][0] = 0;
 
-    std::vector<std::pair<int, int>> dirs{{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+    std::vector<std::pair<int, int>> dirs{{-1, 0},
+                                          {0,  -1},
+                                          {0,  1},
+                                          {1,  0}};
 
     while (!pq.empty()) {
         auto u = pq.top();
@@ -437,7 +440,7 @@ int minimumEffortPath(std::vector<std::vector<int>>& heights) {
         if (visited[i][j]) continue;
         visited[i][j] = true;
 
-        for (auto [di, dj] : dirs) {
+        for (auto [di, dj]: dirs) {
             if (!isValid(i + di, j + dj, n, m)) continue;
 
             int w = std::abs(heights[i][j] - heights[i + di][j + dj]);
@@ -456,22 +459,25 @@ int minimumEffortPath(std::vector<std::vector<int>>& heights) {
 class Node {
 public:
     int val;
-    std::vector<Node*> neighbors;
+    std::vector<Node *> neighbors;
+
     Node() {
         val = 0;
-        neighbors = std::vector<Node*>();
+        neighbors = std::vector<Node *>();
     }
+
     Node(int _val) {
         val = _val;
-        neighbors = std::vector<Node*>();
+        neighbors = std::vector<Node *>();
     }
-    Node(int _val, std::vector<Node*> _neighbors) {
+
+    Node(int _val, std::vector<Node *> _neighbors) {
         val = _val;
         neighbors = _neighbors;
     }
 };
 
-Node* dfs(Node* node, std::vector<Node*> &visited) {
+Node *dfs(Node *node, std::vector<Node *> &visited) {
     auto newNode = new Node(node->val, node->neighbors);
 
     visited[node->val] = newNode;
@@ -487,12 +493,44 @@ Node* dfs(Node* node, std::vector<Node*> &visited) {
     return newNode;
 }
 
-Node* cloneGraph(Node* node) {
+Node *cloneGraph(Node *node) {
     if (node == NULL) return NULL;
 
-    std::vector<Node*> visited(101, NULL);
+    std::vector<Node *> visited(101, NULL);
 
     return dfs(node, visited);
+}
+
+// 117. Populating Next Right Pointers in Each Node II
+
+struct ConnTreeNode {
+    int val;
+    ConnTreeNode *left;
+    ConnTreeNode *right;
+    ConnTreeNode *next;
+};
+
+ConnTreeNode *connect(ConnTreeNode *root) {
+    if (root == NULL) return NULL;
+
+    auto head = root;
+
+    for (; root != NULL; root = root->next) {
+        auto dummy = new ConnTreeNode();
+        auto curr = dummy;
+        for (; root != NULL; root = root->next) {
+            if (root->left != NULL) {
+                curr->next = root->left;
+                curr = curr->next;
+            }
+            if (root->right != NULL) {
+                curr->next = root->right;
+                curr = curr->next;
+            }
+        }
+        root = dummy;
+    }
+    return head;
 }
 
 int main() {
