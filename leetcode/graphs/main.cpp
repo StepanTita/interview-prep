@@ -533,6 +533,26 @@ ConnTreeNode *connect(ConnTreeNode *root) {
     return head;
 }
 
+// 236. Lowest Common Ancestor of a Binary Tree
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+TreeNode* lowestCommonAncestor(TreeNode* curr, TreeNode* p, TreeNode* q) {
+    if (curr == NULL || curr == p || curr == q) return curr;
+
+    auto left = lowestCommonAncestor(curr->left, q, p);
+    auto right = lowestCommonAncestor(curr->right, q, p);
+
+    if (left != NULL && right != NULL) return curr;
+    if (left != NULL) return left;
+    return right;
+}
+
 int main() {
     auto t = std::vector<std::vector<int>>{
             {1, 2, 1},
