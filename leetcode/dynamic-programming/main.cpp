@@ -2870,6 +2870,67 @@ std::vector<int> largestDivisibleSubset(std::vector<int>& nums) {
     return res;
 }
 
+// 2930. Number of Strings Which Can Be Rearranged to Contain Substring
+
+typedef unsigned long long ull;
+
+ull expMod(ull a, int p, int mod) {
+    if (p == 0) return 1;
+
+    if (p % 2 == 0) {
+        ull v = expMod(a, p / 2, mod);
+        return (v * v) % mod;
+    }
+    return (a * expMod(a, p - 1, mod)) % mod;
+}
+
+int stringCount(int n) {
+    ull total = expMod(26, n, MOD);
+
+    ull p23n_1 = expMod(23, n - 1, MOD);
+    ull p24n_1 = expMod(24, n - 1, MOD);
+    ull p25n_1 = expMod(25, n - 1, MOD);
+
+    total -= (p25n_1 * (75 + n) % MOD);
+    total = (total + MOD) % MOD; // Ensure total is non-negative
+
+    total += (p24n_1 * (72 + 2 * n) % MOD);
+    total = (total + MOD) % MOD;
+
+    total -= (p23n_1 * (23 + n) % MOD);
+    total = (total + MOD) % MOD;
+
+    return total % MOD;
+}
+
+const int LEET = 0b1111;
+const int L1 = 0b1000;
+const int E1 = 0b0100;
+const int E2 = 0b0010;
+const int T = 0b0001;
+
+ull dfs(int n, int i, int mask, std::vector<std::vector<ull>> &memo) {
+    if (i >= n) return mask == LEET;
+
+    if (memo[i][mask] != -1) return memo[i][mask];
+
+    ull ans = dfs(n, i + 1, mask | L1, memo) + dfs(n, i + 1, mask | T, memo);
+
+    if (mask & E1) {
+        ans += dfs(n, i + 1, mask | E2, memo);
+    } else {
+        ans += dfs(n, i + 1, mask | E1, memo);
+    }
+
+    ans += 23 * dfs(n, i + 1, mask, memo);
+    return memo[i][mask] = ans % MOD;
+}
+
+int stringCountDP(int n) {
+    std::vector<std::vector<ull>> memo(n, std::vector<ull>(1 << 4, -1));
+    return dfs(n, 0, 0, memo);
+}
+
 int main() {
     std::string s = "catsanddog";
     auto dct = std::vector<std::string>{"cat", "cats", "and", "sand", "dog"};

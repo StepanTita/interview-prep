@@ -101,6 +101,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1463. **Cherry Pickup II**
 140. **Word Break II**
 368. **Largest Divisible Subset**
+2930. **Number of Strings Which Can Be Rearranged to Contain Substring**
 
 
 ### Heap 📊:
