@@ -102,6 +102,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 140. **Word Break II**
 368. **Largest Divisible Subset**
 2930. **Number of Strings Which Can Be Rearranged to Contain Substring**
+1824. **Minimum Sideway Jumps**
 
 
 ### Heap 📊:

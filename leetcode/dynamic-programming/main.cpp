@@ -59,7 +59,7 @@ struct TrieNode {
     bool is_terminal;
 
     TrieNode() : is_terminal(false) {
-        next = std::unordered_map < char, TrieNode * > ();
+        next = std::unordered_map<char, TrieNode *>();
     }
 
     bool has(char c) {
@@ -2786,11 +2786,11 @@ std::string join(std::vector<std::string> &v) {
     return res + v[n - 1];
 }
 
-std::vector<std::string> wordBreak2(std::string s, std::vector<std::string>& wordDict) {
+std::vector<std::string> wordBreak2(std::string s, std::vector<std::string> &wordDict) {
     int n = s.length();
 
-    std::unordered_set<std::string> dct;
-    for (auto word : wordDict) {
+    std::unordered_set < std::string > dct;
+    for (auto word: wordDict) {
         dct.insert(word);
     }
 
@@ -2808,7 +2808,7 @@ std::vector<std::string> wordBreak2(std::string s, std::vector<std::string>& wor
             curr = s[j - 1] + curr;
 
             if (!dp[j - 1].empty() && dct.contains(curr)) {
-                for (auto prev : dp[j - 1]) {
+                for (auto prev: dp[j - 1]) {
                     auto next = std::vector<std::string>(prev.begin(), prev.end());
                     next.emplace_back(curr);
                     dp[i].emplace_back(next);
@@ -2818,7 +2818,7 @@ std::vector<std::string> wordBreak2(std::string s, std::vector<std::string>& wor
     }
 
     std::vector<std::string> res;
-    for (auto v : dp[n]) {
+    for (auto v: dp[n]) {
         res.emplace_back(join(v));
     }
 
@@ -2827,7 +2827,7 @@ std::vector<std::string> wordBreak2(std::string s, std::vector<std::string>& wor
 
 // 368. Largest Divisible Subset
 
-std::vector<int> largestDivisibleSubset(std::vector<int>& nums) {
+std::vector<int> largestDivisibleSubset(std::vector<int> &nums) {
     int n = nums.size();
 
     std::sort(nums.begin(), nums.end());
@@ -2931,9 +2931,38 @@ int stringCountDP(int n) {
     return dfs(n, 0, 0, memo);
 }
 
+// 1824. Minimum Sideway Jumps
+
+int minSideJumps(std::vector<int> &obstacles) {
+    int n = obstacles.size();
+
+    std::vector<std::vector<int>> dp(2, std::vector<int>(3, INF));
+
+    dp[0][0] = 1;
+    dp[0][1] = 0;
+    dp[0][2] = 1;
+    for (int i = 1; i < n; ++i) {
+        if (obstacles[i] != 0) {
+            dp[i & 1][obstacles[i] - 1] = INF;
+
+            for (int lane = 0; lane < 3; ++lane) {
+                if (lane + 1 == obstacles[i]) continue;
+                int prevJumps = (lane + 1 == obstacles[i - 1]) ? INF : (dp[(i - 1) & 1][obstacles[i] - 1] + 1);
+
+                dp[i & 1][lane] = std::min(dp[(i - 1) & 1][lane], prevJumps);
+            }
+        } else {
+            dp[i & 1][0] = std::min({dp[(i - 1) & 1][0], dp[(i - 1) & 1][1] + 1, dp[(i - 1) & 1][2] + 1});
+            dp[i & 1][1] = std::min({dp[(i - 1) & 1][0] + 1, dp[(i - 1) & 1][1], dp[(i - 1) & 1][2] + 1});
+            dp[i & 1][2] = std::min({dp[(i - 1) & 1][0] + 1, dp[(i - 1) & 1][1] + 1, dp[(i - 1) & 1][2]});
+        }
+    }
+
+    return std::min({dp[1][0], dp[1][1], dp[1][2]});
+}
+
 int main() {
-    std::string s = "catsanddog";
-    auto dct = std::vector<std::string>{"cat", "cats", "and", "sand", "dog"};
-    wordBreak2(s, dct);
+    auto v = std::vector<int>{0, 1, 2, 3, 0};
+    std::cout << minSideJumps(v) << std::endl;
     return 0;
 }
