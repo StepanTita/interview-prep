@@ -103,6 +103,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 368. **Largest Divisible Subset**
 2930. **Number of Strings Which Can Be Rearranged to Contain Substring**
 1824. **Minimum Sideway Jumps**
+2380. **Time Needed to Rearrange a Binary String**
 
 
 ### Heap 📊:
@@ -132,6 +133,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 31. **Next Permutation**
 1053. **Previous Permutation With One Swap**
 68. **Text Justification**
+2645. **Minimum Additions to Make Valid String**
 
 ### BFS & DFS 🔍:
 

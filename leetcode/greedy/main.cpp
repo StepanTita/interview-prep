@@ -202,7 +202,28 @@ std::vector<std::string> fullJustify(std::vector<std::string>& words, int maxWid
     return res;
 }
 
+// 2645. Minimum Additions to Make Valid String
+
+int addMinimum(std::string word) {
+    std::string abc = "abc";
+    int count = 0;
+
+    int j = 0;
+    for (int i = 0; i < word.size(); j = (j + 1) % 3) {
+        if (word[i] != abc[j]) {
+            ++count;
+        } else {
+            ++i;
+        }
+    }
+
+    if (j != 0)
+        count += 3 - j;
+
+    return count;
+}
+
 int main() {
-    auto text = std::vector<std::string>{"My","momma","always","said,","\"Life","was","like","a","box","of","chocolates.","You","never","know","what","you're","gonna","get."};
-    fullJustify(text, 20);
+    addMinimum("b");
+    return 0;
 }

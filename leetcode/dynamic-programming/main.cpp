@@ -2961,6 +2961,24 @@ int minSideJumps(std::vector<int> &obstacles) {
     return std::min({dp[1][0], dp[1][1], dp[1][2]});
 }
 
+// 2380. Time Needed to Rearrange a Binary String
+
+int secondsToRemoveOccurrences(std::string s) {
+    int n = s.length();
+
+    int zeros = 0;
+    int seconds = 0;
+
+    for (int i = 0; i < n; ++i) {
+        zeros += s[i] == '0';
+        if (s[i] == '1' && zeros) {
+            seconds = std::max(seconds + 1, zeros);
+        }
+    }
+
+    return seconds;
+}
+
 int main() {
     auto v = std::vector<int>{0, 1, 2, 3, 0};
     std::cout << minSideJumps(v) << std::endl;
