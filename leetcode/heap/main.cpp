@@ -300,6 +300,35 @@ std::vector<std::string> topKFrequent(std::vector<std::string>& words, int k) {
     return res;
 }
 
+// 630. Course Schedule III
+
+int scheduleCourse(std::vector<std::vector<int>>& courses) {
+    std::sort(courses.begin(), courses.end(), [](const std::vector<int> &a, const std::vector<int> &b) {
+        return a[1] < b[1];
+    });
+
+    int n = courses.size();
+
+    std::priority_queue<int> takenCourses;
+
+    int totalTime = 0;
+    for (int i = 0; i < n; ++i) {
+        int currTime = courses[i][0];
+        int deadline = courses[i][1];
+
+        takenCourses.push(currTime);
+
+        totalTime += currTime;
+
+        if (totalTime > deadline) {
+            totalTime -= takenCourses.top();
+            takenCourses.pop();
+        }
+    }
+
+    return takenCourses.size();
+}
+
 int main() {
     return 0;
 }
