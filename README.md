@@ -116,6 +116,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1439. **Find the Kth Smallest Sum of a Matrix With Sorted Rows**
 239. **Sliding Window Maximum**
 692. **Top K Frequent Words**
+630. **Course Schedule III**
 
 ### Stack 📥:
 
