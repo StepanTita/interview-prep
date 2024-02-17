@@ -2979,8 +2979,68 @@ int secondsToRemoveOccurrences(std::string s) {
     return seconds;
 }
 
+// 2100. Find Good Days to Rob the Bank
+
+std::vector<int> goodDaysToRobBank(std::vector<int> &security, int time) {
+    int n = security.size();
+
+    int prevCount = 0;
+    std::vector<int> prefix(n, 0);
+
+    for (int i = 1; i < n; ++i) {
+        if (security[i] <= security[i - 1]) ++prevCount;
+        else prevCount = 0;
+
+        prefix[i] = prevCount;
+    }
+
+    prevCount = 0;
+    std::vector<int> postfix(n, 0);
+    for (int i = n - 2; i >= 0; --i) {
+        if (security[i] <= security[i + 1]) ++prevCount;
+        else prevCount = 0;
+
+        postfix[i] = prevCount;
+    }
+
+    std::vector<int> res;
+    for (int i = 0; i < n; ++i) {
+        if (prefix[i] >= time && postfix[i] >= time) res.emplace_back(i);
+    }
+
+    return res;
+}
+
+std::vector<int> goodDaysToRobBank2(std::vector<int> &security, int time) {
+    int n = security.size();
+
+    int l = 0;
+    int r = 0;
+
+    std::vector<int> res;
+
+    if (time == 0) res.emplace_back(0);
+
+    for (int i = 1; i < n - time; ++i) {
+        if (time == 0) {
+            res.emplace_back(i);
+            continue;
+        }
+
+        if (security[i - 1] >= security[i]) ++l;
+        else l = 0;
+
+        if (security[i + time - 1] <= security[i + time]) ++r;
+        else r = 0;
+
+        if (l >= time && r >= time) res.emplace_back(i);
+    }
+
+    return res;
+}
+
 int main() {
-    auto v = std::vector<int>{0, 1, 2, 3, 0};
-    std::cout << minSideJumps(v) << std::endl;
+    auto v = std::vector<int>{1, 2, 5, 4, 1, 0, 2, 4, 5, 3, 1, 2, 4, 3, 2, 4, 8};
+    goodDaysToRobBank2(v, 2);
     return 0;
 }

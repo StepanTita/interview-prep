@@ -104,6 +104,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2930. **Number of Strings Which Can Be Rearranged to Contain Substring**
 1824. **Minimum Sideway Jumps**
 2380. **Time Needed to Rearrange a Binary String**
+2100. **Find Good Days to Rob the Bank**
 
 
 ### Heap 📊:
