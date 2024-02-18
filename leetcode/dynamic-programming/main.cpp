@@ -3039,6 +3039,40 @@ std::vector<int> goodDaysToRobBank2(std::vector<int> &security, int time) {
     return res;
 }
 
+// 376. Wiggle Subsequence
+
+int sign(int x) {
+    if (x > 0) return 1;
+    else if (x < 0) return -1;
+    return 0;
+}
+
+int wiggleMaxLength(std::vector<int>& nums) {
+    int n = nums.size();
+
+    int skip_neg = 0;
+    int take_neg = 1;
+    int skip_pos = 0;
+    int take_pos = 1;
+
+    int ans = 1;
+
+    for (int i = 1; i < n; ++i) {
+        int sgn = sign(nums[i] - nums[i - 1]);
+        if (sgn == 1) {
+            skip_pos = std::max(take_pos, skip_pos);
+            take_pos = std::max(take_neg, skip_neg) + 1;
+        } else if (sgn == -1) {
+            skip_neg = std::max(take_neg, skip_neg);
+            take_neg = std::max(take_pos, skip_pos) + 1;
+        }
+
+        ans = std::max({ans, skip_pos, take_pos, skip_neg, take_neg});
+    }
+
+    return ans;
+}
+
 int main() {
     auto v = std::vector<int>{1, 2, 5, 4, 1, 0, 2, 4, 5, 3, 1, 2, 4, 3, 2, 4, 8};
     goodDaysToRobBank2(v, 2);
