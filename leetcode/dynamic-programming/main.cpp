@@ -3073,6 +3073,31 @@ int wiggleMaxLength(std::vector<int>& nums) {
     return ans;
 }
 
+// 873. Length of Longest Fibonacci Subsequence
+
+int lenLongestFibSubseq(std::vector<int>& arr) {
+    int n = arr.size();
+
+    std::unordered_map<int, int> index;
+    for (int i = 0; i < n; ++i) {
+        index[arr[i]] = i;
+    }
+
+    std::unordered_map<int, std::unordered_map<int, int>> dp;
+    int ans = 0;
+    for (int k = 0; k < n; ++k) {
+        for (int j = 0; j < k; ++j) {
+            if (arr[k] - arr[j] < arr[j] && index.contains(arr[k] - arr[j])) {
+                int i = index[arr[k] - arr[j]];
+                dp[j][k] = dp[i][j] + 1;
+                ans = std::max(ans, dp[j][k] + 2);
+            }
+        }
+    }
+
+    return ans >= 3 ? ans : 0;
+}
+
 int main() {
     auto v = std::vector<int>{1, 2, 5, 4, 1, 0, 2, 4, 5, 3, 1, 2, 4, 3, 2, 4, 8};
     goodDaysToRobBank2(v, 2);
