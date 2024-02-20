@@ -107,6 +107,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2100. **Find Good Days to Rob the Bank**
 376. **Wiggle Subsequence** [Solution](https://leetcode.com/problems/wiggle-subsequence/solutions/4748614/c-naive-brute-force-top-down-dp-bottom-up-dp-o-n-time-o-1-memory-explained-clear/)
 873. **Length of Longest Fibonacci Subsequence**
+764. **Largest Plus Sign**
 
 
 ### Heap 📊:

@@ -3047,7 +3047,7 @@ int sign(int x) {
     return 0;
 }
 
-int wiggleMaxLength(std::vector<int>& nums) {
+int wiggleMaxLength(std::vector<int> &nums) {
     int n = nums.size();
 
     int skip_neg = 0;
@@ -3075,7 +3075,7 @@ int wiggleMaxLength(std::vector<int>& nums) {
 
 // 873. Length of Longest Fibonacci Subsequence
 
-int lenLongestFibSubseq(std::vector<int>& arr) {
+int lenLongestFibSubseq(std::vector<int> &arr) {
     int n = arr.size();
 
     std::unordered_map<int, int> index;
@@ -3098,8 +3098,54 @@ int lenLongestFibSubseq(std::vector<int>& arr) {
     return ans >= 3 ? ans : 0;
 }
 
+// 764. Largest Plus Sign
+
+int orderOfLargestPlusSign(int n, std::vector<std::vector<int>>& mines) {
+    std::unordered_set<int> banned;
+
+    for (auto v : mines) {
+        banned.insert(v[0] * n + v[1]);
+    }
+
+    std::vector<std::vector<int>> dp(n, std::vector<int>(n, INF));
+
+    int count = 0;
+    for (int i = 0; i < n; ++i) {
+        count = 0;
+        for (int j = 0; j < n; ++j) {
+            count = banned.contains(i * n + j) ? 0 : count + 1;
+            dp[i][j] = std::min(dp[i][j], count);
+        }
+
+        count = 0;
+        for (int j = n - 1; j >= 0; --j) {
+            count = banned.contains(i * n + j) ? 0 : count + 1;
+            dp[i][j] = std::min(dp[i][j], count);
+        }
+    }
+
+    int ans = 0;
+    for (int j = 0; j < n; ++j) {
+        count = 0;
+        for (int i = 0; i < n; ++i) {
+            count = banned.contains(i * n + j) ? 0 : count + 1;
+            dp[i][j] = std::min(dp[i][j], count);
+        }
+
+        count = 0;
+        for (int i = n - 1; i >= 0; --i) {
+            count = banned.contains(i * n + j) ? 0 : count + 1;
+            dp[i][j] = std::min(dp[i][j], count);
+
+            ans = std::max(ans, dp[i][j]);
+        }
+    }
+
+    return ans;
+}
+
 int main() {
-    auto v = std::vector<int>{1, 2, 5, 4, 1, 0, 2, 4, 5, 3, 1, 2, 4, 3, 2, 4, 8};
-    goodDaysToRobBank2(v, 2);
+    auto v = std::vector<std::vector<int>>{{4, 2}};
+    orderOfLargestPlusSign(5, v);
     return 0;
 }
