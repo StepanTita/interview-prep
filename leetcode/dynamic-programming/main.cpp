@@ -3144,8 +3144,57 @@ int orderOfLargestPlusSign(int n, std::vector<std::vector<int>>& mines) {
     return ans;
 }
 
+// 576. Out of Boundary Paths
+
+typedef long long ll;
+
+bool isValidPos(int i, int j, int n, int m) {
+    if (i < 0 || j < 0 || i >= n || j >= m) return false;
+    return true;
+}
+
+int findPaths(int n, int m, int maxMove, int startRow, int startCol) {
+    // dp[i][j][k] - number of ways to get to position i, j in k steps
+    // dp[i][j][k] = dp[p_i][p_j][k - 1]
+    // ans = sum(dp[i][j][k]) for all i, j on the border and k in range[0, maxMove - 1];
+    std::vector<std::vector<std::vector<ll>>> dp(n, std::vector<std::vector<ll>>(m, std::vector<ll>(2, 0)));
+    dp[startRow][startCol][0] = 1;
+
+    ll ans = 0;
+
+    auto dirs = std::vector<std::pair<int, int>>{{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+    for (int k = 1; k <= maxMove; ++k) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                for (auto [di, dj] : dirs) {
+                    if (isValidPos(i + di, j + dj, n, m) && dp[i][j][(k - 1) & 1] != 0) {
+                        dp[i + di][j + dj][k & 1] = (dp[i + di][j + dj][k & 1] + dp[i][j][(k - 1) & 1]) % MOD;
+                    }
+                }
+
+                if (i == n - 1) {
+                    ans = (ans + dp[i][j][(k - 1) & 1]) % MOD;
+                }
+                if (j == m - 1) {
+                    ans = (ans + dp[i][j][(k - 1) & 1]) % MOD;
+                }
+                if (i == 0) {
+                    ans = (ans + dp[i][j][(k - 1) & 1]) % MOD;
+                }
+                if (j == 0) {
+                    ans = (ans + dp[i][j][(k - 1) & 1]) % MOD;
+                }
+
+                dp[i][j][(k - 1) & 1] = 0;
+            }
+        }
+    }
+
+    return ans % MOD;
+}
+
 int main() {
     auto v = std::vector<std::vector<int>>{{4, 2}};
-    orderOfLargestPlusSign(5, v);
+    findPaths(2, 2, 2, 0, 0);
     return 0;
 }
