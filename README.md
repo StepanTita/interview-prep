@@ -109,6 +109,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 873. **Length of Longest Fibonacci Subsequence**
 764. **Largest Plus Sign**
 576. **Out of Boundary Paths**
+2925. **Maximum Score After Applying Operations on a Tree**
 
 
 ### Heap 📊:

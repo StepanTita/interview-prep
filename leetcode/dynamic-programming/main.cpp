@@ -3100,10 +3100,10 @@ int lenLongestFibSubseq(std::vector<int> &arr) {
 
 // 764. Largest Plus Sign
 
-int orderOfLargestPlusSign(int n, std::vector<std::vector<int>>& mines) {
+int orderOfLargestPlusSign(int n, std::vector<std::vector<int>> &mines) {
     std::unordered_set<int> banned;
 
-    for (auto v : mines) {
+    for (auto v: mines) {
         banned.insert(v[0] * n + v[1]);
     }
 
@@ -3162,11 +3162,14 @@ int findPaths(int n, int m, int maxMove, int startRow, int startCol) {
 
     ll ans = 0;
 
-    auto dirs = std::vector<std::pair<int, int>>{{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+    auto dirs = std::vector<std::pair<int, int>>{{-1, 0},
+                                                 {0,  -1},
+                                                 {0,  1},
+                                                 {1,  0}};
     for (int k = 1; k <= maxMove; ++k) {
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                for (auto [di, dj] : dirs) {
+                for (auto [di, dj]: dirs) {
                     if (isValidPos(i + di, j + dj, n, m) && dp[i][j][(k - 1) & 1] != 0) {
                         dp[i + di][j + dj][k & 1] = (dp[i + di][j + dj][k & 1] + dp[i][j][(k - 1) & 1]) % MOD;
                     }
@@ -3193,8 +3196,51 @@ int findPaths(int n, int m, int maxMove, int startRow, int startCol) {
     return ans % MOD;
 }
 
+// 2925. Maximum Score After Applying Operations on a Tree
+
+ll dfs(int curr,
+       std::vector<std::vector<int>> &adjList,
+       std::vector<int> &values,
+       std::vector<ll> &sum
+) {
+    if (adjList[curr].size() == 1 && curr != 0) {
+        sum[curr] = values[curr];
+        return 0;
+    }
+
+    ll dp = 0;
+    sum[curr] = values[curr];
+
+    for (int next: adjList[curr]) {
+        if (sum[next] != 0) continue;
+
+        dp += dfs(next, adjList, values, sum);
+        sum[curr] += sum[next];
+    }
+
+    return std::max(sum[curr] - values[curr], dp + values[curr]);
+}
+
+ll maximumScoreAfterOperations(std::vector<std::vector<int>> &edges, std::vector<int> &values) {
+    // dp[i] = max(sum[j], value[i] + dp[j]) for j children(i)
+    int n = values.size();
+
+    std::vector<ll> sum(n, 0);
+    std::vector<std::vector<int>> adjList(n, std::vector<int>());
+    for (auto edge: edges) {
+        int a = edge[0];
+        int b = edge[1];
+
+        adjList[a].emplace_back(b);
+        adjList[b].emplace_back(a);
+    }
+
+    return dfs(0, adjList, values, sum);
+}
+
 int main() {
-    auto v = std::vector<std::vector<int>>{{4, 2}};
-    findPaths(2, 2, 2, 0, 0);
+    auto e = std::vector<std::vector<int>>{{0, 1}};
+    auto v = std::vector<int>{1, 2};
+    maximumScoreAfterOperations(e, v);
     return 0;
 }
