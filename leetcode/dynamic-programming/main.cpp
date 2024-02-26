@@ -3238,9 +3238,45 @@ ll maximumScoreAfterOperations(std::vector<std::vector<int>> &edges, std::vector
     return dfs(0, adjList, values, sum);
 }
 
+// 673. Number of Longest Increasing Subsequence
+
+int findNumberOfLIS(std::vector<int> &nums) {
+    int n = nums.size();
+
+    // this is max length of the subsequence
+    std::vector<int> dp(n, 0);
+    // this is a list of elemnts where subsequence of length i ends with following elements
+    // it is non-increasing for sure, because otherwise it would end here
+    std::vector<int> lens(n, 1);
+
+    int max_len = 1;
+
+    dp[0] = 1;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i - 1; j >= 0; --j) {
+            if (nums[j] < nums[i]) {
+                if (dp[i] < dp[j] + 1) {
+                    dp[i] = dp[j] + 1;
+                    lens[i] = 0;
+                } else if (dp[i] == dp[j + 1]) {
+                    lens[i] += lens[j];
+                }
+                max_len = std::max(max_len, dp[i]);
+            }
+        }
+    }
+
+    int res = 0;
+    for (int i = 0; i < n; ++i) {
+        if (dp[i] == max_len) res += lens[i];
+    }
+
+    return res;
+}
+
 int main() {
     auto e = std::vector<std::vector<int>>{{0, 1}};
-    auto v = std::vector<int>{1, 2};
-    maximumScoreAfterOperations(e, v);
+    auto v = std::vector<int>{1, 2, 4, 3, 5, 4, 7, 2};
+    std::cout << findNumberOfLIS(v) << std::endl;
     return 0;
 }
