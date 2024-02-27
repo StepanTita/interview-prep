@@ -3274,6 +3274,28 @@ int findNumberOfLIS(std::vector<int> &nums) {
     return res;
 }
 
+// 2266. Count Number of Texts
+
+int countTexts(std::string s) {
+    int n = s.length();
+
+    std::vector<ll> dp(s.length() + 1, 0);
+    dp[0] = 1;
+
+    for (int i = 1; i <= n; ++i) {
+        dp[i] = dp[i - 1];
+        for (int clicks = 2; clicks <= 4 && i - clicks >= 0; ++clicks) {
+            if (s[i - clicks] == s[i - 1]) {
+                if (clicks < 4 || (clicks == 4 && (s[i - 1] == '7' || s[i - 1] == '9'))) {
+                    dp[i] = (dp[i] + dp[i - clicks]) % MOD;
+                }
+            } else break;
+        }
+    }
+
+    return dp[n] % MOD;
+}
+
 int main() {
     auto e = std::vector<std::vector<int>>{{0, 1}};
     auto v = std::vector<int>{1, 2, 4, 3, 5, 4, 7, 2};

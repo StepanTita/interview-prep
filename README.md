@@ -111,6 +111,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 576. **Out of Boundary Paths**
 2925. **Maximum Score After Applying Operations on a Tree**
 673. **Number of Longest Increasing Subsequence**
+2266. **Count Number of Texts**
 
 
 ### Heap 📊:
