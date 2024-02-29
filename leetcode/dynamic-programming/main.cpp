@@ -3296,9 +3296,53 @@ int countTexts(std::string s) {
     return dp[n] % MOD;
 }
 
+// 1774. Closest Dessert Cost
+
+int dfs(
+        int top,
+        std::vector<int>& toppingCosts,
+        int curr,
+        int target
+) {
+    int m = toppingCosts.size();
+
+    // already above target
+    if (top >= m || curr >= target) return target - curr;
+
+    int diff = target - curr;
+    int cost = curr;
+
+    int count = 0;
+
+    while (count <= 2) {
+        int res = dfs(top + 1,toppingCosts, cost, target);
+        ++count;
+        cost += toppingCosts[top];
+
+        if (abs(diff) > abs(res) || abs(diff) == abs(res) && res > 0) diff = res;
+    }
+
+    return diff;
+}
+
+int closestCost(std::vector<int>& baseCosts, std::vector<int>& toppingCosts, int target) {
+    int n = baseCosts.size();
+    int m = toppingCosts.size();
+
+    int ans = INF;
+    for (int i = 0; i < n; ++i) {
+        int diff = dfs(0, toppingCosts, baseCosts[i], target);
+        if (abs(ans) > abs(diff) || abs(diff) == abs(ans) && diff > 0) {
+            ans = diff;
+        }
+    }
+
+    return target - ans;
+}
+
 int main() {
-    auto e = std::vector<std::vector<int>>{{0, 1}};
-    auto v = std::vector<int>{1, 2, 4, 3, 5, 4, 7, 2};
-    std::cout << findNumberOfLIS(v) << std::endl;
+    auto e = std::vector<int>{3, 10};
+    auto v = std::vector<int>{2, 5};
+    std::cout << closestCost(e, v, 9) << std::endl;
     return 0;
 }
