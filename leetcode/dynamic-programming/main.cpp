@@ -3300,7 +3300,7 @@ int countTexts(std::string s) {
 
 int dfs(
         int top,
-        std::vector<int>& toppingCosts,
+        std::vector<int> &toppingCosts,
         int curr,
         int target
 ) {
@@ -3315,7 +3315,7 @@ int dfs(
     int count = 0;
 
     while (count <= 2) {
-        int res = dfs(top + 1,toppingCosts, cost, target);
+        int res = dfs(top + 1, toppingCosts, cost, target);
         ++count;
         cost += toppingCosts[top];
 
@@ -3325,7 +3325,7 @@ int dfs(
     return diff;
 }
 
-int closestCost(std::vector<int>& baseCosts, std::vector<int>& toppingCosts, int target) {
+int closestCost(std::vector<int> &baseCosts, std::vector<int> &toppingCosts, int target) {
     int n = baseCosts.size();
     int m = toppingCosts.size();
 
@@ -3340,9 +3340,36 @@ int closestCost(std::vector<int>& baseCosts, std::vector<int>& toppingCosts, int
     return target - ans;
 }
 
+// 978. Longest Turbulent Subarray
+
+int maxTurbulenceSize(std::vector<int>& arr) {
+    int n = arr.size();
+
+    int ans = 1;
+
+    int even = 1;
+    int odd = 1;
+
+    for (int i = 1; i < n; ++i) {
+        if (arr[i] < arr[i - 1]) {
+            even = odd + 1;
+            odd = 1;
+        } else if (arr[i] > arr[i - 1]) {
+            odd = even + 1;
+            even = 1;
+        } else {
+            even = 1;
+            odd = 1;
+        }
+        ans = std::max({ans, even, odd});
+    }
+
+    return ans;
+}
+
 int main() {
-    auto e = std::vector<int>{3, 10};
+    auto e = std::vector<int>{2, 0, 2, 4, 2, 5, 0, 1, 2, 3};
     auto v = std::vector<int>{2, 5};
-    std::cout << closestCost(e, v, 9) << std::endl;
+    std::cout << maxTurbulenceSize(e) << std::endl;
     return 0;
 }

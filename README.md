@@ -112,6 +112,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2925. **Maximum Score After Applying Operations on a Tree**
 673. **Number of Longest Increasing Subsequence**
 2266. **Count Number of Texts**
+1774. **Closest Dessert Cost**
+978. **Longest Turbulent Subarray**
 
 
 ### Heap 📊:
