@@ -553,6 +553,42 @@ TreeNode* lowestCommonAncestor(TreeNode* curr, TreeNode* p, TreeNode* q) {
     return right;
 }
 
+// 797. All Paths From Source to Target
+
+void dfs(
+        int curr,
+        int target,
+        std::vector<std::vector<int>> &graph,
+        std::vector<int> &path,
+        std::vector<std::vector<int>> &res
+) {
+    path.emplace_back(curr);
+
+    if (curr == target) {
+        res.emplace_back(std::vector<int>(path.begin(), path.end()));
+        path.pop_back();
+        return;
+    }
+
+    for (int next : graph[curr]) {
+        dfs(next, target, graph, path, res);
+    }
+
+    path.pop_back();
+}
+
+std::vector<std::vector<int>> allPathsSourceTarget(std::vector<std::vector<int>>& graph) {
+    int n = graph.size();
+
+    std::vector<int> path;
+    std::vector<std::vector<int>> res;
+
+    dfs(0, n - 1, graph, path, res);
+
+    return res;
+}
+
+
 int main() {
     auto t = std::vector<std::vector<int>>{
             {1, 2, 1},
