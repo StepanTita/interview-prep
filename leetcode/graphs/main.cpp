@@ -588,6 +588,73 @@ std::vector<std::vector<int>> allPathsSourceTarget(std::vector<std::vector<int>>
     return res;
 }
 
+// 1584. Min Cost to Connect All Points
+
+class MST {
+private:
+    std::vector<int> parent;
+    std::vector<int> rank;
+public:
+    int find(int x) {
+        if (parent[x] == -1) return parent[x] = x;
+        else if (parent[x] == x) return x;
+        else return parent[x] = find(parent[x]);
+    }
+
+    int unite(int a, int b) {
+        int pa = find(a);
+        int pb = find(b);
+
+        if (pa == pb) return pa;
+
+        int p = pa;
+
+        if (rank[pa] > rank[pb]) {
+            p = pb;
+        } else if (rank[pa] == rank[pb]) {
+            rank[pa]++;
+        }
+
+        parent[pa] = p;
+        parent[pb] = p;
+        return p;
+    }
+
+    int minCostConnectPoints(std::vector<std::vector<int>>& points) {
+        int n = points.size();
+
+        int E = n * n;
+
+        parent = std::vector<int>(E, -1);
+        rank = std::vector<int>(E, 0);
+
+        std::vector<std::vector<int>> edges;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                edges.emplace_back(std::vector<int>{abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]), i, j});
+            }
+        }
+
+        std::sort(edges.begin(), edges.end());
+
+        int minCost = 0;
+
+        for (auto edge : edges) {
+            int w = edge[0];
+            int a = edge[1];
+            int b = edge[2];
+
+            if (find(a) == find(b)) continue;
+
+            minCost += w;
+
+            unite(a, b);
+        }
+
+        return minCost;
+    }
+};
+
 
 int main() {
     auto t = std::vector<std::vector<int>>{

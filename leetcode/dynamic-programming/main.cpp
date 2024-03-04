@@ -3342,7 +3342,7 @@ int closestCost(std::vector<int> &baseCosts, std::vector<int> &toppingCosts, int
 
 // 978. Longest Turbulent Subarray
 
-int maxTurbulenceSize(std::vector<int>& arr) {
+int maxTurbulenceSize(std::vector<int> &arr) {
     int n = arr.size();
 
     int ans = 1;
