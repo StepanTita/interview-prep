@@ -3367,9 +3367,73 @@ int maxTurbulenceSize(std::vector<int> &arr) {
     return ans;
 }
 
+// 2685. Count the Number of Complete Components
+
+int bfs(int source,
+        int color,
+        std::vector<std::vector<int>> &graph,
+        std::vector<int> &visited
+) {
+    int n = graph.size();
+
+    int marked = 0;
+    std::queue<int> q;
+    q.push(source);
+
+    while (!q.empty()) {
+        auto curr = q.front();
+        q.pop();
+
+        if (visited[curr] == color) continue;
+        visited[curr] = color;
+
+        ++marked;
+
+        for (auto next : graph[curr]) {
+            q.push(next);
+        }
+    }
+
+    return marked;
+}
+
+int countCompleteComponents(int n, std::vector<std::vector<int>> &edges) {
+    std::vector<std::vector<int>> graph(n);
+    for (auto edge: edges) {
+        int a = edge[0];
+        int b = edge[1];
+
+        graph[a].emplace_back(b);
+        graph[b].emplace_back(a);
+    }
+
+    int count = 0;
+    int curr_color = 1;
+    std::vector<int> visited(n, 0);
+    for (int i = 0; i < n; ++i) {
+        if (visited[i]) continue;
+        int marked = bfs(i, curr_color, graph, visited) - 1;
+        bool fail = false;
+        for (int j = 0; j < n; ++j) {
+            if (visited[j] == curr_color && graph[j].size() != marked) {
+                fail = true;
+                break;
+            }
+        }
+
+        if (!fail) {
+            ++count;
+        }
+        ++curr_color;
+    }
+
+    return count;
+}
+
 int main() {
-    auto e = std::vector<int>{2, 0, 2, 4, 2, 5, 0, 1, 2, 3};
-    auto v = std::vector<int>{2, 5};
-    std::cout << maxTurbulenceSize(e) << std::endl;
+    auto e = std::vector<std::vector<int>>{
+            {0, 1}, {0, 2}, {1, 2}, {3, 4}, {3, 5}
+    };
+    std::cout << countCompleteComponents(6, e) << std::endl;
     return 0;
 }

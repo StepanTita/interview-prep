@@ -193,6 +193,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 236. **Lowest Common Ancestor of a Binary Tree**
 797. **All Paths From Source to Target**
 1584. **Min Cost to Connect All Points**
+2685. **Count the Number of Complete Components**
 
 ### Arrays 🎞:
 
