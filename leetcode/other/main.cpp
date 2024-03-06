@@ -1158,6 +1158,28 @@ int maxRepOpt1(std::string s) {
     return res;
 }
 
+// 2405. Optimal Partition of String
+
+int partitionString(std::string s) {
+    int n = s.length();
+
+    int used = 0;
+
+    int count = 1;
+    int l = 0;
+    for (int r = 0; r < n; ++r) {
+        int i = s[r] - 'a';
+        if (used & (1 << i)) {
+            ++count;
+            l = r;
+            used = 0;
+        }
+        used = used | (1 << i);
+    }
+
+    return count;
+}
+
 int main() {
     auto v = std::vector<std::vector<int>>{
             {1, 2, 3},

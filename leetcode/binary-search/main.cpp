@@ -328,6 +328,29 @@ int waysToSplit(std::vector<int> &nums) {
     return res;
 }
 
+// 275. H-Index II
+
+int hIndex(std::vector<int>& citations) {
+    int n = citations.size();
+
+    int l = 0;
+    int r = citations.size() - 1;
+
+    while (l <= r) {
+        int m = (l + r) / 2;
+
+        if (citations[m] == n - m) {
+            return citations[m];
+        } else if (citations[m] > n - m) {
+            r = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+
+    return n - (r + 1);
+}
+
 int main() {
     auto v = std::vector<int>{1, 2, 2, 2, 5, 0};
     std::cout << waysToSplit(v) << std::endl;
