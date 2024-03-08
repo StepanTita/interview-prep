@@ -3430,6 +3430,24 @@ int countCompleteComponents(int n, std::vector<std::vector<int>> &edges) {
     return count;
 }
 
+// 494. Target Sum
+
+int findTargetSumWays(std::vector<int>& nums, int target) {
+    int n = nums.size();
+
+    std::vector<std::unordered_map<int, int>> dp(2);
+    dp[0][0] = 1;
+    for (int i = 1; i <= n; ++i) {
+        for (auto [curr, count] : dp[(i - 1) & 1]) {
+            dp[i & 1][curr + nums[i - 1]] += count;
+            dp[i & 1][curr - nums[i - 1]] += count;
+        }
+
+        dp[(i - 1) & 1].clear();
+    }
+    return dp[n & 1][target];
+}
+
 int main() {
     auto e = std::vector<std::vector<int>>{
             {0, 1}, {0, 2}, {1, 2}, {3, 4}, {3, 5}

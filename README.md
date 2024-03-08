@@ -250,6 +250,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1094. **Car Pooling**
 1156. **Swap For Longest Repeated Character Substring**
 2405. **Optimal Partition of String**
+494. **Target Sum**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
