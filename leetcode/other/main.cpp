@@ -1180,6 +1180,77 @@ int partitionString(std::string s) {
     return count;
 }
 
+// 1878. Get Biggest Three Rhombus Sums in a Grid
+
+void pop_min(std::set<int> &s) {
+    auto itr = s.begin();
+    s.erase(itr);
+}
+
+void exploreRhombus(
+        int i, int j,
+        std::vector<std::vector<int>> &grid,
+        std::set<int> &s,
+        std::vector<std::vector<int>> &ld,
+        std::vector<std::vector<int>> &rd
+) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    for (int len = 1; len <= std::max(n, m); ++len) {
+        int left = j - len;
+        int right = j + len;
+        int bot = i + 2 * len;
+
+        if(left < 0 || right >= m || bot >= n) continue;
+
+        int rhomb = rd[i + len][left] - rd[i][j]
+                    + ld[i + len][right] - ld[i][j]
+                    + ld[bot][j] - ld[i + len][left]
+                    + rd[bot][j] - rd[i + len][right]
+                    + grid[i][j] - grid[bot][j];
+
+        s.insert(rhomb);
+        if (s.size() > 3) pop_min(s);
+    }
+}
+
+std::vector<int> getBiggestThree(std::vector<std::vector<int>>& grid) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    std::vector<std::vector<int> > ld = grid, rd = grid;
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            int pi = i - 1;
+            int prevj = j - 1;
+            if(pi >= 0 && prevj >= 0) ld[i][j] += ld[pi][prevj];
+            prevj = j + 1;
+            if(pi >= 0 && prevj < m) rd[i][j] += rd[pi][prevj];
+        }
+    }
+
+    std::set<int> s;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            s.insert(grid[i][j]);
+            if (s.size() > 3) pop_min(s);
+
+            exploreRhombus(i, j, grid, s, ld, rd);
+        }
+    }
+
+    std::vector<int> res;
+    for (auto el : s) {
+        res.emplace_back(el);
+    }
+
+    std::reverse(res.begin(), res.end());
+
+    return res;
+}
+
 int main() {
     auto v = std::vector<std::vector<int>>{
             {1, 2, 3},

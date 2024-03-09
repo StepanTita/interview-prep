@@ -15,6 +15,7 @@
 #include <queue>
 
 const int INF = 1e9;
+const int MOD = 1e9 + 7;
 
 // 2270. Number of Ways to Split Array
 
@@ -120,6 +121,36 @@ std::vector<int> smallerNumbersThanCurrent(std::vector<int>& nums) {
             dups = 0;
         }
         res[places[i].second] = i - dups;
+    }
+
+    return res;
+}
+
+// 1814. Count Nice Pairs in an Array
+
+int rev(int n) {
+    int res = 0;
+    while (n > 0) {
+        res = 10 * res + (n % 10);
+        n /= 10;
+    }
+
+    return res;
+}
+
+int countNicePairs(std::vector<int>& nums) {
+    // nums[i] - rev(nums[i]) == nums[j] - rev(nums[j])
+    int n = nums.size();
+
+    std::unordered_map<int, int> next;
+    for (int j = 0; j < n; ++j) {
+        ++next[nums[j] - rev(nums[j])];
+    }
+
+    int res = 0;
+    for (int i = 0; i < n; ++i) {
+        --next[nums[i] - rev(nums[i])];
+        res = (res + next[nums[i] - rev(nums[i])]) % MOD;
     }
 
     return res;

@@ -155,6 +155,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1162. **As Far from Land as Possible**
 103. **Binary Tree Zigzag Level Order Traversal**
 463. **Island Perimeter**
+1305. **All Elements in Two Binary Search Trees**
 
 ### Math ♾️:
 
@@ -202,6 +203,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1184. **Distance Between Bus Stops**
 1732. **Find the Highest Altitude**
 1365. **How Many Numbers Are Smaller Than the Current Number**
+1814. **Count Nice Pairs in an Array**
 
 
 ### Union Find 🇺🇳:
@@ -251,6 +253,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1156. **Swap For Longest Repeated Character Substring**
 2405. **Optimal Partition of String**
 494. **Target Sum**
+1878. **Get Biggest Three Rhombus Sums in a Grid**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
