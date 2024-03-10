@@ -3448,6 +3448,50 @@ int findTargetSumWays(std::vector<int>& nums, int target) {
     return dp[n & 1][target];
 }
 
+// 2212. Maximum Points in an Archery Competition
+
+int getScore(std::vector<int>& aliceArrows, std::vector<int>& bobArrows) {
+    int score = 0;
+    for (int i = 0; i < aliceArrows.size(); ++i) {
+        if (bobArrows[i] > aliceArrows[i]) score += i;
+    }
+
+    return score;
+}
+
+void dfs(int s, int numArrows, int &maxScore, std::vector<int> &aliceArrows, std::vector<int> &bobArrows, std::vector<int> &shots) {
+    int n = aliceArrows.size();
+
+    if (s >= n || numArrows == 0) {
+        int score = getScore(aliceArrows, bobArrows);
+        if (score > maxScore) {
+            shots = std::vector<int>(bobArrows.begin(), bobArrows.end());
+            shots[0] += numArrows;
+            maxScore = score;
+        }
+        return;
+    }
+
+    dfs(s + 1, numArrows, maxScore, aliceArrows, bobArrows, shots);
+
+    bobArrows[s] = std::min(numArrows, aliceArrows[s] + 1);
+
+    dfs(s + 1, numArrows - bobArrows[s], maxScore, aliceArrows, bobArrows, shots);
+
+    bobArrows[s] = 0;
+}
+
+std::vector<int> maximumBobPoints(int numArrows, std::vector<int>& aliceArrows) {
+    std::vector<int> bobArrows(aliceArrows.size(), 0);
+
+    int maxScore = 0;
+    std::vector<int> shots;
+
+    dfs(0, numArrows, maxScore, aliceArrows, bobArrows, shots);
+
+    return shots;
+}
+
 int main() {
     auto e = std::vector<std::vector<int>>{
             {0, 1}, {0, 2}, {1, 2}, {3, 4}, {3, 5}

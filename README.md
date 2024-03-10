@@ -114,6 +114,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2266. **Count Number of Texts**
 1774. **Closest Dessert Cost**
 978. **Longest Turbulent Subarray**
+2212. **Maximum Points in an Archery Competition**
 
 
 ### Heap 📊:
@@ -254,6 +255,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2405. **Optimal Partition of String**
 494. **Target Sum**
 1878. **Get Biggest Three Rhombus Sums in a Grid**
+2260. **Minimum Consecutive Cards to Pick Up**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 

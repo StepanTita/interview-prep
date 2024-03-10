@@ -1251,6 +1251,28 @@ std::vector<int> getBiggestThree(std::vector<std::vector<int>>& grid) {
     return res;
 }
 
+// 2260. Minimum Consecutive Cards to Pick Up
+
+int minimumCardPickup(std::vector<int>& cards) {
+    int n = cards.size();
+    int l = 0;
+
+    int len = n + 1;
+
+    std::unordered_map<int, int> prev;
+
+    for (int i = 0; i < n; ++i) {
+        if (prev.contains(cards[i])) {
+            len = std::min(len, i - prev[cards[i]] + 1);
+        }
+        prev[cards[i]] = i;
+    }
+
+    if (len == n + 1) return -1;
+
+    return len;
+}
+
 int main() {
     auto v = std::vector<std::vector<int>>{
             {1, 2, 3},
