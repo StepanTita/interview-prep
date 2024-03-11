@@ -115,6 +115,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1774. **Closest Dessert Cost**
 978. **Longest Turbulent Subarray**
 2212. **Maximum Points in an Archery Competition**
+2327. **Number of People Aware of a Secret**
 
 
 ### Heap 📊:

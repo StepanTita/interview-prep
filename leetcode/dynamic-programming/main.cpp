@@ -3492,6 +3492,22 @@ std::vector<int> maximumBobPoints(int numArrows, std::vector<int>& aliceArrows) 
     return shots;
 }
 
+// 2327. Number of People Aware of a Secret
+
+int peopleAwareOfSecret(int n, int delay, int forget) {
+    std::vector<int> dp(n + 1, 1);
+    std::vector<int> prefix(n + 1, 0);
+
+    dp[0] = 0;
+
+    for (int day = 1; day <= n; ++day) {
+        dp[day] = (dp[day] + prefix[std::max(0, day - delay)] - prefix[std::max(0, day - forget)] + MOD) % MOD;
+        prefix[day] = (prefix[day - 1] + dp[day]) % MOD;
+    }
+
+    return (dp[n] - dp[n - forget] + MOD) % MOD;
+}
+
 int main() {
     auto e = std::vector<std::vector<int>>{
             {0, 1}, {0, 2}, {1, 2}, {3, 4}, {3, 5}
