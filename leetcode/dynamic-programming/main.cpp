@@ -3508,10 +3508,38 @@ int peopleAwareOfSecret(int n, int delay, int forget) {
     return (dp[n] - dp[n - forget] + MOD) % MOD;
 }
 
+// 264. Ugly Number II
+
+int nthUglyNumber(int n) {
+    std::vector<long long> dp(n + 1, INF);
+    std::vector<long long> primes{2, 3, 5};
+
+    dp[0] = 0;
+    dp[1] = 1;
+    for (int i = 2; i <= n; ++i) {
+        for (int p : primes) {
+            int l = 1;
+            int r = i - 1;
+
+            while (l <= r) {
+                int j = (l + r) / 2;
+
+                if (dp[i - 1] < dp[j] * p && dp[j] * p < dp[i]) {
+                    dp[i] = dp[j] * p;
+                    r = j - 1;
+                } else if (dp[i - 1] < dp[j] * p) {
+                    r = j - 1;
+                } else {
+                    l = j + 1;
+                }
+            }
+        }
+    }
+
+    return dp[n];
+}
+
 int main() {
-    auto e = std::vector<std::vector<int>>{
-            {0, 1}, {0, 2}, {1, 2}, {3, 4}, {3, 5}
-    };
-    std::cout << countCompleteComponents(6, e) << std::endl;
+    std::cout << nthUglyNumber(10) << std::endl;
     return 0;
 }

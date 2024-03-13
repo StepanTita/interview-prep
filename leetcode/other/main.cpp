@@ -1273,6 +1273,21 @@ int minimumCardPickup(std::vector<int>& cards) {
     return len;
 }
 
+// 2439. Minimize Maximum of Array
+
+int minimizeArrayValue(std::vector<int>& nums) {
+    int n = nums.size();
+
+    long long prefix_sum = nums[0];
+    long long ans = nums[0];
+    for (int i = 1; i < n; ++i) {
+        prefix_sum += nums[i];
+        ans = std::max(ans, (prefix_sum + i) / (i + 1));
+    }
+
+    return ans;
+}
+
 int main() {
     auto v = std::vector<std::vector<int>>{
             {1, 2, 3},

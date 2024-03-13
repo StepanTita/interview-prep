@@ -116,6 +116,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 978. **Longest Turbulent Subarray**
 2212. **Maximum Points in an Archery Competition**
 2327. **Number of People Aware of a Secret**
+264. **Ugly Number II**
 
 
 ### Heap 📊:
@@ -257,6 +258,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 494. **Target Sum**
 1878. **Get Biggest Three Rhombus Sums in a Grid**
 2260. **Minimum Consecutive Cards to Pick Up**
+2439. **Minimize Maximum of Array**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
