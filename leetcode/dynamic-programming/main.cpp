@@ -3539,6 +3539,34 @@ int nthUglyNumber(int n) {
     return dp[n];
 }
 
+// 2522. Partition String Into Substrings With Values at Most K
+
+int minimumPartition(std::string s, int k) {
+    int n = s.length();
+
+    // min split for substring ending in i-th position
+    std::vector<int> dp(n + 1, INF);
+
+    int res = INF;
+
+    dp[0] = 0;
+
+    for (int i = 1; i <= n; ++i) {
+        long long p = 1;
+        long long val = 0;
+        for (int j = i - 1; j >= 0; --j) {
+            val = p * (s[j] - '0') + val;
+            p *= 10;
+
+            if (val > k) break;
+
+            dp[i] = std::min(dp[i], dp[j] + 1);
+        }
+    }
+
+    return (dp[n] < INF) ? dp[n] : -1;
+}
+
 int main() {
     std::cout << nthUglyNumber(10) << std::endl;
     return 0;
