@@ -117,6 +117,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2212. **Maximum Points in an Archery Competition**
 2327. **Number of People Aware of a Secret**
 264. **Ugly Number II**
+2522. **Partition String Into Substrings With Values at Most K**
+313. **Super Ugly Number**
 
 
 ### Heap 📊:
@@ -149,6 +151,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1053. **Previous Permutation With One Swap**
 68. **Text Justification**
 2645. **Minimum Additions to Make Valid String**
+2522. **Partition String Into Substrings With Values at Most K**
 
 ### BFS & DFS 🔍:
 

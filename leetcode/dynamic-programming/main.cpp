@@ -3567,6 +3567,30 @@ int minimumPartition(std::string s, int k) {
     return (dp[n] < INF) ? dp[n] : -1;
 }
 
+// 313. Super Ugly Number
+
+using P = std::pair<long long, int>;
+
+int nthSuperUglyNumber(int n, std::vector<int>& primes) {
+    int k = primes.size();
+
+    // index of the smallest generated ugly number ending in primes[j]
+    std::vector<int> index(k, 0);
+    std::vector<long long> dp(n, INF);
+
+    dp[0] = 1;
+    for (int i = 1; i < n; ++i) {
+        for (int j = 0; j < k; ++j) {
+            dp[i] = std::min(dp[i], dp[index[j]] * primes[j]);
+        }
+        for (int j = 0; j < k; ++j) {
+            index[j] += dp[i] == dp[index[j]] * primes[j];
+        }
+    }
+
+    return dp[n - 1];
+}
+
 int main() {
     std::cout << nthUglyNumber(10) << std::endl;
     return 0;

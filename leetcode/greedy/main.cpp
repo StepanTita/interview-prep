@@ -223,6 +223,28 @@ int addMinimum(std::string word) {
     return count;
 }
 
+// 2522. Partition String Into Substrings With Values at Most K
+
+int minimumPartition(std::string s, int k) {
+    int n = s.length();
+
+    int res = 1;
+
+    long long val = 0;
+    for (int i = 0; i < n; ++i) {
+        val = 10 * val + (s[i] - '0');
+
+        if (val > k) {
+            ++res;
+            val = s[i] - '0';
+        }
+
+        if (val > k) return -1;
+    }
+
+    return res;
+}
+
 int main() {
     addMinimum("b");
     return 0;
