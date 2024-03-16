@@ -119,6 +119,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 264. **Ugly Number II**
 2522. **Partition String Into Substrings With Values at Most K**
 313. **Super Ugly Number**
+837. **New 21 Game**
 
 
 ### Heap 📊:
