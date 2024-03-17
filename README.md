@@ -153,6 +153,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 68. **Text Justification**
 2645. **Minimum Additions to Make Valid String**
 2522. **Partition String Into Substrings With Values at Most K**
+2086. **Minimum Number of Food Buckets to Feed the Hamsters**
 
 ### BFS & DFS 🔍:
 

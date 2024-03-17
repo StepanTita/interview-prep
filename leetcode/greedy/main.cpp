@@ -245,6 +245,29 @@ int minimumPartition(std::string s, int k) {
     return res;
 }
 
+// 2086. Minimum Number of Food Buckets to Feed the Hamsters
+
+int minimumBuckets(std::string h) {
+    int n = h.length();
+
+    int count = 0;
+    for (int i = 0; i < n; ++i) {
+        if (h[i] == 'H') {
+            if (i > 0 && h[i - 1] == 'D') continue;
+
+            if (i + 1 < n && h[i + 1] == '.') {
+                h[i + 1] = 'D';
+                ++count;
+            } else if (i - 1 >= 0 && h[i - 1] == '.') {
+                h[i - 1] = 'D';
+                ++count;
+            } else return -1;
+        }
+    }
+
+    return count;
+}
+
 int main() {
     addMinimum("b");
     return 0;
