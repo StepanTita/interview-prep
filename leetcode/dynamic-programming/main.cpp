@@ -3389,7 +3389,7 @@ int bfs(int source,
 
         ++marked;
 
-        for (auto next : graph[curr]) {
+        for (auto next: graph[curr]) {
             q.push(next);
         }
     }
@@ -3432,13 +3432,13 @@ int countCompleteComponents(int n, std::vector<std::vector<int>> &edges) {
 
 // 494. Target Sum
 
-int findTargetSumWays(std::vector<int>& nums, int target) {
+int findTargetSumWays(std::vector<int> &nums, int target) {
     int n = nums.size();
 
     std::vector<std::unordered_map<int, int>> dp(2);
     dp[0][0] = 1;
     for (int i = 1; i <= n; ++i) {
-        for (auto [curr, count] : dp[(i - 1) & 1]) {
+        for (auto [curr, count]: dp[(i - 1) & 1]) {
             dp[i & 1][curr + nums[i - 1]] += count;
             dp[i & 1][curr - nums[i - 1]] += count;
         }
@@ -3450,7 +3450,7 @@ int findTargetSumWays(std::vector<int>& nums, int target) {
 
 // 2212. Maximum Points in an Archery Competition
 
-int getScore(std::vector<int>& aliceArrows, std::vector<int>& bobArrows) {
+int getScore(std::vector<int> &aliceArrows, std::vector<int> &bobArrows) {
     int score = 0;
     for (int i = 0; i < aliceArrows.size(); ++i) {
         if (bobArrows[i] > aliceArrows[i]) score += i;
@@ -3459,7 +3459,8 @@ int getScore(std::vector<int>& aliceArrows, std::vector<int>& bobArrows) {
     return score;
 }
 
-void dfs(int s, int numArrows, int &maxScore, std::vector<int> &aliceArrows, std::vector<int> &bobArrows, std::vector<int> &shots) {
+void dfs(int s, int numArrows, int &maxScore, std::vector<int> &aliceArrows, std::vector<int> &bobArrows,
+         std::vector<int> &shots) {
     int n = aliceArrows.size();
 
     if (s >= n || numArrows == 0) {
@@ -3481,7 +3482,7 @@ void dfs(int s, int numArrows, int &maxScore, std::vector<int> &aliceArrows, std
     bobArrows[s] = 0;
 }
 
-std::vector<int> maximumBobPoints(int numArrows, std::vector<int>& aliceArrows) {
+std::vector<int> maximumBobPoints(int numArrows, std::vector<int> &aliceArrows) {
     std::vector<int> bobArrows(aliceArrows.size(), 0);
 
     int maxScore = 0;
@@ -3517,7 +3518,7 @@ int nthUglyNumber(int n) {
     dp[0] = 0;
     dp[1] = 1;
     for (int i = 2; i <= n; ++i) {
-        for (int p : primes) {
+        for (int p: primes) {
             int l = 1;
             int r = i - 1;
 
@@ -3571,7 +3572,7 @@ int minimumPartition(std::string s, int k) {
 
 using P = std::pair<long long, int>;
 
-int nthSuperUglyNumber(int n, std::vector<int>& primes) {
+int nthSuperUglyNumber(int n, std::vector<int> &primes) {
     int k = primes.size();
 
     // index of the smallest generated ugly number ending in primes[j]
@@ -3620,7 +3621,42 @@ double new21Game(int n, int k, int maxPts) {
     return probability;
 }
 
+// 1567. Maximum Length of Subarray With Positive Product
+
+int s(int v) {
+    if (v > 0) return 1;
+    else if (v == 0) return 0;
+    else return -1;
+}
+
+int getMaxLen(std::vector<int> &nums) {
+    int n = nums.size();
+
+    std::vector<std::vector<int>> dp(2, std::vector<int>(3, 0));
+
+    int ans = nums[0] > 0;
+
+    dp[0][s(nums[0]) + 1] = 1;
+    for (int i = 1; i < n; ++i) {
+        if (s(nums[i]) > 0) {
+            dp[i & 1][2] = dp[(i - 1) & 1][2] + 1;
+            dp[i & 1][0] = (dp[(i - 1) & 1][0] + 1) * (dp[(i - 1) & 1][0] != 0);
+        } else if (s(nums[i]) < 0) {
+            dp[i & 1][2] = (dp[(i - 1) & 1][0] + 1) * (dp[(i - 1) & 1][0] != 0);
+            dp[i & 1][0] = dp[(i - 1) & 1][2] + 1;
+        }
+
+        ans = std::max(ans, dp[i & 1][2]);
+
+        dp[(i - 1) & 1][0] = 0;
+        dp[(i - 1) & 1][1] = 0;
+        dp[(i - 1) & 1][2] = 0;
+    }
+    return ans;
+}
+
 int main() {
-    std::cout << nthUglyNumber(10) << std::endl;
+    auto v = std::vector<int>{0,1,-2,-3,-4};
+    std::cout << getMaxLen(v) << std::endl;
     return 0;
 }

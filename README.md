@@ -120,6 +120,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2522. **Partition String Into Substrings With Values at Most K**
 313. **Super Ugly Number**
 837. **New 21 Game**
+1567. **Maximum Length of Subarray With Positive Product**
 
 
 ### Heap 📊:
@@ -203,6 +204,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 797. **All Paths From Source to Target**
 1584. **Min Cost to Connect All Points**
 2685. **Count the Number of Complete Components**
+310. **Minimum Height Trees**
 
 ### Arrays 🎞:
 

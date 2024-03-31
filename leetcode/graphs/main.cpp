@@ -535,12 +535,12 @@ ConnTreeNode *connect(ConnTreeNode *root) {
 
 // 236. Lowest Common Ancestor of a Binary Tree
 
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
+//struct TreeNode {
+//    int val;
+//    TreeNode *left;
+//    TreeNode *right;
+//    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+//};
 
 TreeNode* lowestCommonAncestor(TreeNode* curr, TreeNode* p, TreeNode* q) {
     if (curr == NULL || curr == p || curr == q) return curr;
@@ -655,13 +655,63 @@ public:
     }
 };
 
+// 310. Minimum Height Trees
+
+std::vector<int> findMinHeightTrees(int n, std::vector<std::vector<int>>& edges) {
+    if (n == 1) return std::vector<int>{0};
+
+    std::vector<std::vector<int>> adj_list(n, std::vector<int>());
+
+    std::vector<int> indegree(n, 0);
+    for (auto e : edges) {
+        int a = e[0];
+        int b = e[1];
+
+        adj_list[a].emplace_back(b);
+        adj_list[b].emplace_back(a);
+
+        ++indegree[a];
+        ++indegree[b];
+    }
+
+    std::queue<int> q;
+    for (int i = 0; i < n; ++i) {
+        if (indegree[i] == 1) {
+            q.push(i);
+        }
+    }
+
+    std::vector<int> res;
+    while (!q.empty()) {
+        res.clear();
+
+        int size = q.size();
+
+        for (int i = 0; i < size; ++i) {
+            auto curr = q.front();
+            q.pop();
+
+            res.emplace_back(curr);
+
+            for (auto next : adj_list[curr]) {
+                --indegree[next];
+                if (indegree[next] == 1) {
+                    q.push(next);
+                }
+            }
+        }
+    }
+
+    return res;
+}
+
 
 int main() {
     auto t = std::vector<std::vector<int>>{
-            {1, 2, 1},
-            {2, 3, 2},
-            {1, 3, 4}
+            {1, 0},
+            {1, 2},
+            {1, 3}
     };
-    networkDelayTime(t, 3, 1);
+    findMinHeightTrees(4, t);
     return 0;
 }
