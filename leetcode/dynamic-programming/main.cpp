@@ -3655,8 +3655,32 @@ int getMaxLen(std::vector<int> &nums) {
     return ans;
 }
 
+// 2944. Minimum Number of Coins for Fruits
+
+int dfs(int curr, std::vector<int>& prices, std::vector<int> &memo) {
+    int n = prices.size();
+
+    if (curr >= n) return 0;
+    if (memo[curr] != -1) return memo[curr];
+
+    int next = curr + (curr + 1);
+    int ans = prices[curr] + dfs(next + 1, prices, memo);
+
+    for (int i = curr + 1; i < std::min(n, next + 1); ++i) {
+        ans = std::min(ans, prices[curr] + dfs(i, prices, memo));
+    }
+
+    return memo[curr] = ans;
+}
+
+int minimumCoins(std::vector<int>& prices) {
+    std::vector<int> memo(prices.size(), -1);
+
+    return dfs(0, prices, memo);
+}
+
 int main() {
-    auto v = std::vector<int>{0,1,-2,-3,-4};
-    std::cout << getMaxLen(v) << std::endl;
+    auto v = std::vector<int>{3, 1, 2};
+    std::cout << minimumCoins(v) << std::endl;
     return 0;
 }

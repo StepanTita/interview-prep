@@ -121,6 +121,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 313. **Super Ugly Number**
 837. **New 21 Game**
 1567. **Maximum Length of Subarray With Positive Product**
+2944. **Minimum Number of Coins for Fruits**
 
 
 ### Heap 📊:
