@@ -1059,7 +1059,7 @@ void rotate(std::vector<std::vector<int>> &matrix) {
 
 // 46. Permutations
 
-bool nextPermutation(vector<int> &nums) {
+bool nextPermutation(std::vector<int> &nums) {
     int n = nums.size();
 
     int pivot = n - 2;
@@ -1288,12 +1288,41 @@ int minimizeArrayValue(std::vector<int>& nums) {
     return ans;
 }
 
+// 748. Shortest Completing Word
+
+std::string shortestCompletingWord(std::string licensePlate, std::vector<std::string>& words) {
+    std::unordered_map<char, int> freq;
+
+    for (char c : licensePlate) {
+        char lc = std::tolower(c);
+        if (std::isalpha(lc)) {
+            ++freq[lc];
+        }
+    }
+
+    std::string res = "";
+    for (auto w : words) {
+        auto cFreq = std::unordered_map<char, int>(freq.begin(), freq.end());
+        for (char c : w) {
+            char lc = std::tolower(c);
+            if (!isalpha(lc) || !cFreq.contains(lc)) continue;
+
+            if (--cFreq[lc] < 0) continue;
+            if (cFreq[lc] == 0) {
+                cFreq.erase(lc);
+            }
+        }
+
+        if (cFreq.empty() && (res == "" || res.length() > w.length())) {
+            res = w;
+        }
+    }
+
+    return res;
+}
+
 int main() {
-    auto v = std::vector<std::vector<int>>{
-            {1, 2, 3},
-            {4, 5, 6},
-            {7, 8, 9}
-    };
-    rotate(v);
+    auto v = std::vector<std::string>{"step","steps","stripe","stepple"};
+    shortestCompletingWord("1s3 PSt", v);
     return 0;
 }

@@ -3679,6 +3679,54 @@ int minimumCoins(std::vector<int>& prices) {
     return dfs(0, prices, memo);
 }
 
+// 1668. Maximum Repeating Substring
+
+int find(std::string &haystack, std::string &needle) {
+    int n = haystack.length();
+    int m = needle.length();
+
+    int prev = 0;
+    int curr = 1;
+    std::vector<int> border(m, 0);
+
+    while (curr < m) {
+        if (needle[prev] == needle[curr]) {
+            border[curr] = prev + 1;
+            ++curr; ++prev;
+        } else if (prev == 0) {
+            ++curr;
+        } else {
+            prev = border[prev - 1];
+        }
+    }
+
+    int i = 0;
+    int j = 0;
+    while (i < n) {
+        if (haystack[i] == needle[j]) {
+            ++i; ++j;
+        } else if (j == 0) {
+            ++i;
+        } else {
+            j = border[j - 1];
+        }
+
+        if (j == m) return i - m;
+    }
+
+    return -1;
+}
+
+int maxRepeating(std::string sequence, std::string word) {
+    std::string kRep = "";
+    for (int k = 1; kRep.length() <= sequence.length(); ++k) {
+        kRep += word;
+        if (find(sequence, kRep) < 0) return k - 1;
+    }
+
+    return 0;
+}
+
 int main() {
     auto v = std::vector<int>{3, 1, 2};
     std::cout << minimumCoins(v) << std::endl;

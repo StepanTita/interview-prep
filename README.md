@@ -267,6 +267,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1878. **Get Biggest Three Rhombus Sums in a Grid**
 2260. **Minimum Consecutive Cards to Pick Up**
 2439. **Minimize Maximum of Array**
+1668. **Maximum Repeating Substring**
+748. **Shortest Completing Word**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
