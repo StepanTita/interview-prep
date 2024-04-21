@@ -1321,8 +1321,34 @@ std::string shortestCompletingWord(std::string licensePlate, std::vector<std::st
     return res;
 }
 
+// 821. Shortest Distance to a Character
+
+std::vector<int> shortestToChar(std::string s, char c) {
+    int n = s.length();
+
+    int prev = -1;
+    int next = -1;
+
+    std::vector<int> ans(n, 0);
+    for (int i = 0; i < n; ++i) {
+        if (i > next) {
+            prev = prev + 1;
+            while (prev < n && s[prev] != c) ++prev;
+
+            next = prev + 1;
+            while (next < n && s[next] != c) ++next;
+        }
+
+        int cPrev = prev < n ? prev : INF;
+        int cNext = next < n ? next : INF;
+
+        ans[i] = std::min(std::abs(i - cPrev), std::abs(i - cNext));
+    }
+
+    return ans;
+}
+
 int main() {
-    auto v = std::vector<std::string>{"step","steps","stripe","stepple"};
-    shortestCompletingWord("1s3 PSt", v);
+    shortestToChar("loveleetcode", 'e');
     return 0;
 }

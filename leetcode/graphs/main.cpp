@@ -344,23 +344,23 @@ TreeNode *lcaDeepestLeaves(TreeNode *root) {
 
 // 1026. Maximum Difference Between Node and Ancestor
 
-int dfs(TreeNode *curr, int currMin, int currMax) {
-    if (curr == NULL) return 0;
-
-    int left = dfs(curr->left, std::min(curr->val, currMin), std::max(curr->val, currMax));
-    int right = dfs(curr->right, std::min(curr->val, currMin), std::max(curr->val, currMax));
-
-    return std::max({
-                            left,
-                            right,
-                            std::abs(curr->val - currMin),
-                            std::abs(curr->val - currMax)
-                    });
-}
-
-int maxAncestorDiff(TreeNode *root) {
-    return dfs(root, root->val, root->val);
-}
+//int dfs(TreeNode *curr, int currMin, int currMax) {
+//    if (curr == NULL) return 0;
+//
+//    int left = dfs(curr->left, std::min(curr->val, currMin), std::max(curr->val, currMax));
+//    int right = dfs(curr->right, std::min(curr->val, currMin), std::max(curr->val, currMax));
+//
+//    return std::max({
+//                            left,
+//                            right,
+//                            std::abs(curr->val - currMin),
+//                            std::abs(curr->val - currMax)
+//                    });
+//}
+//
+//int maxAncestorDiff(TreeNode *root) {
+//    return dfs(root, root->val, root->val);
+//}
 
 // 743. Network Delay Time
 
@@ -705,13 +705,27 @@ std::vector<int> findMinHeightTrees(int n, std::vector<std::vector<int>>& edges)
     return res;
 }
 
+// 1022. Sum of Root To Leaf Binary Numbers
+
+int dfs(TreeNode* curr, int num) {
+    if (curr == NULL) {
+        return 0;
+    }
+
+    int val = 2 * num + curr->val;
+
+    if (curr->left == curr->right) return val;
+
+    return dfs(curr->left, val) + dfs(curr->right, val);
+}
+
+int sumRootToLeaf(TreeNode* root) {
+    return dfs(root, 0);
+}
+
 
 int main() {
-    auto t = std::vector<std::vector<int>>{
-            {1, 0},
-            {1, 2},
-            {1, 3}
-    };
-    findMinHeightTrees(4, t);
+    auto root = new TreeNode(1, new TreeNode(0, new TreeNode(0), new TreeNode(1)), new TreeNode(1, new TreeNode(0), new TreeNode(1)));
+    std::cout << sumRootToLeaf(root) << std::endl;
     return 0;
 }

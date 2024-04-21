@@ -206,6 +206,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1584. **Min Cost to Connect All Points**
 2685. **Count the Number of Complete Components**
 310. **Minimum Height Trees**
+1022. **Sum of Root To Leaf Binary Numbers**
 
 ### Arrays 🎞:
 
@@ -269,6 +270,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 2439. **Minimize Maximum of Array**
 1668. **Maximum Repeating Substring**
 748. **Shortest Completing Word**
+821. **Shortest Distance to a Character**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
