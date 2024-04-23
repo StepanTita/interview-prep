@@ -662,11 +662,11 @@ std::pair<std::unordered_map<int, char>, std::unordered_map<int, int>> transform
 }
 
 bool stretchy(
-        std::unordered_map < int, char > &originalPos,
-        std::unordered_map < int, int > &originalFreq,
+        std::unordered_map<int, char> &originalPos,
+        std::unordered_map<int, int> &originalFreq,
 
-        std::unordered_map < int, char > &pos,
-        std::unordered_map < int, int > &freq
+        std::unordered_map<int, char> &pos,
+        std::unordered_map<int, int> &freq
 ) {
     if (freq.size() != originalFreq.size()) return false;
 
@@ -1135,7 +1135,7 @@ int maxRepOpt1(std::string s) {
     }
 
     int res = 0;
-    for (auto [g, idxs] : groups) {
+    for (auto [g, idxs]: groups) {
         int prev = 0;
         int curr = 1;
         int ans = 0;
@@ -1182,7 +1182,7 @@ int partitionString(std::string s) {
 
 // 1878. Get Biggest Three Rhombus Sums in a Grid
 
-void pop_min(std::set<int> &s) {
+void pop_min(std::set < int > &s) {
     auto itr = s.begin();
     s.erase(itr);
 }
@@ -1202,7 +1202,7 @@ void exploreRhombus(
         int right = j + len;
         int bot = i + 2 * len;
 
-        if(left < 0 || right >= m || bot >= n) continue;
+        if (left < 0 || right >= m || bot >= n) continue;
 
         int rhomb = rd[i + len][left] - rd[i][j]
                     + ld[i + len][right] - ld[i][j]
@@ -1215,19 +1215,19 @@ void exploreRhombus(
     }
 }
 
-std::vector<int> getBiggestThree(std::vector<std::vector<int>>& grid) {
+std::vector<int> getBiggestThree(std::vector<std::vector<int>> &grid) {
     int n = grid.size();
     int m = grid[0].size();
 
     std::vector<std::vector<int> > ld = grid, rd = grid;
 
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
             int pi = i - 1;
             int prevj = j - 1;
-            if(pi >= 0 && prevj >= 0) ld[i][j] += ld[pi][prevj];
+            if (pi >= 0 && prevj >= 0) ld[i][j] += ld[pi][prevj];
             prevj = j + 1;
-            if(pi >= 0 && prevj < m) rd[i][j] += rd[pi][prevj];
+            if (pi >= 0 && prevj < m) rd[i][j] += rd[pi][prevj];
         }
     }
 
@@ -1242,7 +1242,7 @@ std::vector<int> getBiggestThree(std::vector<std::vector<int>>& grid) {
     }
 
     std::vector<int> res;
-    for (auto el : s) {
+    for (auto el: s) {
         res.emplace_back(el);
     }
 
@@ -1253,7 +1253,7 @@ std::vector<int> getBiggestThree(std::vector<std::vector<int>>& grid) {
 
 // 2260. Minimum Consecutive Cards to Pick Up
 
-int minimumCardPickup(std::vector<int>& cards) {
+int minimumCardPickup(std::vector<int> &cards) {
     int n = cards.size();
     int l = 0;
 
@@ -1275,7 +1275,7 @@ int minimumCardPickup(std::vector<int>& cards) {
 
 // 2439. Minimize Maximum of Array
 
-int minimizeArrayValue(std::vector<int>& nums) {
+int minimizeArrayValue(std::vector<int> &nums) {
     int n = nums.size();
 
     long long prefix_sum = nums[0];
@@ -1290,10 +1290,10 @@ int minimizeArrayValue(std::vector<int>& nums) {
 
 // 748. Shortest Completing Word
 
-std::string shortestCompletingWord(std::string licensePlate, std::vector<std::string>& words) {
+std::string shortestCompletingWord(std::string licensePlate, std::vector<std::string> &words) {
     std::unordered_map<char, int> freq;
 
-    for (char c : licensePlate) {
+    for (char c: licensePlate) {
         char lc = std::tolower(c);
         if (std::isalpha(lc)) {
             ++freq[lc];
@@ -1301,9 +1301,9 @@ std::string shortestCompletingWord(std::string licensePlate, std::vector<std::st
     }
 
     std::string res = "";
-    for (auto w : words) {
+    for (auto w: words) {
         auto cFreq = std::unordered_map<char, int>(freq.begin(), freq.end());
-        for (char c : w) {
+        for (char c: w) {
             char lc = std::tolower(c);
             if (!isalpha(lc) || !cFreq.contains(lc)) continue;
 
@@ -1346,6 +1346,64 @@ std::vector<int> shortestToChar(std::string s, char c) {
     }
 
     return ans;
+}
+
+// 806. Number of Lines To Write String
+
+std::vector<int> numberOfLines(std::vector<int> &widths, std::string s) {
+    int lines = 1;
+    int width = 0;
+
+    for (char c: s) {
+        if (width + widths[c - 'a'] > 100) {
+            ++lines;
+            width = 0;
+        }
+
+        width += widths[c - 'a'];
+    }
+
+    return std::vector<int>{lines, width};
+}
+
+// 812. Largest Triangle Area
+
+double largestTriangleArea(std::vector<std::vector<int>> &points) {
+    double maxArea = 0;
+
+    for (auto p1: points) {
+        int x1 = p1[0];
+        int y1 = p1[1];
+        for (auto p2: points) {
+            int x2 = p2[0];
+            int y2 = p2[1];
+            for (auto p3: points) {
+                int x3 = p3[0];
+                int y3 = p3[1];
+
+                double area = 0.5 * std::abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2));
+
+                maxArea = std::max(maxArea, area);
+            }
+        }
+    }
+
+    return maxArea;
+}
+
+// 867. Transpose Matrix
+
+std::vector<std::vector<int>> transpose(std::vector<std::vector<int>>& matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+
+    std::vector<std::vector<int>> res(m, std::vector<int>(n, 0));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            res[j][i] = matrix[i][j];
+        }
+    }
+    return res;
 }
 
 int main() {

@@ -271,6 +271,9 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1668. **Maximum Repeating Substring**
 748. **Shortest Completing Word**
 821. **Shortest Distance to a Character**
+806. **Number of Lines To Write String**
+812. **Largest Triangle Area**
+867. **Transpose Matrix**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 
