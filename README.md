@@ -166,6 +166,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 103. **Binary Tree Zigzag Level Order Traversal**
 463. **Island Perimeter**
 1305. **All Elements in Two Binary Search Trees**
+965. **Univalued Binary Tree**
 
 ### Math ♾️:
 
@@ -274,6 +275,7 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 806. **Number of Lines To Write String**
 812. **Largest Triangle Area**
 867. **Transpose Matrix**
+976. **Largest Perimeter Triangle**
 
 Happy coding! If you have any questions or suggestions, feel free to open an issue or create a pull request.
 

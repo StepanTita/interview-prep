@@ -1406,6 +1406,21 @@ std::vector<std::vector<int>> transpose(std::vector<std::vector<int>>& matrix) {
     return res;
 }
 
+// 976. Largest Perimeter Triangle
+
+int largestPerimeter(std::vector<int>& nums) {
+    int n = nums.size();
+
+    std::sort(nums.begin(), nums.end());
+
+    for (int i = n - 3; i >= 0; --i) {
+        if (nums[i] + nums[i + 1] > nums[i + 2])
+            return nums[i] + nums[i + 1] + nums[i + 2];
+    }
+
+    return 0;
+}
+
 int main() {
     shortestToChar("loveleetcode", 'e');
     return 0;
