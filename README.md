@@ -217,6 +217,8 @@ LeetCode challenges. If you find this repository helpful, please consider giving
 1732. **Find the Highest Altitude**
 1365. **How Many Numbers Are Smaller Than the Current Number**
 1814. **Count Nice Pairs in an Array**
+1013. **Partition Array Into Three Parts With Equal Sum**
+1018. **Binary Prefix Divisible By 5**
 
 
 ### Union Find 🇺🇳:

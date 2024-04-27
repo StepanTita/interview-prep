@@ -155,3 +155,58 @@ int countNicePairs(std::vector<int>& nums) {
 
     return res;
 }
+
+// 1013. Partition Array Into Three Parts With Equal Sum
+
+bool canThreePartsEqualSum(std::vector<int>& arr) {
+    int n = arr.size();
+
+    std::vector<int> prefix(n, 0);
+    prefix[0] = arr[0];
+    for (int i = 1; i < n; ++i) {
+        prefix[i] = prefix[i - 1] + arr[i];
+    }
+
+    if (prefix[n - 1] % 3 != 0) return false;
+
+    int part = prefix[n - 1] / 3;
+
+    int i = 0;
+    for (; i < n; ++i) {
+        if (prefix[i] == part) break;
+    }
+
+    if (i == n) return false;
+
+    int j = i + 1;
+    for (; j < n; ++j) {
+        if (prefix[j] - prefix[i] == part) break;
+    }
+
+    if (j == n) return false;
+
+    return n - 1 != j && prefix[n - 1] - prefix[j] == part;
+}
+
+// 1018. Binary Prefix Divisible By 5
+
+std::vector<bool> prefixesDivBy5(std::vector<int>& nums) {
+    int n = nums.size();
+
+    std::vector<bool> ans(n, 0);
+
+    int val = nums[0];
+    ans[0] = !(val % 5);
+    for (int i = 1; i < n; ++i) {
+        nums[i] = (nums[i - 1] * 2 + nums[i]) % 10;
+        ans[i] = !(nums[i] % 5);
+    }
+
+    return ans;
+}
+
+int main() {
+    auto v = std::vector<int>{1, -1, 1, -1};
+    canThreePartsEqualSum(v);
+    return 0;
+}
